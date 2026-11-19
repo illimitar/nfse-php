@@ -7,21 +7,30 @@ use Spatie\DataTransferObject\Attributes\MapFrom;
 
 class BeneficioMunicipalData extends Dto
 {
+    public static $__mapFrom = array (
+  'codigoBeneficio' => 'nBM',
+  'percentualReducaoBcBm' => 'pRedBCBM',
+  'valorReducaoBcBm' => 'vRedBCBM'
+);
+    public static $__propertyTypes = array (
+  'codigoBeneficio' => '?string',
+  'percentualReducaoBcBm' => '?float',
+  'valorReducaoBcBm' => '?float'
+);
+
+
     /**
      * Código de identificação do Benefício Municipal.
      */
-    #[MapFrom('nBM')]
-    public ?string $codigoBeneficio = null;
+    public $codigoBeneficio = null;
 
     /**
      * Percentual de redução da base de cálculo referente ao benefício municipal.
      */
-    #[MapFrom('pRedBCBM')]
-    public ?float $percentualReducaoBcBm = null;
+    public $percentualReducaoBcBm = null;
 
     /**
      * Valor monetário de redução da base de cálculo referente ao benefício municipal.
      */
-    #[MapFrom('vRedBCBM')]
-    public ?float $valorReducaoBcBm = null;
+    public $valorReducaoBcBm = null;
 }

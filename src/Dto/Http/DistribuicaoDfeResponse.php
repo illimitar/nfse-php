@@ -7,25 +7,37 @@ use Spatie\DataTransferObject\Attributes\MapFrom;
 
 class DistribuicaoDfeResponse extends Dto
 {
-    #[MapFrom('tpAmb')]
-    public ?string $tipoAmbiente = null;
+    public static $__mapFrom = array (
+  'tipoAmbiente' => 'tpAmb',
+  'versaoAplicativo' => 'verAplic',
+  'dataHoraProcessamento' => 'dhProc',
+  'ultimoNsu' => 'ultNSU',
+  'maiorNsu' => 'maiorNSU',
+  'listaNsu' => 'lNSU'
+);
+    public static $__propertyTypes = array (
+  'tipoAmbiente' => '?string',
+  'versaoAplicativo' => '?string',
+  'dataHoraProcessamento' => '?string',
+  'ultimoNsu' => '?int',
+  'maiorNsu' => '?int',
+  'listaNsu' => 'array'
+);
 
-    #[MapFrom('verAplic')]
-    public ?string $versaoAplicativo = null;
 
-    #[MapFrom('dhProc')]
-    public ?string $dataHoraProcessamento = null;
+    public $tipoAmbiente = null;
 
-    #[MapFrom('ultNSU')]
-    public ?int $ultimoNsu = null;
+    public $versaoAplicativo = null;
 
-    #[MapFrom('maiorNSU')]
-    public ?int $maiorNsu = null;
+    public $dataHoraProcessamento = null;
 
-    public array $alertas = [];
+    public $ultimoNsu = null;
 
-    public array $erros = [];
+    public $maiorNsu = null;
 
-    #[MapFrom('lNSU')]
-    public array $listaNsu = [];
+    public $alertas = [];
+
+    public $erros = [];
+
+    public $listaNsu = [];
 }

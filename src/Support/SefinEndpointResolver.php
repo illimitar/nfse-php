@@ -17,27 +17,25 @@ class SefinEndpointResolver implements EndpointResolver
     /**
      * Municípios com emissor próprio no leiaute nacional, por código IBGE.
      *
-     * @var array<string, array{production: string, homologation: string}>
+     * @var array
      */
-    private static array $endpoints = [];
+    private static $endpoints = array();
 
     /**
-     * Hosts municipais que antes eram acessados pelo IP. O certificado TLS é
-     * emitido para o nome, então a URL usa o nome e o IP fica fixado via
-     * CURLOPT_RESOLVE (mesmo destino de rede, verificação de host ligada).
+     * Hosts municipais que antes eram acessados pelo IP.
      *
-     * @var array<string, string>
+     * @var array
      */
-    private static array $pinnedHosts = [];
+    private static $pinnedHosts = array();
 
     /**
      * Entradas no formato do CURLOPT_RESOLVE ("host:porta:ip").
      *
-     * @return list<string>
+     * @return array
      */
     public static function pinnedHosts(): array
     {
-        $entries = [];
+        $entries = array();
         foreach (self::$pinnedHosts as $hostPort => $ip) {
             $entries[] = $hostPort.':'.$ip;
         }
@@ -47,7 +45,6 @@ class SefinEndpointResolver implements EndpointResolver
 
     public function resolve(NfseContext $context): string
     {
-        // Padrão
         $endpoint = new Endpoint([
             'production' => self::DEFAULT['production'],
             'homologation' => self::DEFAULT['homologation'],
@@ -64,7 +61,6 @@ class SefinEndpointResolver implements EndpointResolver
             ]);
         }
 
-        // Se o cliente manda um personalizado
         if ($context->endpoint) {
             $endpoint = $context->endpoint;
         }

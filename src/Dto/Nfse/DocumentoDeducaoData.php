@@ -10,51 +10,64 @@ use Spatie\DataTransferObject\Attributes\MapFrom;
 
 class DocumentoDeducaoData extends Dto
 {
+    public static $__mapFrom = array (
+  'chaveNfse' => 'chNFSe',
+  'chaveNfe' => 'chNFe',
+  'descricaoOutrasDeducoes' => 'xDescOutDed',
+  'dataEmissaoDocumento' => 'dEmiDoc',
+  'valorDedutivelRedutivel' => 'vDedutivelRedutivel',
+  'valorDeducaoReducao' => 'vDeducaoReducao',
+  'fornecedor' => 'fornec'
+);
+    public static $__propertyTypes = array (
+  'chaveNfse' => '?string',
+  'chaveNfe' => '?string',
+  'tipoDeducaoReducao' => '?TipoDeducaoReducao',
+  'descricaoOutrasDeducoes' => '?string',
+  'dataEmissaoDocumento' => '?string',
+  'valorDedutivelRedutivel' => '?float',
+  'valorDeducaoReducao' => '?float',
+  'fornecedor' => '?FornecedorData'
+);
+
+
     /**
      * Chave de NFS-e.
      */
-    #[MapFrom('chNFSe')]
-    public ?string $chaveNfse = null;
+    public $chaveNfse = null;
 
     /**
      * Chave de NF-e.
      */
-    #[MapFrom('chNFe')]
-    public ?string $chaveNfe = null;
+    public $chaveNfe = null;
 
     /**
      * Tipo de dedução/redução.
      */
-    #[MapFrom('tpDedRed'), CastWith(EnumCaster::class, enumType: TipoDeducaoReducao::class)]
-    public ?TipoDeducaoReducao $tipoDeducaoReducao = null;
+    public $tipoDeducaoReducao = null;
 
     /**
      * Descrição de outras deduções.
      */
-    #[MapFrom('xDescOutDed')]
-    public ?string $descricaoOutrasDeducoes = null;
+    public $descricaoOutrasDeducoes = null;
 
     /**
      * Data de emissão do documento.
      */
-    #[MapFrom('dEmiDoc')]
-    public ?string $dataEmissaoDocumento = null;
+    public $dataEmissaoDocumento = null;
 
     /**
      * Valor dedutível/redutível.
      */
-    #[MapFrom('vDedutivelRedutivel')]
-    public ?float $valorDedutivelRedutivel = null;
+    public $valorDedutivelRedutivel = null;
 
     /**
      * Valor de dedução/redução.
      */
-    #[MapFrom('vDeducaoReducao')]
-    public ?float $valorDeducaoReducao = null;
+    public $valorDeducaoReducao = null;
 
     /**
      * Informações do fornecedor.
      */
-    #[MapFrom('fornec')]
-    public ?FornecedorData $fornecedor = null;
+    public $fornecedor = null;
 }

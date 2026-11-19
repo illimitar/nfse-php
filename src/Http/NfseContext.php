@@ -2,19 +2,55 @@
 
 namespace Nfse\Http;
 
-use Nfse\Enums\TipoAmbiente;
-
 final class NfseContext
 {
+    /** @var mixed */
+    public $ambiente;
+
+    /** @var string|null */
+    public $certificatePath;
+
+    /** @var string */
+    public $certificatePassword;
+
+    /** @var string|null */
+    public $codigoMunicipio;
+
+    /** @var mixed */
+    public $endpoint;
+
+    /** @var string|null */
+    public $certificateContent;
+
+    /** @var string|null */
+    public $nssCertificateSelector;
+
+    /**
+     * @param mixed $ambiente Valor de TipoAmbiente (enum ou constante string/int)
+     * @param string|null $certificatePath
+     * @param string $certificatePassword
+     * @param string|null $codigoMunicipio
+     * @param mixed $endpoint
+     * @param string|null $certificateContent
+     * @param string|null $nssCertificateSelector
+     */
     public function __construct(
-        public TipoAmbiente $ambiente,
-        public ?string $certificatePath = null,
-        public string $certificatePassword = '',
-        public ?string $codigoMunicipio = null,
-        public ?\Nfse\Dto\Http\Endpoint $endpoint = null,
-        public ?string $certificateContent = null,
-        public ?string $nssCertificateSelector = null,
+        $ambiente,
+        $certificatePath = null,
+        $certificatePassword = '',
+        $codigoMunicipio = null,
+        $endpoint = null,
+        $certificateContent = null,
+        $nssCertificateSelector = null
     ) {
+        $this->ambiente = $ambiente;
+        $this->certificatePath = $certificatePath;
+        $this->certificatePassword = $certificatePassword;
+        $this->codigoMunicipio = $codigoMunicipio;
+        $this->endpoint = $endpoint;
+        $this->certificateContent = $certificateContent;
+        $this->nssCertificateSelector = $nssCertificateSelector;
+
         if ($certificatePath === null && $certificateContent === null && $nssCertificateSelector === null) {
             throw new \InvalidArgumentException('Informe certificado PFX ou seletor de certificado NSS.');
         }

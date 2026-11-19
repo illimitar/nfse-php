@@ -5,36 +5,43 @@ namespace Nfse\Enums;
 /**
  * Tributação do ISSQN
  */
-enum TributacaoIssqn: int
+final class TributacaoIssqn
 {
+    const OperacaoTributavel = 1;
+    const Imunidade = 2;
+    const ExportacaoServico = 3;
+    const NaoIncidencia = 4;
+
+    private function __construct()
+    {
+    }
+
     /**
      * Operação tributável
      */
-    case OperacaoTributavel = 1;
-
     /**
      * Imunidade
      */
-    case Imunidade = 2;
-
     /**
      * Exportação de serviço
      */
-    case ExportacaoServico = 3;
-
     /**
      * Não Incidência
      */
-    case NaoIncidencia = 4;
-
     public function getDescription(): string
     {
-        return match ($this) {
-            self::OperacaoTributavel => 'Operação tributável',
-            self::Imunidade => 'Imunidade',
-            self::ExportacaoServico => 'Exportação de serviço',
-            self::NaoIncidencia => 'Não Incidência',
-        };
+        return (call_user_func(function () {
+    switch ($this) {
+    case self::OperacaoTributavel:
+        return 'Operação tributável';
+    case self::Imunidade:
+        return 'Imunidade';
+    case self::ExportacaoServico:
+        return 'Exportação de serviço';
+    case self::NaoIncidencia:
+        return 'Não Incidência';
+    }
+}));
     }
 
     public function label(): string

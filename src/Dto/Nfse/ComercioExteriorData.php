@@ -12,6 +12,45 @@ use Spatie\DataTransferObject\Attributes\MapFrom;
 
 class ComercioExteriorData extends Dto
 {
+    public static $__mapFrom = array (
+  'vinculoPrestacao' => 'vincPrest',
+  'nifExportador' => 'NIFExport',
+  'codigoPaisExportador' => 'cPaisExport',
+  'codigoMecanismoApoioFomento' => 'cMecAFComex',
+  'numeroEnquadramento' => 'nEnquad',
+  'numeroProcesso' => 'nProc',
+  'indicadorIncentivo' => 'indIncentivo',
+  'descricaoIncentivo' => 'xDescIncentivo',
+  'tipoMoeda' => 'tpMoeda',
+  'valorServicoMoeda' => 'vServMoeda',
+  'mecanismoApoioComexPrestador' => 'mecAFComexP',
+  'mecanismoApoioComexTomador' => 'mecAFComexT',
+  'numeroDeclaracaoImportacao' => 'nDI',
+  'numeroRegistroExportacao' => 'nRE',
+  'mdic' => 'mdic'
+);
+    public static $__propertyTypes = array (
+  'modoPrestacao' => '?ModoPrestacao',
+  'vinculoPrestacao' => '?int',
+  'tipoPessoaExportador' => '?TipoPessoa',
+  'nifExportador' => '?string',
+  'codigoPaisExportador' => '?string',
+  'codigoMecanismoApoioFomento' => '?string',
+  'numeroEnquadramento' => '?string',
+  'numeroProcesso' => '?string',
+  'indicadorIncentivo' => '?int',
+  'descricaoIncentivo' => '?string',
+  'tipoMoeda' => '?string',
+  'valorServicoMoeda' => '?float',
+  'mecanismoApoioComexPrestador' => '?string',
+  'mecanismoApoioComexTomador' => '?string',
+  'movimentacaoTemporariaBens' => '?MovimentacaoTemporariaBens',
+  'numeroDeclaracaoImportacao' => '?string',
+  'numeroRegistroExportacao' => '?string',
+  'mdic' => '?string'
+);
+
+
     /**
      * Modo de prestação do serviço.
      * 1 - Transfronteiriço
@@ -19,116 +58,98 @@ class ComercioExteriorData extends Dto
      * 3 - Presença Comercial no Exterior
      * 4 - Movimento Temporário de Pessoas Físicas
      */
-    #[MapFrom('mdPrestacao'), CastWith(EnumCaster::class, enumType: ModoPrestacao::class)]
-    public ?ModoPrestacao $modoPrestacao = null;
+    public $modoPrestacao = null;
 
     /**
      * Vínculo entre as partes no negócio.
      * 1 - Sem vínculo
      * 2 - Com vínculo
      */
-    #[MapFrom('vincPrest')]
-    public ?int $vinculoPrestacao = null;
+    public $vinculoPrestacao = null;
 
     /**
      * Tipo de pessoa do exportador.
      * 1 - Pessoa Jurídica
      * 2 - Pessoa Física
      */
-    #[MapFrom('tpPessoaExport'), CastWith(EnumCaster::class, enumType: TipoPessoa::class)]
-    public ?TipoPessoa $tipoPessoaExportador = null;
+    public $tipoPessoaExportador = null;
 
     /**
      * NIF do exportador.
      */
-    #[MapFrom('NIFExport')]
-    public ?string $nifExportador = null;
+    public $nifExportador = null;
 
     /**
      * Código do país do exportador.
      */
-    #[MapFrom('cPaisExport')]
-    public ?string $codigoPaisExportador = null;
+    public $codigoPaisExportador = null;
 
     /**
      * Código do mecanismo de apoio/fomento.
      */
-    #[MapFrom('cMecAFComex')]
-    public ?string $codigoMecanismoApoioFomento = null;
+    public $codigoMecanismoApoioFomento = null;
 
     /**
      * Número do enquadramento.
      */
-    #[MapFrom('nEnquad')]
-    public ?string $numeroEnquadramento = null;
+    public $numeroEnquadramento = null;
 
     /**
      * Número do processo.
      */
-    #[MapFrom('nProc')]
-    public ?string $numeroProcesso = null;
+    public $numeroProcesso = null;
 
     /**
      * Indicador de incentivo fiscal.
      * 1 - Sim
      * 2 - Não
      */
-    #[MapFrom('indIncentivo')]
-    public ?int $indicadorIncentivo = null;
+    public $indicadorIncentivo = null;
 
     /**
      * Descrição do incentivo fiscal.
      */
-    #[MapFrom('xDescIncentivo')]
-    public ?string $descricaoIncentivo = null;
+    public $descricaoIncentivo = null;
 
     /**
      * Código da moeda da transação (ISO 4217).
      */
-    #[MapFrom('tpMoeda')]
-    public ?string $tipoMoeda = null;
+    public $tipoMoeda = null;
 
     /**
      * Valor do serviço na moeda estrangeira.
      */
-    #[MapFrom('vServMoeda')]
-    public ?float $valorServicoMoeda = null;
+    public $valorServicoMoeda = null;
 
     /**
      * Mecanismo de apoio/fomento ao Comércio Exterior utilizado pelo prestador.
      */
-    #[MapFrom('mecAFComexP')]
-    public ?string $mecanismoApoioComexPrestador = null;
+    public $mecanismoApoioComexPrestador = null;
 
     /**
      * Mecanismo de apoio/fomento ao Comércio Exterior utilizado pelo tomador.
      */
-    #[MapFrom('mecAFComexT')]
-    public ?string $mecanismoApoioComexTomador = null;
+    public $mecanismoApoioComexTomador = null;
 
     /**
      * Movimentação temporária de bens.
      */
-    #[MapFrom('movTempBens'), CastWith(EnumCaster::class, enumType: MovimentacaoTemporariaBens::class)]
-    public ?MovimentacaoTemporariaBens $movimentacaoTemporariaBens = null;
+    public $movimentacaoTemporariaBens = null;
 
     /**
      * Número da Declaração de Importação (DI/DSI/DA/DRI-E) averbada.
      */
-    #[MapFrom('nDI')]
-    public ?string $numeroDeclaracaoImportacao = null;
+    public $numeroDeclaracaoImportacao = null;
 
     /**
      * Número do Registro de Exportação (RE) averbado.
      */
-    #[MapFrom('nRE')]
-    public ?string $numeroRegistroExportacao = null;
+    public $numeroRegistroExportacao = null;
 
     /**
      * Compartilhamento de dados com o MDIC.
      * 1 - Sim
      * 2 - Não
      */
-    #[MapFrom('mdic')]
-    public ?string $mdic = null;
+    public $mdic = null;
 }

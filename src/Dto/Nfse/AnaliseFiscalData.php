@@ -13,39 +13,50 @@ use Spatie\DataTransferObject\Attributes\MapFrom;
  */
 class AnaliseFiscalData extends Dto
 {
+    public static $__mapFrom = array (
+  'descricao' => 'xDesc',
+  'cpfAgenteTributario' => 'CPFAgTrib',
+  'numeroProcessoAdministrativo' => 'nProcAdm',
+  'codigoMotivo' => 'cMotivo',
+  'descricaoMotivo' => 'xMotivo'
+);
+    public static $__propertyTypes = array (
+  'descricao' => '?string',
+  'cpfAgenteTributario' => '?string',
+  'numeroProcessoAdministrativo' => '?string',
+  'codigoMotivo' => '?string',
+  'descricaoMotivo' => '?string'
+);
+
+
     /**
      * Descrição do Evento
      * e105104: "Cancelamento de NFS-e Deferido por Análise Fiscal"
      * e105105: "Cancelamento de NFS-e Indeferido por Análise Fiscal"
      */
-    #[MapFrom('xDesc')]
-    public ?string $descricao = null;
+    public $descricao = null;
 
     /**
      * CPF do agente da administração tributária municipal que efetuou
      * o deferimento/indeferimento da solicitação de análise fiscal
      */
-    #[MapFrom('CPFAgTrib')]
-    public ?string $cpfAgenteTributario = null;
+    public $cpfAgenteTributario = null;
 
     /**
      * Número do processo administrativo municipal vinculado à solicitação
      * de análise fiscal para cancelamento de NFS-e (opcional)
      */
-    #[MapFrom('nProcAdm')]
-    public ?string $numeroProcessoAdministrativo = null;
+    public $numeroProcessoAdministrativo = null;
 
     /**
      * Código do motivo da decisão fiscal
      * e105104: 1 - Cancelamento de NFS-e Deferido
      * e105105: 1 - Cancelamento de NFS-e Indeferido; 2 - Cancelamento de NFS-e Indeferido Sem Análise de Mérito
      */
-    #[MapFrom('cMotivo')]
-    public ?string $codigoMotivo = null;
+    public $codigoMotivo = null;
 
     /**
      * Descrição para explicitar o motivo indicado neste evento
      */
-    #[MapFrom('xMotivo')]
-    public ?string $descricaoMotivo = null;
+    public $descricaoMotivo = null;
 }

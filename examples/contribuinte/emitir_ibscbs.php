@@ -13,9 +13,9 @@ try {
     // $certificatePassword = 'senha';
 
     $context = new NfseContext(
-        ambiente: \Nfse\Enums\TipoAmbiente::Homologacao,
-        certificatePath: $certificatePath,
-        certificatePassword: $certificatePassword
+        \Nfse\Enums\TipoAmbiente::Homologacao,
+        $certificatePath,
+        $certificatePassword
     );
 
     $nfse = new Nfse($context);
@@ -27,19 +27,19 @@ try {
     $numero = '100';
 
     $idDps = IdGenerator::generateDpsId(
-        cpfCnpj: $cnpjPrestador,
-        codIbge: $codigoMunicipio,
-        serieDps: $serie,
-        numDps: $numero
+        $cnpjPrestador,
+        $codigoMunicipio,
+        $serie,
+        $numero
     );
 
     $dps = new DpsData([
         '@attributes' => [
-            'versao' => '1.01',
+            'versao' => '1.01'
         ],
         'infDPS' => [
             '@attributes' => [
-                'Id' => $idDps,
+                'Id' => $idDps
             ],
             'tpAmb' => 2, // Homologação
             'dhEmi' => date('c'),
@@ -56,45 +56,45 @@ try {
                 'end' => [
                     'endNac' => [
                         'cMun' => $codigoMunicipio,
-                        'CEP' => '60000000',
+                        'CEP' => '60000000'
                     ],
                     'xLgr' => 'Rua Teste',
                     'nro' => '123',
-                    'xBairro' => 'Centro',
+                    'xBairro' => 'Centro'
                 ],
                 'regTrib' => [
                     'opSimpNac' => 1, // Não Optante
                     'regEspTrib' => 0, // Nenhum
-                ],
+                ]
             ],
             'toma' => [
                 'CNPJ' => '44827692000111',
-                'xNome' => 'Cliente de Teste',
+                'xNome' => 'Cliente de Teste'
             ],
             'serv' => [
                 'locPrest' => [
-                    'cLocPrestacao' => $codigoMunicipio,
+                    'cLocPrestacao' => $codigoMunicipio
                 ],
                 'cServ' => [
                     'cTribNac' => '010101',
                     'xDescServ' => 'Desenvolvimento de Software',
                     // O item da NBS é obrigatório quando o grupo IBSCBS é informado
-                    'cNBS' => '112011000',
-                ],
+                    'cNBS' => '112011000'
+                ]
             ],
             'valores' => [
                 'vServPrest' => [
-                    'vServ' => 100.00,
+                    'vServ' => 100.00
                 ],
                 'trib' => [
                     'tribMun' => [
                         'tribISSQN' => 1,
-                        'tpRetISSQN' => 1,
+                        'tpRetISSQN' => 1
                     ],
                     'totTrib' => [
-                        'indTotTrib' => 0,
-                    ],
-                ],
+                        'indTotTrib' => 0
+                    ]
+                ]
             ],
             'IBSCBS' => [
                 'finNFSe' => '0', // NFS-e regular
@@ -104,12 +104,12 @@ try {
                     'trib' => [
                         'gIBSCBS' => [
                             'CST' => '000', // Tributação integral
-                            'cClassTrib' => '000001',
-                        ],
-                    ],
-                ],
-            ],
-        ],
+                            'cClassTrib' => '000001'
+                        ]
+                    ]
+                ]
+            ]
+        ]
     ]);
 
     echo "Emitindo NFS-e com IBS/CBS para a DPS: $idDps...\n";

@@ -9,7 +9,7 @@ use Nfse\Support\SchemaText;
 
 class EventosXmlBuilder
 {
-    private DOMDocument $dom;
+    private $dom;
 
     public function buildPedRegEvento(PedRegEventoData $data): string
     {
@@ -23,7 +23,7 @@ class EventosXmlBuilder
         $inf = $this->dom->createElement('infPedReg');
 
         // Build Id for infPedReg: PRE + chNFSe + tipoEvento
-        // nPedRegEvento foi removido do Id a partir de jan/2026 (TSIdPedRegEvt: PRE[0-9]{56})
+        // nPedRegEvento foi removido do Id a partir de jan/2026 (PRE[0-9]{56})
         $ch = $data->infPedReg->chaveNfse;
         $tipo = $data->infPedReg->tipoEvento;
         $id = "PRE{$ch}{$tipo}";

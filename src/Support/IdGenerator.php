@@ -12,10 +12,10 @@ class IdGenerator
      * @param  string  $cpfCnpj  CPF ou CNPJ do emitente.
      * @param  string  $codIbge  Código IBGE do município de emissão (7 dígitos).
      * @param  string  $serieDps  Série da DPS (até 5 caracteres).
-     * @param  string|int  $numDps  Número da DPS (até 15 dígitos).
+     * @param  $numDps  Número da DPS (até 15 dígitos).
      * @return string ID gerado (45 caracteres).
      */
-    public static function generateDpsId(string $cpfCnpj, string $codIbge, string $serieDps, string|int $numDps): string
+    public static function generateDpsId(string $cpfCnpj, string $codIbge, string $serieDps, $numDps): string
     {
         $cpfCnpj = preg_replace('/\D/', '', $cpfCnpj);
 

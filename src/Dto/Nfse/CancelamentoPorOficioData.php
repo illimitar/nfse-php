@@ -12,29 +12,39 @@ use Spatie\DataTransferObject\Attributes\MapFrom;
  */
 class CancelamentoPorOficioData extends Dto
 {
+    public static $__mapFrom = array (
+  'descricao' => 'xDesc',
+  'cpfAgenteTributario' => 'CPFAgTrib',
+  'numeroProcessoAdministrativo' => 'nProcAdm',
+  'descricaoProcessoAdministrativo' => 'xProcAdm'
+);
+    public static $__propertyTypes = array (
+  'descricao' => '?string',
+  'cpfAgenteTributario' => '?string',
+  'numeroProcessoAdministrativo' => '?string',
+  'descricaoProcessoAdministrativo' => '?string'
+);
+
+
     /**
      * Descrição do Evento: "Cancelamento de NFS-e por Ofício"
      */
-    #[MapFrom('xDesc')]
-    public ?string $descricao = null;
+    public $descricao = null;
 
     /**
      * CPF do agente da administração tributária municipal que efetuou
      * o cancelamento por ofício de NFS-e
      */
-    #[MapFrom('CPFAgTrib')]
-    public ?string $cpfAgenteTributario = null;
+    public $cpfAgenteTributario = null;
 
     /**
      * Número do processo administrativo municipal vinculado ao
      * cancelamento de NFS-e por ofício
      */
-    #[MapFrom('nProcAdm')]
-    public ?string $numeroProcessoAdministrativo = null;
+    public $numeroProcessoAdministrativo = null;
 
     /**
      * Descrição para explicitar o motivo indicado neste evento
      */
-    #[MapFrom('xProcAdm')]
-    public ?string $descricaoProcessoAdministrativo = null;
+    public $descricaoProcessoAdministrativo = null;
 }

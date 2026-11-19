@@ -7,21 +7,28 @@ namespace Nfse\Enums;
  *
  * Baseado no schema: TSMotivoEmisTI
  */
-enum MotivoEmissaoTomadorIntermediario: string
+final class MotivoEmissaoTomadorIntermediario
 {
+    const Rejeicao = '4';
+
+    private function __construct()
+    {
+    }
+
     /**
      * Rejeição de NFS-e emitida pelo prestador
      */
-    case Rejeicao = '4';
-
     /**
      * Get description for the enum case
      */
     public function getDescription(): string
     {
-        return match ($this) {
-            self::Rejeicao => 'Rejeição de NFS-e emitida pelo prestador',
-        };
+        return (call_user_func(function () {
+    switch ($this) {
+    case self::Rejeicao:
+        return 'Rejeição de NFS-e emitida pelo prestador';
+    }
+}));
     }
 
     /**

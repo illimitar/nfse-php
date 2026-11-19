@@ -6,11 +6,11 @@ use Exception;
 
 class Certificate
 {
-    private string $pfxContent;
+    private $pfxContent;
 
-    private string $password;
+    private $password;
 
-    private ?array $certData = null;
+    private $certData = null;
 
     public function __construct(string $pfxPath, string $password)
     {

@@ -7,27 +7,34 @@ namespace Nfse\Enums;
  *
  * Baseado no schema: TSAmbGer
  */
-enum AmbienteGerador: string
+final class AmbienteGerador
 {
+    const Municipio = '1';
+    const SefinNacional = '2';
+
+    private function __construct()
+    {
+    }
+
     /**
      * Sistema Próprio do Município
      */
-    case Municipio = '1';
-
     /**
      * Sefin Nacional
      */
-    case SefinNacional = '2';
-
     /**
      * Get description for the enum case
      */
     public function getDescription(): string
     {
-        return match ($this) {
-            self::Municipio => 'Sistema Próprio do Município',
-            self::SefinNacional => 'Sefin Nacional',
-        };
+        return (call_user_func(function () {
+    switch ($this) {
+    case self::Municipio:
+        return 'Sistema Próprio do Município';
+    case self::SefinNacional:
+        return 'Sefin Nacional';
+    }
+}));
     }
 
     /**

@@ -6,7 +6,7 @@ use Nfse\Dto\Dto;
 
 class ResultadoConsultaConfiguracoesConvenioResponse extends Dto
 {
-    public ?string $mensagem = null;
+    public $mensagem = null;
 
-    public ?ParametrosConfiguracaoConvenioDto $parametrosConvenio = null;
+    public $parametrosConvenio = null;
 }

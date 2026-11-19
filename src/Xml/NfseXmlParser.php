@@ -23,7 +23,7 @@ class NfseXmlParser
         $xml = str_replace('\"', '"', $xml);
 
         // Eventos no layout antigo usam nDFe; o layout 1.01 renomeou para nDFSe
-        $xml = str_replace(['<nDFe>', '</nDFe>'], ['<nDFSe>', '</nDFSe>'], $xml);
+        $xml = str_replace(array('<nDFe>', '</nDFe>'), array('<nDFSe>', '</nDFSe>'), $xml);
 
         // 2. Parse XML
         $useInternal = libxml_use_internal_errors(true);

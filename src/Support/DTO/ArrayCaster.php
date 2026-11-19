@@ -7,12 +7,12 @@ use Spatie\DataTransferObject\Caster;
 class ArrayCaster implements Caster
 {
     /** @phpstan-ignore constructor.unusedParameter */
-    public function __construct(
-        array $types,
-        private string $itemType,
-    ) {}
+    private $itemType;
 
-    public function cast(mixed $value): mixed
+    public function __construct(array $types, string $itemType) {
+        $this->itemType = $itemType;}
+
+    public function cast($value)
     {
         if (! is_array($value)) {
             return $value;

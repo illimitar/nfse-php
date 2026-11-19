@@ -7,15 +7,23 @@ use Spatie\DataTransferObject\Attributes\MapFrom;
 
 class DescontoData extends Dto
 {
+    public static $__mapFrom = array (
+  'valorDescontoIncondicionado' => 'vDescIncond',
+  'valorDescontoCondicionado' => 'vDescCond'
+);
+    public static $__propertyTypes = array (
+  'valorDescontoIncondicionado' => '?float',
+  'valorDescontoCondicionado' => '?float'
+);
+
+
     /**
      * Valor do desconto incondicionado.
      */
-    #[MapFrom('vDescIncond')]
-    public ?float $valorDescontoIncondicionado = null;
+    public $valorDescontoIncondicionado = null;
 
     /**
      * Valor do desconto condicionado.
      */
-    #[MapFrom('vDescCond')]
-    public ?float $valorDescontoCondicionado = null;
+    public $valorDescontoCondicionado = null;
 }

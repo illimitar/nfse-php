@@ -5,72 +5,79 @@ namespace Nfse\Enums;
 /**
  * Tipo de Retenção do PIS/COFINS e CSLL
  */
-enum TipoRetencaoPisCofins: int
+final class TipoRetencaoPisCofins
 {
+    const NaoRetidos = 0;
+    const PisCofinsRetido = 1;
+    const PisCofinsNaoRetido = 2;
+    const Retidos = 3;
+    const PisCofinsRetidosCsllNaoRetido = 4;
+    const PisRetidoCofinsCsllNaoRetido = 5;
+    const CofinsRetidoPisCsllNaoRetido = 6;
+    const PisNaoRetidoCofinsCsllRetidos = 7;
+    const PisCofinsNaoRetidosCsllRetido = 8;
+    const CofinsNaoRetidoPisCsllRetidos = 9;
+
+    private function __construct()
+    {
+    }
+
     /**
      * PIS/COFINS/CSLL Não Retidos
      */
-    case NaoRetidos = 0;
-
     /**
      * PIS/COFINS Retido
      */
-    case PisCofinsRetido = 1;
-
     /**
      * PIS/COFINS Não Retido
      */
-    case PisCofinsNaoRetido = 2;
-
     /**
      * PIS/COFINS/CSLL Retidos
      */
-    case Retidos = 3;
-
     /**
      * PIS/COFINS Retidos, CSLL Não Retido
      */
-    case PisCofinsRetidosCsllNaoRetido = 4;
-
     /**
      * PIS Retido, COFINS/CSLL Não Retido
      */
-    case PisRetidoCofinsCsllNaoRetido = 5;
-
     /**
      * COFINS Retido, PIS/CSLL Não Retido
      */
-    case CofinsRetidoPisCsllNaoRetido = 6;
-
     /**
      * PIS Não Retido, COFINS/CSLL Retidos
      */
-    case PisNaoRetidoCofinsCsllRetidos = 7;
-
     /**
      * PIS/COFINS Não Retidos, CSLL Retido
      */
-    case PisCofinsNaoRetidosCsllRetido = 8;
-
     /**
      * COFINS Não Retido, PIS/CSLL Retidos
      */
-    case CofinsNaoRetidoPisCsllRetidos = 9;
-
     public function getDescription(): string
     {
-        return match ($this) {
-            self::NaoRetidos => 'PIS/COFINS/CSLL Não Retidos',
-            self::PisCofinsRetido => 'PIS/COFINS Retido',
-            self::PisCofinsNaoRetido => 'PIS/COFINS Não Retido',
-            self::Retidos => 'PIS/COFINS/CSLL Retidos',
-            self::PisCofinsRetidosCsllNaoRetido => 'PIS/COFINS Retidos, CSLL Não Retido',
-            self::PisRetidoCofinsCsllNaoRetido => 'PIS Retido, COFINS/CSLL Não Retido',
-            self::CofinsRetidoPisCsllNaoRetido => 'COFINS Retido, PIS/CSLL Não Retido',
-            self::PisNaoRetidoCofinsCsllRetidos => 'PIS Não Retido, COFINS/CSLL Retidos',
-            self::PisCofinsNaoRetidosCsllRetido => 'PIS/COFINS Não Retidos, CSLL Retido',
-            self::CofinsNaoRetidoPisCsllRetidos => 'COFINS Não Retido, PIS/CSLL Retidos',
-        };
+        return (call_user_func(function () {
+    switch ($this) {
+    case self::NaoRetidos:
+        return 'PIS/COFINS/CSLL Não Retidos';
+    case self::PisCofinsRetido:
+        return 'PIS/COFINS Retido';
+    case self::PisCofinsNaoRetido:
+        return 'PIS/COFINS Não Retido';
+    case self::Retidos:
+        return 'PIS/COFINS/CSLL Retidos';
+    case self::PisCofinsRetidosCsllNaoRetido:
+        return 'PIS/COFINS Retidos, CSLL Não Retido';
+    case self::PisRetidoCofinsCsllNaoRetido:
+        return 'PIS Retido, COFINS/CSLL Não Retido';
+    case self::CofinsRetidoPisCsllNaoRetido:
+        return 'COFINS Retido, PIS/CSLL Não Retido';
+    case self::PisNaoRetidoCofinsCsllRetidos:
+        return 'PIS Não Retido, COFINS/CSLL Retidos';
+    case self::PisCofinsNaoRetidosCsllRetido:
+        return 'PIS/COFINS Não Retidos, CSLL Retido';
+    case self::CofinsNaoRetidoPisCsllRetidos:
+        return 'COFINS Não Retido, PIS/CSLL Retidos';
+    }
+}));
     }
 
     public function label(): string
@@ -86,14 +93,18 @@ enum TipoRetencaoPisCofins: int
      */
     public function isRetidoPis(): bool
     {
-        return match ($this) {
-            self::PisCofinsRetido,
-            self::Retidos,
-            self::PisCofinsRetidosCsllNaoRetido,
-            self::PisRetidoCofinsCsllNaoRetido,
-            self::CofinsNaoRetidoPisCsllRetidos => true,
-            default => false,
-        };
+        return (call_user_func(function () {
+    switch ($this) {
+    case self::PisCofinsRetido:
+    case self::Retidos:
+    case self::PisCofinsRetidosCsllNaoRetido:
+    case self::PisRetidoCofinsCsllNaoRetido:
+    case self::CofinsNaoRetidoPisCsllRetidos:
+        return true;
+    default:
+        return false;
+    }
+}));
     }
 
     /**
@@ -104,14 +115,18 @@ enum TipoRetencaoPisCofins: int
      */
     public function isRetidoCofins(): bool
     {
-        return match ($this) {
-            self::PisCofinsRetido,
-            self::Retidos,
-            self::PisCofinsRetidosCsllNaoRetido,
-            self::CofinsRetidoPisCsllNaoRetido,
-            self::PisNaoRetidoCofinsCsllRetidos => true,
-            default => false,
-        };
+        return (call_user_func(function () {
+    switch ($this) {
+    case self::PisCofinsRetido:
+    case self::Retidos:
+    case self::PisCofinsRetidosCsllNaoRetido:
+    case self::CofinsRetidoPisCsllNaoRetido:
+    case self::PisNaoRetidoCofinsCsllRetidos:
+        return true;
+    default:
+        return false;
+    }
+}));
     }
 
     /**
@@ -122,12 +137,16 @@ enum TipoRetencaoPisCofins: int
      */
     public function isRetidoCsll(): bool
     {
-        return match ($this) {
-            self::Retidos,
-            self::PisNaoRetidoCofinsCsllRetidos,
-            self::PisCofinsNaoRetidosCsllRetido,
-            self::CofinsNaoRetidoPisCsllRetidos => true,
-            default => false,
-        };
+        return (call_user_func(function () {
+    switch ($this) {
+    case self::Retidos:
+    case self::PisNaoRetidoCofinsCsllRetidos:
+    case self::PisCofinsNaoRetidosCsllRetido:
+    case self::CofinsNaoRetidoPisCsllRetidos:
+        return true;
+    default:
+        return false;
+    }
+}));
     }
 }

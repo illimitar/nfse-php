@@ -7,12 +7,21 @@ use Spatie\DataTransferObject\Attributes\MapFrom;
 
 class RejeicaoPrestadorData extends Dto
 {
-    #[MapFrom('xDesc')]
-    public ?string $descricao = null;
+    public static $__mapFrom = array (
+  'descricao' => 'xDesc',
+  'codigoMotivo' => 'infRej.cMotivo',
+  'motivo' => 'infRej.xMotivo'
+);
+    public static $__propertyTypes = array (
+  'descricao' => '?string',
+  'codigoMotivo' => '?string',
+  'motivo' => '?string'
+);
 
-    #[MapFrom('infRej.cMotivo')]
-    public ?string $codigoMotivo = null;
 
-    #[MapFrom('infRej.xMotivo')]
-    public ?string $motivo = null;
+    public $descricao = null;
+
+    public $codigoMotivo = null;
+
+    public $motivo = null;
 }

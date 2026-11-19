@@ -7,45 +7,58 @@ use Spatie\DataTransferObject\Attributes\MapFrom;
 
 class EnderecoEmitenteData extends Dto
 {
+    public static $__mapFrom = array (
+  'logradouro' => 'xLgr',
+  'numero' => 'nro',
+  'complemento' => 'xCpl',
+  'bairro' => 'xBairro',
+  'codigoMunicipio' => 'cMun',
+  'uf' => 'UF',
+  'cep' => 'CEP'
+);
+    public static $__propertyTypes = array (
+  'logradouro' => '?string',
+  'numero' => '?string',
+  'complemento' => '?string',
+  'bairro' => '?string',
+  'codigoMunicipio' => '?string',
+  'uf' => '?string',
+  'cep' => '?string'
+);
+
+
     /**
      * Logradouro.
      */
-    #[MapFrom('xLgr')]
-    public ?string $logradouro = null;
+    public $logradouro = null;
 
     /**
      * Número.
      */
-    #[MapFrom('nro')]
-    public ?string $numero = null;
+    public $numero = null;
 
     /**
      * Complemento.
      */
-    #[MapFrom('xCpl')]
-    public ?string $complemento = null;
+    public $complemento = null;
 
     /**
      * Bairro.
      */
-    #[MapFrom('xBairro')]
-    public ?string $bairro = null;
+    public $bairro = null;
 
     /**
      * Código do município (IBGE).
      */
-    #[MapFrom('cMun')]
-    public ?string $codigoMunicipio = null;
+    public $codigoMunicipio = null;
 
     /**
      * Sigla da UF.
      */
-    #[MapFrom('UF')]
-    public ?string $uf = null;
+    public $uf = null;
 
     /**
      * CEP.
      */
-    #[MapFrom('CEP')]
-    public ?string $cep = null;
+    public $cep = null;
 }

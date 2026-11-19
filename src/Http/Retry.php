@@ -36,7 +36,7 @@ class Retry
             }
 
             return $exception instanceof ConnectException
-                || in_array($response?->getStatusCode(), self::RETRY_STATUS, true);
+                || in_array($response !== null ? $response->getStatusCode() : null, self::RETRY_STATUS, true);
         }));
 
         return $stack;

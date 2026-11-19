@@ -7,12 +7,21 @@ use Spatie\DataTransferObject\Attributes\MapFrom;
 
 class PedRegEventoData extends Dto
 {
-    #[MapFrom('@attributes.Id')]
-    public ?string $id = null;
+    public static $__mapFrom = array (
+  'id' => '@attributes.Id',
+  'infPedReg' => 'infPedReg',
+  'versao' => 'versao'
+);
+    public static $__propertyTypes = array (
+  'id' => '?string',
+  'infPedReg' => '?InfPedRegData',
+  'versao' => 'string'
+);
 
-    #[MapFrom('infPedReg')]
-    public ?InfPedRegData $infPedReg = null;
 
-    #[MapFrom('versao')]
-    public string $versao = '1.01';
+    public $id = null;
+
+    public $infPedReg = null;
+
+    public $versao = '1.01';
 }

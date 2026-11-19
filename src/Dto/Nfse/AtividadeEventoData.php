@@ -7,35 +7,46 @@ use Spatie\DataTransferObject\Attributes\MapFrom;
 
 class AtividadeEventoData extends Dto
 {
+    public static $__mapFrom = array (
+  'nome' => 'xNome',
+  'dataInicio' => 'dtIni',
+  'dataFim' => 'dtFim',
+  'idAtividadeEvento' => 'idAtvEvt',
+  'endereco' => 'end'
+);
+    public static $__propertyTypes = array (
+  'nome' => '?string',
+  'dataInicio' => '?string',
+  'dataFim' => '?string',
+  'idAtividadeEvento' => '?string',
+  'endereco' => '?EnderecoData'
+);
+
+
     /**
      * Nome do evento ou atividade.
      */
-    #[MapFrom('xNome')]
-    public ?string $nome = null;
+    public $nome = null;
 
     /**
      * Data de início do evento.
      * Formato: AAAA-MM-DD
      */
-    #[MapFrom('dtIni')]
-    public ?string $dataInicio = null;
+    public $dataInicio = null;
 
     /**
      * Data de fim do evento.
      * Formato: AAAA-MM-DD
      */
-    #[MapFrom('dtFim')]
-    public ?string $dataFim = null;
+    public $dataFim = null;
 
     /**
      * Identificador da atividade ou evento.
      */
-    #[MapFrom('idAtvEvt')]
-    public ?string $idAtividadeEvento = null;
+    public $idAtividadeEvento = null;
 
     /**
      * Endereço do evento.
      */
-    #[MapFrom('end')]
-    public ?EnderecoData $endereco = null;
+    public $endereco = null;
 }

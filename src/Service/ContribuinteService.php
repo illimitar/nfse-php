@@ -19,12 +19,15 @@ use Nfse\Xml\NfseXmlParser;
 
 class ContribuinteService
 {
-    private SefinNacionalInterface $sefinClient;
+    private $sefinClient;
 
-    private AdnClient $adnClient;
+    private $adnClient;
 
-    public function __construct(private NfseContext $context)
+    private $context;
+
+    public function __construct(NfseContext $context)
     {
+        $this->context = $context;
         $this->sefinClient = new SefinClient($context);
         $this->adnClient = new AdnClient($context);
     }
@@ -50,7 +53,7 @@ class ContribuinteService
         $response = $this->sefinClient->emitirNfse($payload);
 
         if (! empty($response->erros)) {
-            $msg = 'Erro na emissão: '.json_encode($response->erros);
+            $msg = 'Erro na emissão: ' . json_encode($response->erros);
             throw NfseApiException::responseError($msg, 0, null, $response->erros);
         }
 
@@ -100,9 +103,6 @@ class ContribuinteService
      * gerar o DANFSe internamente e adequar seus layouts. Novo Layout: o documento agora possui um formato
      * padrão obrigatório em folha A4, exigência de QR Code e inclusão de campos para IBS e CBS.
      * Nota técnica: https://www.gov.br/nfse/pt-br/biblioteca/documentacao-tecnica/rtc/nt-008-se-cgnfse-danfse-20260505.pdf
-     * Para gerar o PDF localmente, use o pacote nfse-nacional/danfse-php:
-     * `(new \Danfse\Danfse\Danfse)->render($nfse->contribuinte()->consultar($chaveAcesso))`.
-     * @see https://github.com/nfse-nacional/danfse-php
      */
     public function downloadDanfse(string $chaveAcesso): string
     {

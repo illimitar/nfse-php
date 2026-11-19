@@ -20,15 +20,18 @@ use Nfse\Support\SefinEndpointResolver;
 
 class SefinClient implements SefinNacionalInterface
 {
-    private Client $httpClient;
+    private $httpClient;
 
-    private string $baseUrl;
+    private $baseUrl;
 
-    private ?string $tempCertFile = null;
+    private $tempCertFile = null;
 
-    public function __construct(private NfseContext $context)
+    private $context;
+
+    public function __construct(NfseContext $context)
     {
-        $resolver = new SefinEndpointResolver;
+        $this->context = $context;
+        $resolver = new SefinEndpointResolver();
         $this->baseUrl = $resolver->resolve($this->context);
         $this->httpClient = $this->createHttpClient();
     }
@@ -54,48 +57,41 @@ class SefinClient implements SefinNacionalInterface
 
     private function createHttpClient(): Client
     {
-        $curlOptions = [
-            // Endpoints municipais publicados por IP: o nome do certificado é fixado
-            // no IP original para que a verificação de host funcione.
+        $curlOptions = array(
             CURLOPT_RESOLVE => SefinEndpointResolver::pinnedHosts(),
-        ];
+        );
 
         if ($this->context->nssCertificateSelector !== null) {
-            // O Guzzle exige que a opção `cert` seja um arquivo existente; o seletor NSS não é, então segue cru para o cURL.
             $curlOptions[CURLOPT_SSLCERTTYPE] = 'ENG';
             $curlOptions[CURLOPT_SSLCERT] = $this->context->nssCertificateSelector;
-            $certificateOptions = [];
+            $certificateOptions = array();
         } else {
-            $certificateOptions = [
-                RequestOptions::CERT => [$this->resolveCertificatePath(), $this->context->certificatePassword],
+            $certificateOptions = array(
+                RequestOptions::CERT => array($this->resolveCertificatePath(), $this->context->certificatePassword),
                 RequestOptions::CERT_TYPE => 'P12',
-            ];
+            );
         }
 
-        return new Client([
-            'base_uri' => rtrim($this->baseUrl, '/').'/',
+        return new Client(array_merge(array(
+            'base_uri' => rtrim($this->baseUrl, '/') . '/',
             'handler' => Retry::stack(),
-            ...$certificateOptions,
             'curl' => $curlOptions,
             RequestOptions::FORCE_IP_RESOLVE => 'v4',
-            // Com o Retry (3 tentativas), um host inacessível segura a requisição
-            // por até 3x o connect timeout; 10s basta para o handshake.
             RequestOptions::CONNECT_TIMEOUT => 10,
             RequestOptions::TIMEOUT => 60,
             RequestOptions::VERSION => '1.1',
-            RequestOptions::HEADERS => [
+            RequestOptions::HEADERS => array(
                 'Content-Type' => 'application/json',
                 'Accept' => 'application/json',
-            ],
-        ]);
-
+            ),
+        ), $certificateOptions));
     }
 
     private function post(string $endpoint, array $data): array
     {
         try {
             $response = $this->httpClient->post($endpoint, [
-                RequestOptions::JSON => $data,
+                RequestOptions::JSON => $data
             ]);
 
             $body = $response->getBody()->getContents();
@@ -126,79 +122,79 @@ class SefinClient implements SefinNacionalInterface
     {
         $response = $this->post('nfse', ['dpsXmlGZipB64' => $dpsXmlGZipB64]);
 
-        return new EmissaoNfseResponse(
-            tipoAmbiente: $response['tipoAmbiente'] ?? null,
-            versaoAplicativo: $response['versaoAplicativo'] ?? null,
-            dataHoraProcessamento: $response['dataHoraProcessamento'] ?? null,
-            idDps: $response['idDps'] ?? null,
-            chaveAcesso: $response['chaveAcesso'] ?? null,
-            nfseXmlGZipB64: $response['nfseXmlGZipB64'] ?? null,
-            alertas: $this->mapMensagens($response['alertas'] ?? []),
-            erros: $this->mapMensagens($response['erros'] ?? [])
-        );
+        return new EmissaoNfseResponse([
+            'tipoAmbiente' => $response['tipoAmbiente'] ?? null,
+            'versaoAplicativo' => $response['versaoAplicativo'] ?? null,
+            'dataHoraProcessamento' => $response['dataHoraProcessamento'] ?? null,
+            'idDps' => $response['idDps'] ?? null,
+            'chaveAcesso' => $response['chaveAcesso'] ?? null,
+            'nfseXmlGZipB64' => $response['nfseXmlGZipB64'] ?? null,
+            'alertas' => $this->mapMensagens($response['alertas'] ?? []),
+            'erros' => $this->mapMensagens($response['erros'] ?? []),
+        ]);
     }
 
     public function consultarNfse(string $chaveAcesso): ConsultaNfseResponse
     {
         $response = $this->get("nfse/{$chaveAcesso}");
 
-        return new ConsultaNfseResponse(
-            tipoAmbiente: $response['tipoAmbiente'] ?? null,
-            versaoAplicativo: $response['versaoAplicativo'] ?? null,
-            dataHoraProcessamento: $response['dataHoraProcessamento'] ?? null,
-            chaveAcesso: $response['chaveAcesso'] ?? null,
-            nfseXmlGZipB64: $response['nfseXmlGZipB64'] ?? null
-        );
+        return new ConsultaNfseResponse([
+            'tipoAmbiente' => $response['tipoAmbiente'] ?? null,
+            'versaoAplicativo' => $response['versaoAplicativo'] ?? null,
+            'dataHoraProcessamento' => $response['dataHoraProcessamento'] ?? null,
+            'chaveAcesso' => $response['chaveAcesso'] ?? null,
+            'nfseXmlGZipB64' => $response['nfseXmlGZipB64'] ?? null,
+        ]);
     }
 
     public function consultarDps(string $idDps): ConsultaDpsResponse
     {
         $response = $this->get("dps/{$idDps}");
 
-        return new ConsultaDpsResponse(
-            tipoAmbiente: $response['tipoAmbiente'] ?? null,
-            versaoAplicativo: $response['versaoAplicativo'] ?? null,
-            dataHoraProcessamento: $response['dataHoraProcessamento'] ?? null,
-            idDps: $response['idDps'] ?? null,
-            chaveAcesso: $response['chaveAcesso'] ?? null
-        );
+        return new ConsultaDpsResponse([
+            'tipoAmbiente' => $response['tipoAmbiente'] ?? null,
+            'versaoAplicativo' => $response['versaoAplicativo'] ?? null,
+            'dataHoraProcessamento' => $response['dataHoraProcessamento'] ?? null,
+            'idDps' => $response['idDps'] ?? null,
+            'chaveAcesso' => $response['chaveAcesso'] ?? null,
+        ]);
     }
 
     public function registrarEvento(string $chaveAcesso, string $eventoXmlGZipB64): RegistroEventoResponse
     {
         $response = $this->post("nfse/{$chaveAcesso}/eventos", [
-            'pedidoRegistroEventoXmlGZipB64' => $eventoXmlGZipB64,
+            'pedidoRegistroEventoXmlGZipB64' => $eventoXmlGZipB64
         ]);
 
-        return new RegistroEventoResponse(
-            tipoAmbiente: $response['tipoAmbiente'] ?? null,
-            versaoAplicativo: $response['versaoAplicativo'] ?? null,
-            dataHoraProcessamento: $response['dataHoraProcessamento'] ?? null,
-            eventoXmlGZipB64: $response['eventoXmlGZipB64'] ?? null
-        );
+        return new RegistroEventoResponse([
+            'tipoAmbiente' => $response['tipoAmbiente'] ?? null,
+            'versaoAplicativo' => $response['versaoAplicativo'] ?? null,
+            'dataHoraProcessamento' => $response['dataHoraProcessamento'] ?? null,
+            'eventoXmlGZipB64' => $response['eventoXmlGZipB64'] ?? null,
+        ]);
     }
 
     public function consultarEvento(string $chaveAcesso, int $tipoEvento, int $numSeqEvento): ConsultaEventoResponse
     {
         $response = $this->get("nfse/{$chaveAcesso}/eventos/{$tipoEvento}/{$numSeqEvento}");
 
-        $eventos = array_map(
-            fn (array $evento): EventoDto => new EventoDto(
-                chaveAcesso: $evento['chaveAcesso'] ?? null,
-                tipoEvento: $evento['tipoEvento'] ?? null,
-                numeroPedidoRegistroEvento: $evento['numeroPedidoRegistroEvento'] ?? null,
-                dataHoraRecebimento: $evento['dataHoraRecebimento'] ?? null,
-                arquivoXml: $evento['arquivoXml'] ?? null
-            ),
-            $response['eventos'] ?? []
-        );
+        $eventos = array();
+        foreach (($response['eventos'] ?? array()) as $evento) {
+            $eventos[] = new EventoDto(array(
+                'chaveAcesso' => $evento['chaveAcesso'] ?? null,
+                'tipoEvento' => $evento['tipoEvento'] ?? null,
+                'numeroPedidoRegistroEvento' => $evento['numeroPedidoRegistroEvento'] ?? null,
+                'dataHoraRecebimento' => $evento['dataHoraRecebimento'] ?? null,
+                'arquivoXml' => $evento['arquivoXml'] ?? null,
+            ));
+        }
 
-        return new ConsultaEventoResponse(
-            tipoAmbiente: $response['tipoAmbiente'] ?? null,
-            versaoAplicativo: $response['versaoAplicativo'] ?? null,
-            dataHoraProcessamento: $response['dataHoraProcessamento'] ?? null,
-            eventos: $eventos
-        );
+        return new ConsultaEventoResponse(array(
+            'tipoAmbiente' => $response['tipoAmbiente'] ?? null,
+            'versaoAplicativo' => $response['versaoAplicativo'] ?? null,
+            'dataHoraProcessamento' => $response['dataHoraProcessamento'] ?? null,
+            'eventos' => $eventos,
+        ));
     }
 
     public function verificarDps(string $idDps): bool
@@ -216,10 +212,7 @@ class SefinClient implements SefinNacionalInterface
     }
 
     /**
-     * @deprecated A API do Sefin Nacional não expõe listagem de eventos: o
-     *             endpoint `eventos` só aceita POST (registro) e
-     *             `eventos/{tipo}` responde 404. Use {@see self::consultarEvento()}
-     *             com o tipo e a sequência.
+     * @deprecated A API do Sefin Nacional não expõe listagem de eventos.
      */
     public function listarEventos(string $chaveAcesso): array
     {
@@ -229,7 +222,7 @@ class SefinClient implements SefinNacionalInterface
     }
 
     /**
-     * @deprecated Ver {@see self::listarEventos()}.
+     * @deprecated A API do Sefin Nacional não expõe listagem de eventos.
      */
     public function listarEventosPorTipo(string $chaveAcesso, int $tipoEvento): array
     {
@@ -240,21 +233,23 @@ class SefinClient implements SefinNacionalInterface
 
     private function mapMensagens(array $mensagens): array
     {
-        return array_map(fn ($m) => new MensagemProcessamentoDto(
-            mensagem: $m['mensagem'] ?? $m['Mensagem'] ?? null,
-            parametros: $m['parametros'] ?? $m['Parametros'] ?? null,
-            codigo: $m['codigo'] ?? $m['Codigo'] ?? null,
-            descricao: $m['descricao'] ?? $m['Descricao'] ?? null,
-            complemento: $m['complemento'] ?? $m['Complemento'] ?? null
-        ), $mensagens);
+        return array_map(function ($m) {
+            return new MensagemProcessamentoDto([
+                'mensagem' => $m['mensagem'] ?? $m['Mensagem'] ?? null,
+                'parametros' => $m['parametros'] ?? $m['Parametros'] ?? null,
+                'codigo' => $m['codigo'] ?? $m['Codigo'] ?? null,
+                'descricao' => $m['descricao'] ?? $m['Descricao'] ?? null,
+                'complemento' => $m['complemento'] ?? $m['Complemento'] ?? null,
+            ]);
+        }, $mensagens);
     }
 
     /**
+     * @param  $e
      * @return mixed
-     *
      * @throws NfseApiException
      */
-    private function handleException(\Exception|GuzzleException $e)
+    private function handleException($e)
     {
         $errorBody = '';
         if ($e instanceof \GuzzleHttp\Exception\RequestException && $e->getResponse()) {

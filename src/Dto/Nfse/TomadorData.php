@@ -10,66 +10,81 @@ use Spatie\DataTransferObject\Attributes\MapFrom;
 
 class TomadorData extends Dto
 {
+    public static $__mapFrom = array (
+  'cpf' => 'CPF',
+  'cnpj' => 'CNPJ',
+  'nif' => 'NIF',
+  'caepf' => 'CAEPF',
+  'inscricaoMunicipal' => 'IM',
+  'nome' => 'xNome',
+  'endereco' => 'end',
+  'telefone' => 'fone',
+  'email' => 'email'
+);
+    public static $__propertyTypes = array (
+  'cpf' => '?string',
+  'cnpj' => '?string',
+  'nif' => '?string',
+  'codigoNaoNif' => '?MotivoNaoNif',
+  'caepf' => '?string',
+  'inscricaoMunicipal' => '?string',
+  'nome' => '?string',
+  'endereco' => '?EnderecoData',
+  'telefone' => '?string',
+  'email' => '?string'
+);
+
+
     /**
      * CPF do tomador.
      * Obrigatório se pessoa física.
      */
-    #[MapFrom('CPF')]
-    public ?string $cpf = null;
+    public $cpf = null;
 
     /**
      * CNPJ do tomador.
      * Obrigatório se pessoa jurídica.
      */
-    #[MapFrom('CNPJ')]
-    public ?string $cnpj = null;
+    public $cnpj = null;
 
     /**
      * Número de Identificação Fiscal (NIF) do tomador.
      * Não permitido se tpEmit=2.
      */
-    #[MapFrom('NIF')]
-    public ?string $nif = null;
+    public $nif = null;
 
     /**
      * Código do motivo de não informar o NIF.
      */
-    #[MapFrom('cNaoNIF'), CastWith(EnumCaster::class, enumType: MotivoNaoNif::class)]
-    public ?MotivoNaoNif $codigoNaoNif = null;
+    public $codigoNaoNif = null;
 
     /**
      * Cadastro de Atividade Econômica da Pessoa Física.
      */
-    #[MapFrom('CAEPF')]
-    public ?string $caepf = null;
+    public $caepf = null;
 
     /**
      * Inscrição Municipal do tomador.
      */
-    #[MapFrom('IM')]
-    public ?string $inscricaoMunicipal = null;
+    public $inscricaoMunicipal = null;
 
     /**
      * Razão Social ou Nome do tomador.
      */
-    #[MapFrom('xNome')]
-    public ?string $nome = null;
+    public $nome = null;
 
     /**
      * Endereço do tomador.
      */
-    #[MapFrom('end')]
-    public ?EnderecoData $endereco = null;
+    public $endereco = null;
 
     /**
      * Telefone do tomador.
      */
-    #[MapFrom('fone')]
-    public ?string $telefone = null;
+    public $telefone = null;
 
     /**
      * Email do tomador.
      */
-    #[MapFrom('email')]
-    public ?string $email = null;
+    public $email = null;
 }

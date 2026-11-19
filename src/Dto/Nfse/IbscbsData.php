@@ -13,121 +13,141 @@ use Spatie\DataTransferObject\Attributes\MapFrom;
 
 class IbscbsData extends Dto
 {
+    public static $__mapFrom = array (
+  'finalidadeNfse' => 'finNFSe',
+  'indicadorUsoConsumoPessoal' => 'indFinal',
+  'codigoIndicadorOperacao' => 'cIndOp',
+  'chavesNfseReferenciadas' => 'gRefNFSe.refNFSe',
+  'destinatario' => 'dest',
+  'imovel' => 'imovel',
+  'cst' => 'valores.trib.gIBSCBS.CST',
+  'codigoClassificacaoTributaria' => 'valores.trib.gIBSCBS.cClassTrib',
+  'codigoCreditoPresumido' => 'valores.trib.gIBSCBS.cCredPres',
+  'cstTributacaoRegular' => 'valores.trib.gIBSCBS.gTribRegular.CSTReg',
+  'codigoClassificacaoTributariaRegular' => 'valores.trib.gIBSCBS.gTribRegular.cClassTribReg',
+  'percentualDiferimentoUf' => 'valores.trib.gIBSCBS.gDif.pDifUF',
+  'percentualDiferimentoMunicipal' => 'valores.trib.gIBSCBS.gDif.pDifMun',
+  'percentualDiferimentoCbs' => 'valores.trib.gIBSCBS.gDif.pDifCBS'
+);
+    public static $__propertyTypes = array (
+  'finalidadeNfse' => '?string',
+  'indicadorUsoConsumoPessoal' => '?int',
+  'codigoIndicadorOperacao' => '?string',
+  'tipoOperacao' => '?TipoOperacaoRtc',
+  'chavesNfseReferenciadas' => '?array',
+  'tipoEnteGovernamental' => '?TipoEnteGovernamental',
+  'indicadorDestinatario' => '?IndicadorDestinatario',
+  'destinatario' => '?TomadorData',
+  'imovel' => '?ImovelData',
+  'documentosReembolso' => '?array',
+  'cst' => '?string',
+  'codigoClassificacaoTributaria' => '?string',
+  'codigoCreditoPresumido' => '?string',
+  'cstTributacaoRegular' => '?string',
+  'codigoClassificacaoTributariaRegular' => '?string',
+  'percentualDiferimentoUf' => '?float',
+  'percentualDiferimentoMunicipal' => '?float',
+  'percentualDiferimentoCbs' => '?float'
+);
+
+
     /**
      * Indicador da finalidade da emissão de NFS-e.
      * 0 - NFS-e regular
      */
-    #[MapFrom('finNFSe')]
-    public ?string $finalidadeNfse = null;
+    public $finalidadeNfse = null;
 
     /**
      * Indica operação de uso ou consumo pessoal (art. 57).
      * 0 - Não
      * 1 - Sim
      */
-    #[MapFrom('indFinal')]
-    public ?int $indicadorUsoConsumoPessoal = null;
+    public $indicadorUsoConsumoPessoal = null;
 
     /**
      * Código indicador da operação de fornecimento, conforme tabela
      * "código indicador de operação" (Anexo VII).
      */
-    #[MapFrom('cIndOp')]
-    public ?string $codigoIndicadorOperacao = null;
+    public $codigoIndicadorOperacao = null;
 
     /**
      * Tipo de Operação com Entes Governamentais ou outros serviços sobre bens imóveis.
      */
-    #[MapFrom('tpOper'), CastWith(EnumCaster::class, enumType: TipoOperacaoRtc::class)]
-    public ?TipoOperacaoRtc $tipoOperacao = null;
+    public $tipoOperacao = null;
 
     /**
      * Chaves de acesso das NFS-e referenciadas.
      *
      * @var string[]|null
      */
-    #[MapFrom('gRefNFSe.refNFSe')]
-    public ?array $chavesNfseReferenciadas = null;
+    public $chavesNfseReferenciadas = null;
 
     /**
      * Tipo de ente governamental.
      * Informado apenas no caso de compras governamentais.
      */
-    #[MapFrom('tpEnteGov'), CastWith(EnumCaster::class, enumType: TipoEnteGovernamental::class)]
-    public ?TipoEnteGovernamental $tipoEnteGovernamental = null;
+    public $tipoEnteGovernamental = null;
 
     /**
      * A respeito do destinatário dos serviços.
      */
-    #[MapFrom('indDest'), CastWith(EnumCaster::class, enumType: IndicadorDestinatario::class)]
-    public ?IndicadorDestinatario $indicadorDestinatario = null;
+    public $indicadorDestinatario = null;
 
     /**
      * Dados do destinatário do serviço.
      * Só deve ser identificado quando indDest = 1.
      */
-    #[MapFrom('dest')]
-    public ?TomadorData $destinatario = null;
+    public $destinatario = null;
 
     /**
      * Informações de operações relacionadas a bens imóveis, exceto obras.
      */
-    #[MapFrom('imovel')]
-    public ?ImovelData $imovel = null;
+    public $imovel = null;
 
     /**
      * Documentos referenciados de reembolso, repasse ou ressarcimento.
      *
      * @var ReembolsoDocumentoData[]|null
      */
-    #[MapFrom('valores.gReeRepRes.documentos'), CastWith(ArrayCaster::class, itemType: ReembolsoDocumentoData::class)]
-    public ?array $documentosReembolso = null;
+    public $documentosReembolso = null;
 
     /**
      * Código de Situação Tributária do IBS e da CBS.
      */
-    #[MapFrom('valores.trib.gIBSCBS.CST')]
-    public ?string $cst = null;
+    public $cst = null;
 
     /**
      * Código de Classificação Tributária do IBS e da CBS.
      */
-    #[MapFrom('valores.trib.gIBSCBS.cClassTrib')]
-    public ?string $codigoClassificacaoTributaria = null;
+    public $codigoClassificacaoTributaria = null;
 
     /**
      * Código e classificação do crédito presumido do IBS e da CBS.
      */
-    #[MapFrom('valores.trib.gIBSCBS.cCredPres')]
-    public ?string $codigoCreditoPresumido = null;
+    public $codigoCreditoPresumido = null;
 
     /**
      * Código de Situação Tributária do IBS e da CBS de tributação regular.
      */
-    #[MapFrom('valores.trib.gIBSCBS.gTribRegular.CSTReg')]
-    public ?string $cstTributacaoRegular = null;
+    public $cstTributacaoRegular = null;
 
     /**
      * Código da Classificação Tributária do IBS e da CBS de tributação regular.
      */
-    #[MapFrom('valores.trib.gIBSCBS.gTribRegular.cClassTribReg')]
-    public ?string $codigoClassificacaoTributariaRegular = null;
+    public $codigoClassificacaoTributariaRegular = null;
 
     /**
      * Percentual de diferimento para o IBS estadual.
      */
-    #[MapFrom('valores.trib.gIBSCBS.gDif.pDifUF')]
-    public ?float $percentualDiferimentoUf = null;
+    public $percentualDiferimentoUf = null;
 
     /**
      * Percentual de diferimento para o IBS municipal.
      */
-    #[MapFrom('valores.trib.gIBSCBS.gDif.pDifMun')]
-    public ?float $percentualDiferimentoMunicipal = null;
+    public $percentualDiferimentoMunicipal = null;
 
     /**
      * Percentual de diferimento para a CBS.
      */
-    #[MapFrom('valores.trib.gIBSCBS.gDif.pDifCBS')]
-    public ?float $percentualDiferimentoCbs = null;
+    public $percentualDiferimentoCbs = null;
 }

@@ -17,7 +17,7 @@ $municipios = [
     'BELO_HORIZONTE' => '3106200',
     'PORTO_ALEGRE' => '4314902',
     'BRASILIA' => '5300108',
-    'RECIFE' => '2611606',
+    'RECIFE' => '2611606'
 ];
 
 // Escolha o município que será usado nos exemplos
@@ -35,9 +35,9 @@ if (! file_exists($certificatePath)) {
 }
 
 $context = new NfseContext(
-    ambiente: \Nfse\Enums\TipoAmbiente::Producao,
-    certificatePath: $certificatePath,
-    certificatePassword: $certificatePassword
+    \Nfse\Enums\TipoAmbiente::Producao,
+    $certificatePath,
+    $certificatePassword
 );
 
 $nfse = new Nfse($context);

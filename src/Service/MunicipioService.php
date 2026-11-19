@@ -9,9 +9,9 @@ use Nfse\Http\NfseContext;
 
 class MunicipioService
 {
-    private AdnClient $adnClient;
+    private $adnClient;
 
-    private CncClient $cncClient;
+    private $cncClient;
 
     public function __construct(NfseContext $context)
     {

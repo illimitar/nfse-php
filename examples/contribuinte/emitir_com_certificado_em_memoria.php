@@ -21,10 +21,10 @@ $certificatePassword = '[PASSWORD]';
 
 // Passa certificateContent em vez de certificatePath
 $context = new NfseContext(
-    ambiente: TipoAmbiente::Homologacao,
-    certificatePath: null,
-    certificatePassword: $certificatePassword,
-    certificateContent: $pfxContent,
+    TipoAmbiente::Homologacao,
+    null,
+    $certificatePassword,
+    $pfxContent
 );
 
 $nfse = new Nfse($context);
@@ -36,10 +36,10 @@ try {
     $numero          = '100';
 
     $idDps = IdGenerator::generateDpsId(
-        cpfCnpj: $cnpjPrestador,
-        codIbge: $codigoMunicipio,
-        serieDps: $serie,
-        numDps: $numero
+        $cnpjPrestador,
+        $codigoMunicipio,
+        $serie,
+        $numero
     );
 
     $dps = new DpsData([
@@ -61,27 +61,27 @@ try {
                     'endNac' => ['cMun' => $codigoMunicipio, 'CEP' => '60000000'],
                     'xLgr'   => 'Rua Teste',
                     'nro'    => '123',
-                    'xBairro' => 'Centro',
+                    'xBairro' => 'Centro'
                 ],
-                'regTrib' => ['opSimpNac' => 1, 'regEspTrib' => 0],
+                'regTrib' => ['opSimpNac' => 1, 'regEspTrib' => 0]
             ],
             'toma' => [
                 'CNPJ'  => '44827692000111',
-                'xNome' => 'Cliente de Teste',
+                'xNome' => 'Cliente de Teste'
             ],
             'serv' => [
                 'locPrest' => ['cLocPrestacao' => $codigoMunicipio],
-                'cServ'    => ['cTribNac' => '010101', 'xDescServ' => 'Desenvolvimento de Software'],
+                'cServ'    => ['cTribNac' => '010101', 'xDescServ' => 'Desenvolvimento de Software']
             ],
             'valores' => [
                 'vServPrest' => ['vServ' => 100.00],
                 'trib' => [
                     'tribMun' => ['tribISSQN' => 1, 'tpRetISSQN' => 1],
                     'tribFed' => ['piscofins' => ['CST' => '08']],
-                    'totTrib' => ['indTotTrib' => 0],
-                ],
-            ],
-        ],
+                    'totTrib' => ['indTotTrib' => 0]
+                ]
+            ]
+        ]
     ]);
 
     $nfseData = $nfse->contribuinte()->emitir($dps);

@@ -26,12 +26,15 @@ class AdnClient implements AdnDanfseInterface
 
     private const URL_HOMOLOGATION = 'https://adn.producaorestrita.nfse.gov.br';
 
-    private Client $httpClient;
+    private $httpClient;
 
-    private ?string $tempCertFile = null;
+    private $tempCertFile = null;
 
-    public function __construct(private NfseContext $context)
+    private $context;
+
+    public function __construct(NfseContext $context)
     {
+        $this->context = $context;
         $this->httpClient = $this->createHttpClient();
     }
 
@@ -60,40 +63,34 @@ class AdnClient implements AdnDanfseInterface
             ? self::URL_PRODUCTION
             : self::URL_HOMOLOGATION;
 
-        $curlOptions = [
-            // Endpoints municipais publicados por IP: o nome do certificado é fixado
-            // no IP original para que a verificação de host funcione.
+        $curlOptions = array(
             CURLOPT_RESOLVE => SefinEndpointResolver::pinnedHosts(),
-        ];
+        );
 
         if ($this->context->nssCertificateSelector !== null) {
-            // O Guzzle exige que a opção `cert` seja um arquivo existente; o seletor NSS não é, então segue cru para o cURL.
             $curlOptions[CURLOPT_SSLCERTTYPE] = 'ENG';
             $curlOptions[CURLOPT_SSLCERT] = $this->context->nssCertificateSelector;
-            $certificateOptions = [];
+            $certificateOptions = array();
         } else {
-            $certificateOptions = [
-                RequestOptions::CERT => [$this->resolveCertificatePath(), $this->context->certificatePassword],
+            $certificateOptions = array(
+                RequestOptions::CERT => array($this->resolveCertificatePath(), $this->context->certificatePassword),
                 RequestOptions::CERT_TYPE => 'P12',
-            ];
+            );
         }
 
-        return new Client([
+        return new Client(array_merge(array(
             'base_uri' => $baseUrl,
             'handler' => Retry::stack(),
-            ...$certificateOptions,
             'curl' => $curlOptions,
             RequestOptions::FORCE_IP_RESOLVE => 'v4',
-            // Com o Retry (3 tentativas), um host inacessível segura a requisição
-            // por até 3x o connect timeout; 10s basta para o handshake.
             RequestOptions::CONNECT_TIMEOUT => 10,
             RequestOptions::TIMEOUT => 60,
             RequestOptions::VERSION => '1.1',
-            RequestOptions::HEADERS => [
+            RequestOptions::HEADERS => array(
                 'Content-Type' => 'application/json',
                 'Accept' => 'application/json',
-            ],
-        ]);
+            ),
+        ), $certificateOptions));
     }
 
     private function get(string $endpoint): array
@@ -122,9 +119,9 @@ class AdnClient implements AdnDanfseInterface
     {
         $queryParams = [];
         if ($cnpjConsulta) {
-             if(strlen($cnpjConsulta) == 14){
+            if (strlen($cnpjConsulta) == 14) {
                 $queryParams['cnpjConsulta'] = $cnpjConsulta;
-            }else if(strlen($cnpjConsulta) == 11){
+            } elseif (strlen($cnpjConsulta) == 11) {
                 $queryParams['cpfConsulta'] = $cnpjConsulta;
             }
         }
@@ -178,8 +175,8 @@ class AdnClient implements AdnDanfseInterface
         try {
             $response = $this->httpClient->post('/adn/DFe', [
                 RequestOptions::JSON => [
-                    'LoteXmlGZipB64' => [$xmlZipB64],
-                ],
+                    'LoteXmlGZipB64' => [$xmlZipB64]
+                ]
             ]);
 
             return json_decode($response->getBody()->getContents(), true);
@@ -201,7 +198,7 @@ class AdnClient implements AdnDanfseInterface
             'mensagem' => $response['mensagem'] ?? null,
             'parametrosConvenio' => isset($response['parametrosConvenio'])
                 ? new ParametrosConfiguracaoConvenioDto($response['parametrosConvenio'])
-                : null,
+                : null
         ]);
     }
 
@@ -248,10 +245,11 @@ class AdnClient implements AdnDanfseInterface
      */
     public function obterDanfse(string $chaveAcesso): string
     {
-        // Municípios com endpoint próprio servem o PDF na mesma base do envio.
-        // URI absoluta faz o Guzzle ignorar o base_uri nacional.
-        $url = (new SefinEndpointResolver)->resolveDanfse($this->context, $chaveAcesso)
-            ?? "/danfse/{$chaveAcesso}";
+        $resolver = new SefinEndpointResolver();
+        $url = $resolver->resolveDanfse($this->context, $chaveAcesso);
+        if ($url === null) {
+            $url = "/danfse/{$chaveAcesso}";
+        }
 
         try {
             $response = $this->httpClient->get($url);
@@ -266,17 +264,17 @@ class AdnClient implements AdnDanfseInterface
 
     private function mapDistribuicaoResponse(array $response): DistribuicaoDfeResponse
     {
-        $listaNsu = array_map(fn ($item) => new DistribuicaoNsuDto([
+        $listaNsu = array_map(function ($item) { return new DistribuicaoNsuDto([
             'NSU' => $item['NSU'] ?? null,
             'chAcesso' => $item['ChaveAcesso'] ?? null,
-            'dfeXmlGZipB64' => $item['ArquivoXml'] ?? null,
-        ]), $response['LoteDFe'] ?? []);
+            'dfeXmlGZipB64' => $item['ArquivoXml'] ?? null
+        ]); }, $response['LoteDFe'] ?? []);
 
         $ultimoNsu = $response['UltimoNSU'] ?? null;
         $maiorNsu = $response['MaiorNSU'] ?? null;
 
         if (empty($ultimoNsu) && ! empty($listaNsu)) {
-            $nsus = array_map(fn ($item) => $item->nsu, $listaNsu);
+            $nsus = array_map(function ($item) { return $item->nsu; }, $listaNsu);
             $maxNsu = max($nsus);
             $ultimoNsu = $maxNsu;
             $maiorNsu = $maxNsu;
@@ -290,7 +288,7 @@ class AdnClient implements AdnDanfseInterface
             'maiorNSU' => $maiorNsu,
             'alertas' => $this->mapMensagens($response['Alertas'] ?? []),
             'erros' => $this->mapMensagens($response['Erros'] ?? []),
-            'lNSU' => $listaNsu,
+            'lNSU' => $listaNsu
         ]);
     }
 
@@ -298,32 +296,32 @@ class AdnClient implements AdnDanfseInterface
     {
         $aliquotas = [];
         foreach ($response['aliquotas'] ?? [] as $servico => $lista) {
-            $aliquotas[$servico] = array_map(fn ($item) => new AliquotaDto($item), $lista);
+            $aliquotas[$servico] = array_map(function ($item) { return new AliquotaDto($item); }, $lista);
         }
 
         return new ResultadoConsultaAliquotasResponse([
             'mensagem' => $response['mensagem'] ?? null,
-            'aliquotas' => $aliquotas,
+            'aliquotas' => $aliquotas
         ]);
     }
 
     private function mapMensagens(array $mensagens): array
     {
-        return array_map(fn ($m) => new MensagemProcessamentoDto([
+        return array_map(function ($m) { return new MensagemProcessamentoDto([
             'mensagem' => $m['Mensagem'] ?? $m['mensagem'] ?? null,
             'parametros' => $m['Parametros'] ?? $m['parametros'] ?? null,
             'codigo' => $m['Codigo'] ?? $m['codigo'] ?? null,
             'descricao' => $m['Descricao'] ?? $m['descricao'] ?? null,
-            'complemento' => $m['Complemento'] ?? $m['complemento'] ?? null,
-        ]), $mensagens);
+            'complemento' => $m['Complemento'] ?? $m['complemento'] ?? null
+        ]); }, $mensagens);
     }
 
     /**
+     * @param  $e
      * @return mixed
-     *
      * @throws NfseApiException
      */
-    private function handleException(\GuzzleHttp\Exception\RequestException|\Exception $e)
+    private function handleException($e)
     {
         $responseBody = '';
         if ($e->hasResponse()) {

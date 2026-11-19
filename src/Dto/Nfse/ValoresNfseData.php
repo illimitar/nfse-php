@@ -7,51 +7,65 @@ use Spatie\DataTransferObject\Attributes\MapFrom;
 
 class ValoresNfseData extends Dto
 {
+    public static $__mapFrom = array (
+  'valorCalculadoDeducaoReducao' => 'vCalcDR',
+  'tipoBeneficioMunicipal' => 'tpBM',
+  'valorCalculadoBeneficioMunicipal' => 'vCalcBM',
+  'baseCalculo' => 'vBC',
+  'aliquotaAplicada' => 'pAliqAplic',
+  'valorIssqn' => 'vISSQN',
+  'valorTotalRetido' => 'vTotalRet',
+  'valorLiquido' => 'vLiq'
+);
+    public static $__propertyTypes = array (
+  'valorCalculadoDeducaoReducao' => '?float',
+  'tipoBeneficioMunicipal' => '?int',
+  'valorCalculadoBeneficioMunicipal' => '?float',
+  'baseCalculo' => '?float',
+  'aliquotaAplicada' => '?float',
+  'valorIssqn' => '?float',
+  'valorTotalRetido' => '?float',
+  'valorLiquido' => '?float'
+);
+
+
     /**
      * Valor calculado de Dedução/Redução.
      */
-    #[MapFrom('vCalcDR')]
-    public ?float $valorCalculadoDeducaoReducao = null;
+    public $valorCalculadoDeducaoReducao = null;
 
     /**
      * Tipo de Benefício Municipal.
      */
-    #[MapFrom('tpBM')]
-    public ?int $tipoBeneficioMunicipal = null;
+    public $tipoBeneficioMunicipal = null;
 
     /**
      * Valor calculado de Benefício Municipal.
      */
-    #[MapFrom('vCalcBM')]
-    public ?float $valorCalculadoBeneficioMunicipal = null;
+    public $valorCalculadoBeneficioMunicipal = null;
 
     /**
      * Valor da Base de Cálculo.
      */
-    #[MapFrom('vBC')]
-    public ?float $baseCalculo = null;
+    public $baseCalculo = null;
 
     /**
      * Alíquota Aplicada.
      */
-    #[MapFrom('pAliqAplic')]
-    public ?float $aliquotaAplicada = null;
+    public $aliquotaAplicada = null;
 
     /**
      * Valor do ISSQN.
      */
-    #[MapFrom('vISSQN')]
-    public ?float $valorIssqn = null;
+    public $valorIssqn = null;
 
     /**
      * Valor Total Retido.
      */
-    #[MapFrom('vTotalRet')]
-    public ?float $valorTotalRetido = null;
+    public $valorTotalRetido = null;
 
     /**
      * Valor Líquido da NFS-e.
      */
-    #[MapFrom('vLiq')]
-    public ?float $valorLiquido = null;
+    public $valorLiquido = null;
 }

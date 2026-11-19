@@ -6,11 +6,11 @@ use Nfse\Dto\Dto;
 
 class RegistroEventoResponse extends Dto
 {
-    public ?int $tipoAmbiente = null;
+    public $tipoAmbiente = null;
 
-    public ?string $versaoAplicativo = null;
+    public $versaoAplicativo = null;
 
-    public ?string $dataHoraProcessamento = null;
+    public $dataHoraProcessamento = null;
 
-    public ?string $eventoXmlGZipB64 = null;
+    public $eventoXmlGZipB64 = null;
 }

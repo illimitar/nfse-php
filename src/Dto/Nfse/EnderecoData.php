@@ -7,45 +7,58 @@ use Spatie\DataTransferObject\Attributes\MapFrom;
 
 class EnderecoData extends Dto
 {
+    public static $__mapFrom = array (
+  'codigoMunicipio' => 'endNac.cMun',
+  'cep' => 'endNac.CEP',
+  'logradouro' => 'xLgr',
+  'numero' => 'nro',
+  'bairro' => 'xBairro',
+  'complemento' => 'xCpl',
+  'enderecoExterior' => 'endExt'
+);
+    public static $__propertyTypes = array (
+  'codigoMunicipio' => '?string',
+  'cep' => '?string',
+  'logradouro' => '?string',
+  'numero' => '?string',
+  'bairro' => '?string',
+  'complemento' => '?string',
+  'enderecoExterior' => '?EnderecoExteriorData'
+);
+
+
     /**
      * Código do município (IBGE).
      */
-    #[MapFrom('endNac.cMun')]
-    public ?string $codigoMunicipio = null;
+    public $codigoMunicipio = null;
 
     /**
      * CEP.
      */
-    #[MapFrom('endNac.CEP')]
-    public ?string $cep = null;
+    public $cep = null;
 
     /**
      * Logradouro.
      */
-    #[MapFrom('xLgr')]
-    public ?string $logradouro = null;
+    public $logradouro = null;
 
     /**
      * Número.
      */
-    #[MapFrom('nro')]
-    public ?string $numero = null;
+    public $numero = null;
 
     /**
      * Bairro.
      */
-    #[MapFrom('xBairro')]
-    public ?string $bairro = null;
+    public $bairro = null;
 
     /**
      * Complemento.
      */
-    #[MapFrom('xCpl')]
-    public ?string $complemento = null;
+    public $complemento = null;
 
     /**
      * Endereço no exterior.
      */
-    #[MapFrom('endExt')]
-    public ?EnderecoExteriorData $enderecoExterior = null;
+    public $enderecoExterior = null;
 }

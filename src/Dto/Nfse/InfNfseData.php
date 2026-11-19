@@ -12,135 +12,160 @@ use Spatie\DataTransferObject\Attributes\MapFrom;
 
 class InfNfseData extends Dto
 {
+    public static $__mapFrom = array (
+  'id' => '@attributes.Id',
+  'numeroNfse' => 'nNFSe',
+  'numeroDfse' => 'nDFSe',
+  'codigoVerificacao' => 'cVerif',
+  'dataProcessamento' => 'dhProc',
+  'versaoAplicativo' => 'verAplic',
+  'localEmissao' => 'xLocEmi',
+  'localPrestacao' => 'xLocPrestacao',
+  'codigoLocalIncidencia' => 'cLocIncid',
+  'nomeLocalIncidencia' => 'xLocIncid',
+  'descricaoTributacaoNacional' => 'xTribNac',
+  'descricaoTributacaoMunicipal' => 'xTribMun',
+  'descricaoNbs' => 'xNBS',
+  'tipoEmissao' => 'tpEmis',
+  'outrasInformacoes' => 'xOutInf',
+  'dps' => 'DPS',
+  'emitente' => 'emit',
+  'valores' => 'valores',
+  'ibscbs' => 'IBSCBS'
+);
+    public static $__propertyTypes = array (
+  'id' => '?string',
+  'numeroNfse' => '?string',
+  'numeroDfse' => '?string',
+  'codigoVerificacao' => '?string',
+  'dataProcessamento' => '?string',
+  'ambienteGerador' => '?AmbienteGerador',
+  'versaoAplicativo' => '?string',
+  'processoEmissao' => '?ProcessoEmissao',
+  'localEmissao' => '?string',
+  'localPrestacao' => '?string',
+  'codigoLocalIncidencia' => '?string',
+  'nomeLocalIncidencia' => '?string',
+  'descricaoTributacaoNacional' => '?string',
+  'descricaoTributacaoMunicipal' => '?string',
+  'descricaoNbs' => '?string',
+  'tipoEmissao' => '?int',
+  'codigoStatus' => '?CodigoStatus',
+  'outrasInformacoes' => '?string',
+  'dps' => '?DpsData',
+  'emitente' => '?EmitenteData',
+  'valores' => '?ValoresNfseData',
+  'ibscbs' => '?IbscbsNfseData'
+);
+
+
     /**
      * Identificador da NFS-e.
      */
-    #[MapFrom('@attributes.Id')]
-    public ?string $id = null;
+    public $id = null;
 
     /**
      * Número da NFS-e.
      */
-    #[MapFrom('nNFSe')]
-    public ?string $numeroNfse = null;
+    public $numeroNfse = null;
 
     /**
      * Número do DFe.
      */
-    #[MapFrom('nDFSe')]
-    public ?string $numeroDfse = null;
+    public $numeroDfse = null;
 
     /**
      * Código de verificação.
      */
-    #[MapFrom('cVerif')]
-    public ?string $codigoVerificacao = null;
+    public $codigoVerificacao = null;
 
     /**
      * Data e hora de processamento.
      */
-    #[MapFrom('dhProc')]
-    public ?string $dataProcessamento = null;
+    public $dataProcessamento = null;
 
     /**
      * Ambiente gerador.
      */
-    #[MapFrom('ambGer'), CastWith(EnumCaster::class, enumType: AmbienteGerador::class)]
-    public ?AmbienteGerador $ambienteGerador = null;
+    public $ambienteGerador = null;
 
     /**
      * Versão do aplicativo.
      */
-    #[MapFrom('verAplic')]
-    public ?string $versaoAplicativo = null;
+    public $versaoAplicativo = null;
 
     /**
      * Processo de emissão.
      */
-    #[MapFrom('procEmi'), CastWith(EnumCaster::class, enumType: ProcessoEmissao::class)]
-    public ?ProcessoEmissao $processoEmissao = null;
+    public $processoEmissao = null;
 
     /**
      * Local de emissão (Nome).
      */
-    #[MapFrom('xLocEmi')]
-    public ?string $localEmissao = null;
+    public $localEmissao = null;
 
     /**
      * Local de prestação (Nome).
      */
-    #[MapFrom('xLocPrestacao')]
-    public ?string $localPrestacao = null;
+    public $localPrestacao = null;
 
     /**
      * Código do local de incidência.
      */
-    #[MapFrom('cLocIncid')]
-    public ?string $codigoLocalIncidencia = null;
+    public $codigoLocalIncidencia = null;
 
     /**
      * Local de incidência (Nome).
      */
-    #[MapFrom('xLocIncid')]
-    public ?string $nomeLocalIncidencia = null;
+    public $nomeLocalIncidencia = null;
 
     /**
      * Descrição da tributação nacional.
      */
-    #[MapFrom('xTribNac')]
-    public ?string $descricaoTributacaoNacional = null;
+    public $descricaoTributacaoNacional = null;
 
     /**
      * Descrição da tributação municipal.
      */
-    #[MapFrom('xTribMun')]
-    public ?string $descricaoTributacaoMunicipal = null;
+    public $descricaoTributacaoMunicipal = null;
 
     /**
      * Descrição da NBS.
      */
-    #[MapFrom('xNBS')]
-    public ?string $descricaoNbs = null;
+    public $descricaoNbs = null;
 
     /**
      * Tipo de Emissão.
      */
-    #[MapFrom('tpEmis')]
-    public ?int $tipoEmissao = null;
+    public $tipoEmissao = null;
 
     /**
      * Código de status.
      */
-    #[MapFrom('cStat'), CastWith(EnumCaster::class, enumType: CodigoStatus::class)]
-    public ?CodigoStatus $codigoStatus = null;
+    public $codigoStatus = null;
 
     /**
      * Outras Informações.
      */
-    #[MapFrom('xOutInf')]
-    public ?string $outrasInformacoes = null;
+    public $outrasInformacoes = null;
 
     /**
      * Dados da DPS.
      */
-    #[MapFrom('DPS')]
-    public ?DpsData $dps = null;
+    public $dps = null;
 
     /**
      * Dados do emitente.
      */
-    #[MapFrom('emit')]
-    public ?EmitenteData $emitente = null;
+    public $emitente = null;
 
     /**
      * Valores da NFS-e.
      */
-    #[MapFrom('valores')]
-    public ?ValoresNfseData $valores = null;
+    public $valores = null;
 
     /**
      * Grupo de informações geradas pelo sistema referentes ao IBS e à CBS.
      */
-    #[MapFrom('IBSCBS')]
-    public ?IbscbsNfseData $ibscbs = null;
+    public $ibscbs = null;
 }

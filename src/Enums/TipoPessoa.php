@@ -5,27 +5,34 @@ namespace Nfse\Enums;
 /**
  * Tipo de Pessoa (Física ou Jurídica)
  */
-enum TipoPessoa: int
+final class TipoPessoa
 {
+    const Juridica = 1;
+    const Fisica = 2;
+
+    private function __construct()
+    {
+    }
+
     /**
      * Pessoa Jurídica
      */
-    case Juridica = 1;
-
     /**
      * Pessoa Física
      */
-    case Fisica = 2;
-
     /**
      * Get description for the enum case
      */
     public function getDescription(): string
     {
-        return match ($this) {
-            self::Juridica => 'Pessoa Jurídica',
-            self::Fisica => 'Pessoa Física',
-        };
+        return (call_user_func(function () {
+    switch ($this) {
+    case self::Juridica:
+        return 'Pessoa Jurídica';
+    case self::Fisica:
+        return 'Pessoa Física';
+    }
+}));
     }
 
     /**

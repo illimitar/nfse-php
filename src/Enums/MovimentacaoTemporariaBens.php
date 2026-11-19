@@ -7,39 +7,46 @@ namespace Nfse\Enums;
  *
  * Baseado no schema: TSMovTempBens
  */
-enum MovimentacaoTemporariaBens: string
+final class MovimentacaoTemporariaBens
 {
+    const Nenhum = '0';
+    const Nao = '1';
+    const SimImportacao = '2';
+    const SimExportacao = '3';
+
+    private function __construct()
+    {
+    }
+
     /**
      * Nenhum
      */
-    case Nenhum = '0';
-
     /**
      * Não
      */
-    case Nao = '1';
-
     /**
      * Sim (Importação)
      */
-    case SimImportacao = '2';
-
     /**
      * Sim (Exportação)
      */
-    case SimExportacao = '3';
-
     /**
      * Get description for the enum case
      */
     public function getDescription(): string
     {
-        return match ($this) {
-            self::Nenhum => 'Nenhum',
-            self::Nao => 'Não',
-            self::SimImportacao => 'Sim (Importação)',
-            self::SimExportacao => 'Sim (Exportação)',
-        };
+        return (call_user_func(function () {
+    switch ($this) {
+    case self::Nenhum:
+        return 'Nenhum';
+    case self::Nao:
+        return 'Não';
+    case self::SimImportacao:
+        return 'Sim (Importação)';
+    case self::SimExportacao:
+        return 'Sim (Exportação)';
+    }
+}));
     }
 
     /**

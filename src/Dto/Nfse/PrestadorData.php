@@ -7,72 +7,89 @@ use Spatie\DataTransferObject\Attributes\MapFrom;
 
 class PrestadorData extends Dto
 {
+    public static $__mapFrom = array (
+  'cnpj' => 'CNPJ',
+  'cpf' => 'CPF',
+  'nif' => 'NIF',
+  'codigoNaoNif' => 'cNaoNIF',
+  'caepf' => 'CAEPF',
+  'inscricaoMunicipal' => 'IM',
+  'nome' => 'xNome',
+  'endereco' => 'end',
+  'telefone' => 'fone',
+  'email' => 'email',
+  'regimeTributario' => 'regTrib'
+);
+    public static $__propertyTypes = array (
+  'cnpj' => '?string',
+  'cpf' => '?string',
+  'nif' => '?string',
+  'codigoNaoNif' => '?string',
+  'caepf' => '?string',
+  'inscricaoMunicipal' => '?string',
+  'nome' => '?string',
+  'endereco' => '?EnderecoData',
+  'telefone' => '?string',
+  'email' => '?string',
+  'regimeTributario' => '?RegimeTributarioData'
+);
+
+
     /**
      * CNPJ do prestador.
      * Obrigatório se não for pessoa física.
      */
-    #[MapFrom('CNPJ')]
-    public ?string $cnpj = null;
+    public $cnpj = null;
 
     /**
      * CPF do prestador.
      * Obrigatório se pessoa física.
      */
-    #[MapFrom('CPF')]
-    public ?string $cpf = null;
+    public $cpf = null;
 
     /**
      * Número de Identificação Fiscal (NIF) do prestador.
      * Não permitido se tpEmit=1.
      */
-    #[MapFrom('NIF')]
-    public ?string $nif = null;
+    public $nif = null;
 
     /**
      * Código do motivo de não informar o NIF.
      */
-    #[MapFrom('cNaoNIF')]
-    public ?string $codigoNaoNif = null;
+    public $codigoNaoNif = null;
 
     /**
      * Cadastro de Atividade Econômica da Pessoa Física.
      */
-    #[MapFrom('CAEPF')]
-    public ?string $caepf = null;
+    public $caepf = null;
 
     /**
      * Inscrição Municipal do prestador.
      */
-    #[MapFrom('IM')]
-    public ?string $inscricaoMunicipal = null;
+    public $inscricaoMunicipal = null;
 
     /**
      * Razão Social ou Nome do prestador.
      */
-    #[MapFrom('xNome')]
-    public ?string $nome = null;
+    public $nome = null;
 
     /**
      * Endereço do prestador.
      */
-    #[MapFrom('end')]
-    public ?EnderecoData $endereco = null;
+    public $endereco = null;
 
     /**
      * Telefone do prestador.
      */
-    #[MapFrom('fone')]
-    public ?string $telefone = null;
+    public $telefone = null;
 
     /**
      * Email do prestador.
      */
-    #[MapFrom('email')]
-    public ?string $email = null;
+    public $email = null;
 
     /**
      * Regime tributário do prestador.
      */
-    #[MapFrom('regTrib')]
-    public ?RegimeTributarioData $regimeTributario = null;
+    public $regimeTributario = null;
 }

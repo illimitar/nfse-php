@@ -5,39 +5,46 @@ namespace Nfse\Enums;
 /**
  * Tipo de NSU para consulta no ADN
  */
-enum TipoNsu: string
+final class TipoNsu
 {
+    const Recepcao = 'RECEPCAO';
+    const Distribuicao = 'DISTRIBUICAO';
+    const Geral = 'GERAL';
+    const Mei = 'MEI';
+
+    private function __construct()
+    {
+    }
+
     /**
      * Recepção
      */
-    case Recepcao = 'RECEPCAO';
-
     /**
      * Distribuição
      */
-    case Distribuicao = 'DISTRIBUICAO';
-
     /**
      * Geral
      */
-    case Geral = 'GERAL';
-
     /**
      * MEI
      */
-    case Mei = 'MEI';
-
     /**
      * Get description for the enum case
      */
     public function getDescription(): string
     {
-        return match ($this) {
-            self::Recepcao => 'Recepção',
-            self::Distribuicao => 'Distribuição',
-            self::Geral => 'Geral',
-            self::Mei => 'MEI',
-        };
+        return (call_user_func(function () {
+    switch ($this) {
+    case self::Recepcao:
+        return 'Recepção';
+    case self::Distribuicao:
+        return 'Distribuição';
+    case self::Geral:
+        return 'Geral';
+    case self::Mei:
+        return 'MEI';
+    }
+}));
     }
 
     /**

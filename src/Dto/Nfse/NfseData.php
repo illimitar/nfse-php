@@ -7,26 +7,35 @@ use Spatie\DataTransferObject\Attributes\MapFrom;
 
 class NfseData extends Dto
 {
+    public static $__mapFrom = array (
+  'versao' => '@attributes.versao',
+  'infNfse' => 'infNFSe',
+  'infEvento' => 'infEvento'
+);
+    public static $__propertyTypes = array (
+  'versao' => '?string',
+  'infNfse' => '?InfNfseData',
+  'infEvento' => '?InfEventoData'
+);
+
+
     /**
      * Versão do leiaute.
      */
-    #[MapFrom('@attributes.versao')]
-    public ?string $versao = null;
+    public $versao = null;
 
     /**
      * Informações da NFS-e.
      */
-    #[MapFrom('infNFSe')]
-    public ?InfNfseData $infNfse = null;
+    public $infNfse = null;
 
     /**
      * Informações do Evento.
      */
-    #[MapFrom('infEvento')]
-    public ?InfEventoData $infEvento = null;
+    public $infEvento = null;
 
     /**
      * XML original retornado pela API da SEFIN Nacional.
      */
-    public ?string $nfseXml = null;
+    public $nfseXml = null;
 }

@@ -7,89 +7,119 @@ use Spatie\DataTransferObject\Attributes\MapFrom;
 
 class InfPedRegData extends Dto
 {
-    #[MapFrom('@attributes.Id')]
-    public ?string $id = null;
+    public static $__mapFrom = array (
+  'id' => '@attributes.Id',
+  'tipoAmbiente' => 'tpAmb',
+  'versaoAplicativo' => 'verAplic',
+  'dataHoraEvento' => 'dhEvento',
+  'chaveNfse' => 'chNFSe',
+  'cnpjAutor' => 'CNPJAutor',
+  'cpfAutor' => 'CPFAutor',
+  'nPedRegEvento' => 'nPedRegEvento',
+  'e101101' => 'e101101',
+  'e105102' => 'e105102',
+  'e101103' => 'e101103',
+  'e105104' => 'e105104',
+  'e105105' => 'e105105',
+  'e305101' => 'e305101',
+  'e202201' => 'e202201',
+  'e203202' => 'e203202',
+  'e204203' => 'e204203',
+  'e205204' => 'e205204',
+  'e202205' => 'e202205',
+  'e203206' => 'e203206',
+  'e204207' => 'e204207',
+  'e205208' => 'e205208',
+  'e305102' => 'e305102',
+  'e305103' => 'e305103'
+);
+    public static $__propertyTypes = array (
+  'id' => '?string',
+  'tipoAmbiente' => '?int',
+  'versaoAplicativo' => '?string',
+  'dataHoraEvento' => '?string',
+  'chaveNfse' => '?string',
+  'cnpjAutor' => '?string',
+  'cpfAutor' => '?string',
+  'nPedRegEvento' => 'int',
+  'e101101' => '?CancelamentoData',
+  'e105102' => '?CancelamentoSubstituicaoData',
+  'e101103' => '?AnaliseFiscalSolicitacaoData',
+  'e105104' => '?AnaliseFiscalData',
+  'e105105' => '?AnaliseFiscalData',
+  'e305101' => '?CancelamentoPorOficioData',
+  'e202201' => '?ConfirmacaoPrestadorData',
+  'e203202' => '?ConfirmacaoTomadorData',
+  'e204203' => '?ConfirmacaoIntermediarioData',
+  'e205204' => '?ConfirmacaoTacitaData',
+  'e202205' => '?RejeicaoPrestadorData',
+  'e203206' => '?RejeicaoTomadorData',
+  'e204207' => '?RejeicaoIntermediarioData',
+  'e205208' => '?AnulacaoRejeicaoData',
+  'e305102' => '?BloqueioPorOficioData',
+  'e305103' => '?DesbloqueioPorOficioData'
+);
 
-    #[MapFrom('tpAmb')]
-    public ?int $tipoAmbiente = null;
 
-    #[MapFrom('verAplic')]
-    public ?string $versaoAplicativo = null;
+    public $id = null;
 
-    #[MapFrom('dhEvento')]
-    public ?string $dataHoraEvento = null;
+    public $tipoAmbiente = null;
 
-    #[MapFrom('chNFSe')]
-    public ?string $chaveNfse = null;
+    public $versaoAplicativo = null;
 
-    #[MapFrom('CNPJAutor')]
-    public ?string $cnpjAutor = null;
+    public $dataHoraEvento = null;
 
-    #[MapFrom('CPFAutor')]
-    public ?string $cpfAutor = null;
+    public $chaveNfse = null;
 
-    #[MapFrom('nPedRegEvento')]
-    public int $nPedRegEvento = 1;
+    public $cnpjAutor = null;
 
-    public string $tipoEvento = '101101';
+    public $cpfAutor = null;
+
+    public $nPedRegEvento = 1;
+
+    public $tipoEvento = '101101';
 
     /**
      * === CANCELAMENTOS ===
      */
-    #[MapFrom('e101101')]
-    public ?CancelamentoData $e101101 = null;
+    public $e101101 = null;
 
-    #[MapFrom('e105102')]
-    public ?CancelamentoSubstituicaoData $e105102 = null;
+    public $e105102 = null;
 
-    #[MapFrom('e101103')]
-    public ?AnaliseFiscalSolicitacaoData $e101103 = null;
+    public $e101103 = null;
 
-    #[MapFrom('e105104')]
-    public ?AnaliseFiscalData $e105104 = null;
+    public $e105104 = null;
 
-    #[MapFrom('e105105')]
-    public ?AnaliseFiscalData $e105105 = null;
+    public $e105105 = null;
 
-    #[MapFrom('e305101')]
-    public ?CancelamentoPorOficioData $e305101 = null;
+    public $e305101 = null;
 
     /**
      * === CONFIRMAÇÕES ===
      */
-    #[MapFrom('e202201')]
-    public ?ConfirmacaoPrestadorData $e202201 = null;
+    public $e202201 = null;
 
-    #[MapFrom('e203202')]
-    public ?ConfirmacaoTomadorData $e203202 = null;
+    public $e203202 = null;
 
-    #[MapFrom('e204203')]
-    public ?ConfirmacaoIntermediarioData $e204203 = null;
+    public $e204203 = null;
 
-    #[MapFrom('e205204')]
-    public ?ConfirmacaoTacitaData $e205204 = null;
+    public $e205204 = null;
 
     /**
      * === REJEIÇÕES ===
      */
-    #[MapFrom('e202205')]
-    public ?RejeicaoPrestadorData $e202205 = null;
+    public $e202205 = null;
 
-    #[MapFrom('e203206')]
-    public ?RejeicaoTomadorData $e203206 = null;
+    public $e203206 = null;
 
-    #[MapFrom('e204207')]
-    public ?RejeicaoIntermediarioData $e204207 = null;
+    public $e204207 = null;
 
-    #[MapFrom('e205208')]
-    public ?AnulacaoRejeicaoData $e205208 = null;
+    public $e205208 = null;
 
     /**
      * === AÇÕES POR OFÍCIO ===
      */
-    #[MapFrom('e305102')]
-    public ?BloqueioPorOficioData $e305102 = null;
+    public $e305102 = null;
 
-    #[MapFrom('e305103')]
-    public ?DesbloqueioPorOficioData $e305103 = null;
+    public $e305103 = null;
 }

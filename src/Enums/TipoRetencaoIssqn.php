@@ -5,30 +5,37 @@ namespace Nfse\Enums;
 /**
  * Tipo de Retenção do ISSQN
  */
-enum TipoRetencaoIssqn: int
+final class TipoRetencaoIssqn
 {
+    const NaoRetido = 1;
+    const RetidoTomador = 2;
+    const RetidoIntermediario = 3;
+
+    private function __construct()
+    {
+    }
+
     /**
      * Não Retido
      */
-    case NaoRetido = 1;
-
     /**
      * Retido pelo Tomador
      */
-    case RetidoTomador = 2;
-
     /**
      * Retido pelo Intermediário
      */
-    case RetidoIntermediario = 3;
-
     public function getDescription(): string
     {
-        return match ($this) {
-            self::NaoRetido => 'Não Retido',
-            self::RetidoTomador => 'Retido pelo Tomador',
-            self::RetidoIntermediario => 'Retido pelo Intermediário',
-        };
+        return (call_user_func(function () {
+    switch ($this) {
+    case self::NaoRetido:
+        return 'Não Retido';
+    case self::RetidoTomador:
+        return 'Retido pelo Tomador';
+    case self::RetidoIntermediario:
+        return 'Retido pelo Intermediário';
+    }
+}));
     }
 
     public function label(): string

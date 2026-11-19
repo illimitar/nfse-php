@@ -6,13 +6,13 @@ use Nfse\Dto\Dto;
 
 class MensagemProcessamentoDto extends Dto
 {
-    public ?string $mensagem = null;
+    public $mensagem = null;
 
-    public ?array $parametros = null;
+    public $parametros = null;
 
-    public ?string $codigo = null;
+    public $codigo = null;
 
-    public ?string $descricao = null;
+    public $descricao = null;
 
-    public ?string $complemento = null;
+    public $complemento = null;
 }

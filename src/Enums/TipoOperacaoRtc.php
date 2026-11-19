@@ -5,42 +5,49 @@ namespace Nfse\Enums;
 /**
  * Tipo de Operação com Entes Governamentais ou outros serviços sobre bens imóveis
  */
-enum TipoOperacaoRtc: int
+final class TipoOperacaoRtc
 {
+    const FornecimentoPagamentoPosterior = 1;
+    const RecebimentoFornecimentoRealizado = 2;
+    const FornecimentoPagamentoRealizado = 3;
+    const RecebimentoFornecimentoPosterior = 4;
+    const FornecimentoRecebimentoConcomitantes = 5;
+
+    private function __construct()
+    {
+    }
+
     /**
      * Fornecimento com pagamento posterior
      */
-    case FornecimentoPagamentoPosterior = 1;
-
     /**
      * Recebimento do pagamento com fornecimento já realizado
      */
-    case RecebimentoFornecimentoRealizado = 2;
-
     /**
      * Fornecimento com pagamento já realizado
      */
-    case FornecimentoPagamentoRealizado = 3;
-
     /**
      * Recebimento do pagamento com fornecimento posterior
      */
-    case RecebimentoFornecimentoPosterior = 4;
-
     /**
      * Fornecimento e recebimento do pagamento concomitantes
      */
-    case FornecimentoRecebimentoConcomitantes = 5;
-
     public function getDescription(): string
     {
-        return match ($this) {
-            self::FornecimentoPagamentoPosterior => 'Fornecimento com pagamento posterior',
-            self::RecebimentoFornecimentoRealizado => 'Recebimento do pagamento com fornecimento já realizado',
-            self::FornecimentoPagamentoRealizado => 'Fornecimento com pagamento já realizado',
-            self::RecebimentoFornecimentoPosterior => 'Recebimento do pagamento com fornecimento posterior',
-            self::FornecimentoRecebimentoConcomitantes => 'Fornecimento e recebimento do pagamento concomitantes',
-        };
+        return (call_user_func(function () {
+    switch ($this) {
+    case self::FornecimentoPagamentoPosterior:
+        return 'Fornecimento com pagamento posterior';
+    case self::RecebimentoFornecimentoRealizado:
+        return 'Recebimento do pagamento com fornecimento já realizado';
+    case self::FornecimentoPagamentoRealizado:
+        return 'Fornecimento com pagamento já realizado';
+    case self::RecebimentoFornecimentoPosterior:
+        return 'Recebimento do pagamento com fornecimento posterior';
+    case self::FornecimentoRecebimentoConcomitantes:
+        return 'Fornecimento e recebimento do pagamento concomitantes';
+    }
+}));
     }
 
     public function label(): string

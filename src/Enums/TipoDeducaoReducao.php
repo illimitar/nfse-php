@@ -7,75 +7,52 @@ namespace Nfse\Enums;
  *
  * Baseado no schema: TSIdeDedRed
  */
-enum TipoDeducaoReducao: string
+final class TipoDeducaoReducao
 {
-    /**
-     * Alimentação e bebidas/frigobar
-     */
-    case AlimentacaoBebidas = '1';
+    const AlimentacaoBebidas = '1';
+    const Materiais = '2';
+    const ProducaoExterna = '3';
+    const ReembolsoDespesas = '4';
+    const RepasseConsorciado = '5';
+    const RepassePlanoSaude = '6';
+    const Servicos = '7';
+    const SubempreitadaMaoObra = '8';
+    const ProfissionalParceiro = '9';
+    const OutrasDeducoes = '99';
 
-    /**
-     * Materiais
-     */
-    case Materiais = '2';
-
-    /**
-     * Produção Externa
-     */
-    case ProducaoExterna = '3';
-
-    /**
-     * Reembolso de despesas
-     */
-    case ReembolsoDespesas = '4';
-
-    /**
-     * Repasse consorciado
-     */
-    case RepasseConsorciado = '5';
-
-    /**
-     * Repasse plano de saúde
-     */
-    case RepassePlanoSaude = '6';
-
-    /**
-     * Serviços
-     */
-    case Servicos = '7';
-
-    /**
-     * Subempreitada de mão de obra
-     */
-    case SubempreitadaMaoObra = '8';
-
-    /**
-     * Profissional parceiro
-     */
-    case ProfissionalParceiro = '9';
-
-    /**
-     * Outras deduções
-     */
-    case OutrasDeducoes = '99';
+    private function __construct()
+    {
+    }
 
     /**
      * Get description for the enum case
      */
     public function getDescription(): string
     {
-        return match ($this) {
-            self::AlimentacaoBebidas => 'Alimentação e bebidas/frigobar',
-            self::Materiais => 'Materiais',
-            self::ProducaoExterna => 'Produção Externa',
-            self::ReembolsoDespesas => 'Reembolso de despesas',
-            self::RepasseConsorciado => 'Repasse consorciado',
-            self::RepassePlanoSaude => 'Repasse plano de saúde',
-            self::Servicos => 'Serviços',
-            self::SubempreitadaMaoObra => 'Subempreitada de mão de obra',
-            self::ProfissionalParceiro => 'Profissional parceiro',
-            self::OutrasDeducoes => 'Outras deduções',
-        };
+        return (call_user_func(function () {
+            switch ($this) {
+                case self::AlimentacaoBebidas:
+                    return 'Alimentação e bebidas/frigobar';
+                case self::Materiais:
+                    return 'Materiais';
+                case self::ProducaoExterna:
+                    return 'Produção Externa';
+                case self::ReembolsoDespesas:
+                    return 'Reembolso de despesas';
+                case self::RepasseConsorciado:
+                    return 'Repasse consorciado';
+                case self::RepassePlanoSaude:
+                    return 'Repasse plano de saúde';
+                case self::Servicos:
+                    return 'Serviços';
+                case self::SubempreitadaMaoObra:
+                    return 'Subempreitada de mão de obra';
+                case self::ProfissionalParceiro:
+                    return 'Profissional parceiro';
+                case self::OutrasDeducoes:
+                    return 'Outras deduções';
+            }
+        }));
     }
 
     /**

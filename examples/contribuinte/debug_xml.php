@@ -21,54 +21,54 @@ $serie = '1';
 $numero = '100';
 
 $idDps = IdGenerator::generateDpsId(
-    cpfCnpj: $cnpjPrestador,
-    codIbge: $codigoMunicipio,
-    serieDps: $serie,
-    numDps: $numero
+    $cnpjPrestador,
+    $codigoMunicipio,
+    $serie,
+    $numero
 );
 
 $dps = new DpsData(
-    versao: '1.0.0',
-    infDps: new InfDpsData(
-        id: $idDps,
-        tipoAmbiente: 2,
-        dataEmissao: date('Y-m-d\TH:i:s'),
-        versaoAplicativo: 'SDK-PHP-1.0',
-        serie: $serie,
-        numeroDps: $numero,
-        dataCompetencia: date('Y-m-d'),
-        tipoEmitente: 1,
-        codigoLocalEmissao: $codigoMunicipio,
-        prestador: new PrestadorData(
-            cnpj: $cnpjPrestador,
-            inscricaoMunicipal: '123456',
-            nome: 'Empresa de Teste'
+    '1.0.0',
+    new InfDpsData(
+        $idDps,
+        2,
+        date('Y-m-d\TH:i:s'),
+        'SDK-PHP-1.0',
+        $serie,
+        $numero,
+        date('Y-m-d'),
+        1,
+        $codigoMunicipio,
+        new PrestadorData(
+            $cnpjPrestador,
+            '123456',
+            'Empresa de Teste'
         ),
-        tomador: new TomadorData(
-            cnpj: '98765432000100',
-            nome: 'Cliente de Teste'
+        new TomadorData(
+            '98765432000100',
+            'Cliente de Teste'
         ),
-        servico: new ServicoData(
-            localPrestacao: new LocalPrestacaoData(
-                codigoLocalPrestacao: $codigoMunicipio,
-                codigoPaisPrestacao: 'BR'
+        new ServicoData(
+            new LocalPrestacaoData(
+                $codigoMunicipio,
+                'BR'
             ),
-            codigoServico: new CodigoServicoData(
-                codigoTributacaoNacional: '01.01'
+            new CodigoServicoData(
+                '01.01'
             )
         ),
-        valores: new ValoresData(
-            valorServicoPrestado: new ValorServicoPrestadoData(
-                valorServico: 100.00
+        new ValoresData(
+            new ValorServicoPrestadoData(
+                100.00
             ),
-            tributacao: new TributacaoData(
-                tributacaoIssqn: 1,
-                tipoImunidade: null,
-                tipoRetencaoIssqn: 1,
-                tipoSuspensao: null,
-                numeroProcessoSuspensao: null,
-                beneficioMunicipal: null,
-                cstPisCofins: '01'
+            new TributacaoData(
+                1,
+                null,
+                1,
+                null,
+                null,
+                null,
+                '01'
             )
         )
     )

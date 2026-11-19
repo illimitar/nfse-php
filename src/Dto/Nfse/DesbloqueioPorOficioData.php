@@ -7,12 +7,21 @@ use Spatie\DataTransferObject\Attributes\MapFrom;
 
 class DesbloqueioPorOficioData extends Dto
 {
-    #[MapFrom('xDesc')]
-    public ?string $descricao = null;
+    public static $__mapFrom = array (
+  'descricao' => 'xDesc',
+  'cpfAgenteTributario' => 'CPFAgTrib',
+  'idBloqueioOficio' => 'idBloqOfic'
+);
+    public static $__propertyTypes = array (
+  'descricao' => '?string',
+  'cpfAgenteTributario' => '?string',
+  'idBloqueioOficio' => '?string'
+);
 
-    #[MapFrom('CPFAgTrib')]
-    public ?string $cpfAgenteTributario = null;
 
-    #[MapFrom('idBloqOfic')]
-    public ?string $idBloqueioOficio = null;
+    public $descricao = null;
+
+    public $cpfAgenteTributario = null;
+
+    public $idBloqueioOficio = null;
 }

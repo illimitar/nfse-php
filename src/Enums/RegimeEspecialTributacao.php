@@ -7,64 +7,46 @@ namespace Nfse\Enums;
  *
  * Baseado no schema: TSRegEspTrib
  */
-enum RegimeEspecialTributacao: string
+final class RegimeEspecialTributacao
 {
-    /**
-     * Nenhum
-     */
-    case Nenhum = '0';
+    const Nenhum = '0';
+    const AtoCooperado = '1';
+    const Estimativa = '2';
+    const MicroempresaMunicipal = '3';
+    const NotarioOuRegistrador = '4';
+    const ProfissionalAutonomo = '5';
+    const SociedadeDeProfissionais = '6';
+    const Outros = '9';
 
-    /**
-     * Ato Cooperado (Cooperativa)
-     */
-    case AtoCooperado = '1';
-
-    /**
-     * Estimativa
-     */
-    case Estimativa = '2';
-
-    /**
-     * Microempresa Municipal
-     */
-    case MicroempresaMunicipal = '3';
-
-    /**
-     * Notário ou Registrador
-     */
-    case NotarioOuRegistrador = '4';
-
-    /**
-     * Profissional Autônomo
-     */
-    case ProfissionalAutonomo = '5';
-
-    /**
-     * Sociedade de Profissionais
-     */
-    case SociedadeDeProfissionais = '6';
-
-    /**
-     * Outros
-     */
-    case Outros = '9';
-
+    private function __construct()
+    {
+    }
 
     /**
      * Get description for the enum case
      */
     public function getDescription(): string
     {
-        return match ($this) {
-            self::Nenhum => 'Nenhum',
-            self::AtoCooperado => 'Ato Cooperado (Cooperativa)',
-            self::Estimativa => 'Estimativa',
-            self::MicroempresaMunicipal => 'Microempresa Municipal',
-            self::NotarioOuRegistrador => 'Notário ou Registrador',
-            self::ProfissionalAutonomo => 'Profissional Autônomo',
-            self::SociedadeDeProfissionais => 'Sociedade de Profissionais',
-            self::Outros => 'Outros',
-        };
+        return (call_user_func(function () {
+            switch ($this) {
+                case self::Nenhum:
+                    return 'Nenhum';
+                case self::AtoCooperado:
+                    return 'Ato Cooperado (Cooperativa)';
+                case self::Estimativa:
+                    return 'Estimativa';
+                case self::MicroempresaMunicipal:
+                    return 'Microempresa Municipal';
+                case self::NotarioOuRegistrador:
+                    return 'Notário ou Registrador';
+                case self::ProfissionalAutonomo:
+                    return 'Profissional Autônomo';
+                case self::SociedadeDeProfissionais:
+                    return 'Sociedade de Profissionais';
+                case self::Outros:
+                    return 'Outros';
+            }
+        }));
     }
 
     /**

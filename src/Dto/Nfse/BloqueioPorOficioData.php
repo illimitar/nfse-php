@@ -7,15 +7,25 @@ use Spatie\DataTransferObject\Attributes\MapFrom;
 
 class BloqueioPorOficioData extends Dto
 {
-    #[MapFrom('xDesc')]
-    public ?string $descricao = null;
+    public static $__mapFrom = array (
+  'descricao' => 'xDesc',
+  'cpfAgenteTributario' => 'CPFAgTrib',
+  'motivo' => 'xMotivo',
+  'codigoEvento' => 'codEvento'
+);
+    public static $__propertyTypes = array (
+  'descricao' => '?string',
+  'cpfAgenteTributario' => '?string',
+  'motivo' => '?string',
+  'codigoEvento' => '?string'
+);
 
-    #[MapFrom('CPFAgTrib')]
-    public ?string $cpfAgenteTributario = null;
 
-    #[MapFrom('xMotivo')]
-    public ?string $motivo = null;
+    public $descricao = null;
 
-    #[MapFrom('codEvento')]
-    public ?string $codigoEvento = null;
+    public $cpfAgenteTributario = null;
+
+    public $motivo = null;
+
+    public $codigoEvento = null;
 }

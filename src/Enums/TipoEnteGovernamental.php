@@ -5,36 +5,43 @@ namespace Nfse\Enums;
 /**
  * Tipo de ente governamental, para administração pública direta e suas autarquias e fundações
  */
-enum TipoEnteGovernamental: int
+final class TipoEnteGovernamental
 {
+    const Uniao = 1;
+    const Estado = 2;
+    const DistritoFederal = 3;
+    const Municipio = 4;
+
+    private function __construct()
+    {
+    }
+
     /**
      * União
      */
-    case Uniao = 1;
-
     /**
      * Estado
      */
-    case Estado = 2;
-
     /**
      * Distrito Federal
      */
-    case DistritoFederal = 3;
-
     /**
      * Município
      */
-    case Municipio = 4;
-
     public function getDescription(): string
     {
-        return match ($this) {
-            self::Uniao => 'União',
-            self::Estado => 'Estado',
-            self::DistritoFederal => 'Distrito Federal',
-            self::Municipio => 'Município',
-        };
+        return (call_user_func(function () {
+    switch ($this) {
+    case self::Uniao:
+        return 'União';
+    case self::Estado:
+        return 'Estado';
+    case self::DistritoFederal:
+        return 'Distrito Federal';
+    case self::Municipio:
+        return 'Município';
+    }
+}));
     }
 
     public function label(): string

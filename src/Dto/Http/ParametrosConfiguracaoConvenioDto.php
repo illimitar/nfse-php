@@ -7,18 +7,29 @@ use Spatie\DataTransferObject\Attributes\MapFrom;
 
 class ParametrosConfiguracaoConvenioDto extends Dto
 {
-    #[MapFrom('aderenteAmbienteNacional')]
-    public ?int $aderenteAmbienteNacional = null;
+    public static $__mapFrom = array (
+  'aderenteAmbienteNacional' => 'aderenteAmbienteNacional',
+  'aderenteEmissorNacional' => 'aderenteEmissorNacional',
+  'situacaoEmissaoPadraoContribuintesRFB' => 'situacaoEmissaoPadraoContribuintesRFB',
+  'aderenteMAN' => 'aderenteMAN',
+  'permiteAproveitametoDeCreditos' => 'permiteAproveitametoDeCreditos'
+);
+    public static $__propertyTypes = array (
+  'aderenteAmbienteNacional' => '?int',
+  'aderenteEmissorNacional' => '?int',
+  'situacaoEmissaoPadraoContribuintesRFB' => '?int',
+  'aderenteMAN' => '?int',
+  'permiteAproveitametoDeCreditos' => '?bool'
+);
 
-    #[MapFrom('aderenteEmissorNacional')]
-    public ?int $aderenteEmissorNacional = null;
 
-    #[MapFrom('situacaoEmissaoPadraoContribuintesRFB')]
-    public ?int $situacaoEmissaoPadraoContribuintesRFB = null;
+    public $aderenteAmbienteNacional = null;
 
-    #[MapFrom('aderenteMAN')]
-    public ?int $aderenteMAN = null;
+    public $aderenteEmissorNacional = null;
 
-    #[MapFrom('permiteAproveitametoDeCreditos')]
-    public ?bool $permiteAproveitametoDeCreditos = null;
+    public $situacaoEmissaoPadraoContribuintesRFB = null;
+
+    public $aderenteMAN = null;
+
+    public $permiteAproveitametoDeCreditos = null;
 }

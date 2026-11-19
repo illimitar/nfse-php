@@ -7,9 +7,17 @@ use Spatie\DataTransferObject\Attributes\MapFrom;
 
 class DpsData extends Dto
 {
-    #[MapFrom('@attributes.versao')]
-    public ?string $versao = null;
+    public static $__mapFrom = array (
+  'versao' => '@attributes.versao',
+  'infDps' => 'infDPS'
+);
+    public static $__propertyTypes = array (
+  'versao' => '?string',
+  'infDps' => '?InfDpsData'
+);
 
-    #[MapFrom('infDPS')]
-    public ?InfDpsData $infDps = null;
+
+    public $versao = null;
+
+    public $infDps = null;
 }

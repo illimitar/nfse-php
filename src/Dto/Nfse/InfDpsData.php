@@ -12,52 +12,118 @@ use Spatie\DataTransferObject\Attributes\MapFrom;
 
 class InfDpsData extends Dto
 {
+    /** @var array */
+    public static $__mapFrom = array (
+  'id' => '@attributes.Id',
+  'tipoAmbiente' => 'tpAmb',
+  'dataEmissao' => 'dhEmi',
+  'versaoAplicativo' => 'verAplic',
+  'serie' => 'serie',
+  'numeroDps' => 'nDPS',
+  'dataCompetencia' => 'dCompet',
+  'tipoEmitente' => 'tpEmit',
+  'finalidadeNfse' => 'finNFSe',
+  'codigoLocalEmissao' => 'cLocEmi',
+  'motivoEmissaoTomadorIntermediario' => 'cMotivoEmisTI',
+  'chaveNfseRejeitada' => 'chNFSeRej',
+  'substituicao' => 'subst',
+  'prestador' => 'prest',
+  'tomador' => 'toma',
+  'intermediario' => 'interm',
+  'servico' => 'serv',
+  'ibscbs' => 'IBSCBS',
+  'valores' => 'valores'
+);
+    /** @var array */
+    public static $__castWith = array (
+  'tipoAmbiente' => 
+  array (
+    'caster' => 'Nfse\Support\DTO\EnumCaster',
+    'args' => 
+    array (
+      'enumType' => 'Nfse\Enums\TipoAmbiente'
+    )
+  ),
+  'tipoEmitente' => 
+  array (
+    'caster' => 'Nfse\Support\DTO\EnumCaster',
+    'args' => 
+    array (
+      'enumType' => 'Nfse\Enums\EmitenteDPS'
+    )
+  ),
+  'motivoEmissaoTomadorIntermediario' => 
+  array (
+    'caster' => 'Nfse\Support\DTO\EnumCaster',
+    'args' => 
+    array (
+      'enumType' => 'Nfse\Enums\MotivoEmissaoTomadorIntermediario'
+    )
+  )
+);
+    /** @var array */
+    public static $__propertyTypes = array (
+  'id' => '?string',
+  'tipoAmbiente' => '?TipoAmbiente',
+  'dataEmissao' => '?string',
+  'versaoAplicativo' => '?string',
+  'serie' => '?string',
+  'numeroDps' => '?string',
+  'dataCompetencia' => '?string',
+  'tipoEmitente' => '?EmitenteDPS',
+  'finalidadeNfse' => '?string',
+  'codigoLocalEmissao' => '?string',
+  'motivoEmissaoTomadorIntermediario' => '?MotivoEmissaoTomadorIntermediario',
+  'chaveNfseRejeitada' => '?string',
+  'substituicao' => '?SubstituicaoData',
+  'prestador' => '?PrestadorData',
+  'tomador' => '?TomadorData',
+  'intermediario' => '?IntermediarioData',
+  'servico' => '?ServicoData',
+  'ibscbs' => '?IbscbsData',
+  'valores' => '?ValoresData'
+);
+
+
     /**
      * Identificador da tag a ser assinada.
      * Formado por: "DPS" + Cód.Mun.Emi. + Tipo Inscrição + Inscrição + Série + Número.
      */
-    #[MapFrom('@attributes.Id')]
-    public ?string $id = null;
+    public $id = null;
 
     /**
      * Ambiente de emissão.
      * 1 - Produção
      * 2 - Homologação
      */
-    #[MapFrom('tpAmb'), CastWith(EnumCaster::class, enumType: TipoAmbiente::class)]
-    public ?TipoAmbiente $tipoAmbiente = null;
+    public $tipoAmbiente = null;
 
     /**
      * Data e hora de emissão da DPS.
      * Formato: AAAA-MM-DDThh:mm:ssTZD
      */
-    #[MapFrom('dhEmi')]
-    public ?string $dataEmissao = null;
+    public $dataEmissao = null;
 
     /**
      * Versão do aplicativo emissor.
      */
-    #[MapFrom('verAplic')]
-    public ?string $versaoAplicativo = null;
+    public $versaoAplicativo = null;
 
     /**
      * Série da DPS.
      */
-    #[MapFrom('serie')]
-    public ?string $serie = null;
+    public $serie = null;
 
     /**
      * Número da DPS.
      */
-    #[MapFrom('nDPS')]
-    public ?string $numeroDps = null;
+    public $numeroDps = null;
 
     /**
      * Data de competência da DPS.
      * Formato: AAAA-MM-DD
      */
-    #[MapFrom('dCompet')]
-    public ?string $dataCompetencia = null;
+    public $dataCompetencia = null;
 
     /**
      * Tipo de emitente da DPS.
@@ -65,75 +131,63 @@ class InfDpsData extends Dto
      * 2 - Tomador
      * 3 - Intermediário
      */
-    #[MapFrom('tpEmit'), CastWith(EnumCaster::class, enumType: EmitenteDPS::class)]
-    public ?EmitenteDPS $tipoEmitente = null;
+    public $tipoEmitente = null;
 
     /**
      * Indicador da finalidade da emissão de NFS-e.
      * 0 - NFS-e regular
      */
-    #[MapFrom('finNFSe')]
-    public ?string $finalidadeNfse = null;
+    public $finalidadeNfse = null;
 
     /**
      * Código do município emissor da DPS (IBGE).
      */
-    #[MapFrom('cLocEmi')]
-    public ?string $codigoLocalEmissao = null;
+    public $codigoLocalEmissao = null;
 
     /**
      * Motivo da emissão da DPS pelo Tomador ou Intermediário.
      * Obrigatório se tpEmit = 2 ou 3.
      */
-    #[MapFrom('cMotivoEmisTI'), CastWith(EnumCaster::class, enumType: MotivoEmissaoTomadorIntermediario::class)]
-    public ?MotivoEmissaoTomadorIntermediario $motivoEmissaoTomadorIntermediario = null;
+    public $motivoEmissaoTomadorIntermediario = null;
 
     /**
      * Chave de acesso da NFS-e rejeitada.
      * Obrigatório se cMotivoEmisTI = 4.
      */
-    #[MapFrom('chNFSeRej')]
-    public ?string $chaveNfseRejeitada = null;
+    public $chaveNfseRejeitada = null;
 
     /**
      * Informações de substituição de NFS-e.
      */
-    #[MapFrom('subst')]
-    public ?SubstituicaoData $substituicao = null;
+    public $substituicao = null;
 
     /**
      * Dados do prestador do serviço.
      */
-    #[MapFrom('prest')]
-    public ?PrestadorData $prestador = null;
+    public $prestador = null;
 
     /**
      * Dados do tomador do serviço.
      */
-    #[MapFrom('toma')]
-    public ?TomadorData $tomador = null;
+    public $tomador = null;
 
     /**
      * Dados do intermediário do serviço.
      */
-    #[MapFrom('interm')]
-    public ?IntermediarioData $intermediario = null;
+    public $intermediario = null;
 
     /**
      * Dados do serviço prestado.
      */
-    #[MapFrom('serv')]
-    public ?ServicoData $servico = null;
+    public $servico = null;
 
     /**
      * Grupo de informações declaradas pelo emitente referentes ao IBS e à CBS.
      */
-    #[MapFrom('IBSCBS')]
-    public ?IbscbsData $ibscbs = null;
+    public $ibscbs = null;
 
     /**
      * Valores do serviço e tributos.
      */
-    #[MapFrom('valores')]
-    public ?ValoresData $valores = null;
+    public $valores = null;
 }

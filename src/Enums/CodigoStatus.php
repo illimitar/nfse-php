@@ -7,39 +7,34 @@ namespace Nfse\Enums;
  *
  * Baseado no schema: cStat
  */
-enum CodigoStatus: int
+final class CodigoStatus
 {
-    /**
-     * NFS-e Gerada
-     */
-    case NfseGerada = 100;
+    const NfseGerada = 100;
+    const NfseDecisaoJudicial = 102;
+    const NfseAvulsa = 103;
+    const NfseMei = 107;
 
-    /**
-     * NFS-e de Decisão Judicial
-     */
-    case NfseDecisaoJudicial = 102;
-
-    /**
-     * NFS-e Avulsa
-     */
-    case NfseAvulsa = 103;
-
-    /**
-     * NFS-e MEI
-     */
-    case NfseMei = 107;
+    private function __construct()
+    {
+    }
 
     /**
      * Get description for the enum case
      */
     public function getDescription(): string
     {
-        return match ($this) {
-            self::NfseGerada => 'NFS-e Gerada',
-            self::NfseDecisaoJudicial => 'NFS-e de Decisão Judicial',
-            self::NfseAvulsa => 'NFS-e Avulsa',
-            self::NfseMei => 'NFS-e MEI',
-        };
+        return (call_user_func(function () {
+            switch ($this) {
+                case self::NfseGerada:
+                    return 'NFS-e Gerada';
+                case self::NfseDecisaoJudicial:
+                    return 'NFS-e de Decisão Judicial';
+                case self::NfseAvulsa:
+                    return 'NFS-e Avulsa';
+                case self::NfseMei:
+                    return 'NFS-e MEI';
+            }
+        }));
     }
 
     /**

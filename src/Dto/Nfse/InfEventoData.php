@@ -7,24 +7,37 @@ use Spatie\DataTransferObject\Attributes\MapFrom;
 
 class InfEventoData extends Dto
 {
-    #[MapFrom('@attributes.Id')]
-    public ?string $id = null;
+    public static $__mapFrom = array (
+  'id' => '@attributes.Id',
+  'versaoAplicativo' => 'verAplic',
+  'ambiente' => 'ambGer',
+  'numeroSequencialEvento' => 'nSeqEvento',
+  'dataHoraProcessamento' => 'dhProc',
+  'numeroDfse' => 'nDFSe',
+  'pedRegEvento' => 'pedRegEvento'
+);
+    public static $__propertyTypes = array (
+  'id' => '?string',
+  'versaoAplicativo' => '?string',
+  'ambiente' => '?int',
+  'numeroSequencialEvento' => '?int',
+  'dataHoraProcessamento' => '?string',
+  'numeroDfse' => '?string',
+  'pedRegEvento' => '?PedRegEventoData'
+);
 
-    #[MapFrom('verAplic')]
-    public ?string $versaoAplicativo = null;
 
-    #[MapFrom('ambGer')]
-    public ?int $ambiente = null;
+    public $id = null;
 
-    #[MapFrom('nSeqEvento')]
-    public ?int $numeroSequencialEvento = null;
+    public $versaoAplicativo = null;
 
-    #[MapFrom('dhProc')]
-    public ?string $dataHoraProcessamento = null;
+    public $ambiente = null;
 
-    #[MapFrom('nDFSe')]
-    public ?string $numeroDfse = null;
+    public $numeroSequencialEvento = null;
 
-    #[MapFrom('pedRegEvento')]
-    public ?PedRegEventoData $pedRegEvento = null;
+    public $dataHoraProcessamento = null;
+
+    public $numeroDfse = null;
+
+    public $pedRegEvento = null;
 }

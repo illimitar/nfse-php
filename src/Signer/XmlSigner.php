@@ -11,15 +11,18 @@ class XmlSigner implements SignerInterface
 {
     private const CANONICAL = [true, false, null, null];
 
-    public function __construct(private Certificate $certificate) {}
+    private $certificate;
+
+    public function __construct(Certificate $certificate) {
+        $this->certificate = $certificate;}
 
     /**
      * Sign XML content
      *
      * @param  string  $content  XML content to sign
      * @param  string  $tagname  Tag name to sign (e.g., 'infDPS')
-     * @param  string  $mark  Attribute name for ID (default: 'Id')
-     * @param  int  $algorithm  OpenSSL algorithm (default: OPENSSL_ALGO_SHA1)
+     * @param  string  $mark  Attribute name for ID ('Id')
+     * @param  int  $algorithm  OpenSSL algorithm (OPENSSL_ALGO_SHA1)
      * @param  array  $canonical  Canonicalization options [exclusive, withComments, xpath, nsPrefixes]
      * @param  string  $rootname  Root element name for validation (optional)
      * @param  array  $options  Additional options (reserved for future use)
@@ -48,7 +51,7 @@ class XmlSigner implements SignerInterface
 
         // Validate root element if specified
         if (! empty($rootname) && $root->nodeName !== $rootname) {
-            throw new Exception("Elemento raiz esperado: {$rootname}, encontrado: {$root->nodeName}");
+            throw new Exception("Elemento raiz esperado: {$rootname}, {$root->nodeName}");
         }
 
         $node = $dom->getElementsByTagName($tagname)->item(0);
@@ -70,7 +73,7 @@ class XmlSigner implements SignerInterface
         $xml = str_replace([
             "\n",
             "\r",
-            "\t",
+            "\t"
         ], '', $xml);
 
         return $xml;

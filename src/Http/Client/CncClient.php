@@ -17,12 +17,15 @@ class CncClient
 
     private const URL_HOMOLOGATION = 'https://adn.producaorestrita.nfse.gov.br/cnc';
 
-    private Client $httpClient;
+    private $httpClient;
 
-    private ?string $tempCertFile = null;
+    private $tempCertFile = null;
 
-    public function __construct(private NfseContext $context)
+    private $context;
+
+    public function __construct(NfseContext $context)
     {
+        $this->context = $context;
         $this->httpClient = $this->createHttpClient();
     }
 
@@ -51,36 +54,32 @@ class CncClient
             ? self::URL_PRODUCTION
             : self::URL_HOMOLOGATION;
 
-        $curlOptions = [];
+        $curlOptions = array();
 
         if ($this->context->nssCertificateSelector !== null) {
-            // O Guzzle exige que a opção `cert` seja um arquivo existente; o seletor NSS não é, então segue cru para o cURL.
             $curlOptions[CURLOPT_SSLCERTTYPE] = 'ENG';
             $curlOptions[CURLOPT_SSLCERT] = $this->context->nssCertificateSelector;
-            $certificateOptions = [];
+            $certificateOptions = array();
         } else {
-            $certificateOptions = [
-                RequestOptions::CERT => [$this->resolveCertificatePath(), $this->context->certificatePassword],
+            $certificateOptions = array(
+                RequestOptions::CERT => array($this->resolveCertificatePath(), $this->context->certificatePassword),
                 RequestOptions::CERT_TYPE => 'P12',
-            ];
+            );
         }
 
-        return new Client([
+        return new Client(array_merge(array(
             'base_uri' => $baseUrl,
             'handler' => Retry::stack(),
-            ...$certificateOptions,
             'curl' => $curlOptions,
             RequestOptions::FORCE_IP_RESOLVE => 'v4',
-            // Com o Retry (3 tentativas), um host inacessível segura a requisição
-            // por até 3x o connect timeout; 10s basta para o handshake.
             RequestOptions::CONNECT_TIMEOUT => 10,
             RequestOptions::TIMEOUT => 60,
             RequestOptions::VERSION => '1.1',
-            RequestOptions::HEADERS => [
+            RequestOptions::HEADERS => array(
                 'Content-Type' => 'application/json',
                 'Accept' => 'application/json',
-            ],
-        ]);
+            ),
+        ), $certificateOptions));
     }
 
     private function get(string $endpoint): array
@@ -104,7 +103,7 @@ class CncClient
     {
         try {
             $response = $this->httpClient->post($endpoint, [
-                RequestOptions::JSON => $data,
+                RequestOptions::JSON => $data
             ]);
             $content = $response->getBody()->getContents();
             $decoded = json_decode($content, true);
@@ -145,22 +144,22 @@ class CncClient
 
     private function mapMensagens(array $mensagens): array
     {
-        return array_map(fn ($m) => new MensagemProcessamentoDto([
+        return array_map(function ($m) { return new MensagemProcessamentoDto([
             'mensagem' => $m['Mensagem'] ?? $m['mensagem'] ?? null,
             'parametros' => $m['Parametros'] ?? $m['parametros'] ?? null,
             'codigo' => $m['Codigo'] ?? $m['codigo'] ?? null,
             'descricao' => $m['Descricao'] ?? $m['descricao'] ?? null,
-            'complemento' => $m['Complemento'] ?? $m['complemento'] ?? null,
-        ]), $mensagens);
+            'complemento' => $m['Complemento'] ?? $m['complemento'] ?? null
+        ]); }, $mensagens);
     }
 
     /**
+     * @param  $e
      * @param  array  $decoded
      * @return mixed
-     *
      * @throws NfseApiException
      */
-    private function handleException(\Exception|GuzzleException $e)
+    private function handleException($e)
     {
         $errorBody = '';
         if ($e instanceof \GuzzleHttp\Exception\RequestException && $e->hasResponse()) {

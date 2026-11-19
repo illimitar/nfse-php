@@ -143,12 +143,12 @@ class DpsValidator
             return;
         }
 
-        $cTribNac = $servico->codigoServico?->codigoTributacaoNacional;
+        $cTribNac = $servico->codigoServico->codigoTributacaoNacional;
 
         // Rule 260: obra is required for construction services
         $constructionCodes = [
             '070201', '070202', '070401', '070501', '070502',
-            '070601', '070602', '070701', '070801', '071701', '071901',
+            '070601', '070602', '070701', '070801', '071701', '071901'
         ];
 
         if (in_array($cTribNac, $constructionCodes) && $servico->obra === null) {
@@ -174,12 +174,12 @@ class DpsValidator
         }
 
         // Rule 324: cNBS é obrigatório quando o grupo de IBS/CBS é informado
-        if ($infDps->servico?->codigoServico?->codigoNbs === null) {
+        if ($infDps->servico->codigoServico->codigoNbs === null) {
             $errors[] = 'O item da NBS é obrigatório quando o grupo de informações de IBS/CBS é informado.';
         }
 
         // Rule 549: gRefNFSe é obrigatório quando tpOper = 2 ou 3
-        if ($ibscbs->tipoOperacao?->exigeNfseReferenciada() && empty($ibscbs->chavesNfseReferenciadas)) {
+        if ($ibscbs->tipoOperacao->exigeNfseReferenciada() && empty($ibscbs->chavesNfseReferenciadas)) {
             $errors[] = 'O grupo de NFS-e referenciadas é obrigatório quando o tipo de operação for 2 ou 3.';
         }
 
@@ -194,7 +194,7 @@ class DpsValidator
             $errors[] = 'O código de classificação tributária informado não pertence ao grupo do CST de IBS/CBS informado.';
         }
 
-        $vServ = $infDps->valores?->valorServicoPrestado?->valorServico ?? 0;
+        $vServ = $infDps->valores->valorServicoPrestado->valorServico ?? 0;
 
         foreach ($ibscbs->documentosReembolso ?? [] as $documento) {
             // Rule 621: xTpReeRepRes só deve ser informado quando tpReeRepRes = 99

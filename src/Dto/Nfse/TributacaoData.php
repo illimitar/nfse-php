@@ -16,6 +16,60 @@ use Spatie\DataTransferObject\Attributes\MapFrom;
 
 class TributacaoData extends Dto
 {
+    public static $__mapFrom = array (
+      'tributacaoIssqn' => 'tribMun.tribISSQN',
+      'tipoImunidade' => 'tribMun.tpImunidade',
+      'tipoRetencaoIssqn' => 'tribMun.tpRetISSQN',
+      'aliquota' => 'tribMun.pAliq',
+      'tipoSuspensao' => 'tribMun.exigSusp.tpSusp',
+      'numeroProcessoSuspensao' => 'tribMun.exigSusp.nProcesso',
+      'beneficioMunicipal' => 'tribMun.BM',
+      'cstPisCofins' => 'tribFed.piscofins.CST',
+      'baseCalculoPisCofins' => 'tribFed.piscofins.vBCPisCofins',
+      'aliquotaPis' => 'tribFed.piscofins.pAliqPis',
+      'aliquotaCofins' => 'tribFed.piscofins.pAliqCofins',
+      'valorPis' => 'tribFed.piscofins.vPis',
+      'valorCofins' => 'tribFed.piscofins.vCofins',
+      'tipoRetencaoPisCofins' => 'tribFed.piscofins.tpRetPisCofins',
+      'valorRetidoIrrf' => 'tribFed.vRetIRRF',
+      'valorRetidoCsll' => 'tribFed.vRetCSLL',
+      'valorTotalTributosFederais' => 'totTrib.vTotTrib.vTotTribFed',
+      'valorTotalTributosEstaduais' => 'totTrib.vTotTrib.vTotTribEst',
+      'valorTotalTributosMunicipais' => 'totTrib.vTotTrib.vTotTribMun',
+      'percentualTotalTributosSN' => 'totTrib.pTotTribSN',
+      'percentualTotalTributosFederais' => 'totTrib.pTotTrib.pTotTribFed',
+      'percentualTotalTributosEstaduais' => 'totTrib.pTotTrib.pTotTribEst',
+      'percentualTotalTributosMunicipais' => 'totTrib.pTotTrib.pTotTribMun',
+      'indicadorTotalTributos' => 'totTrib.indTotTrib'
+    );
+    public static $__propertyTypes = array (
+      'tributacaoIssqn' => '?TributacaoIssqn',
+      'tipoImunidade' => '?TipoImunidade',
+      'tipoRetencaoIssqn' => '?TipoRetencaoIssqn',
+      'aliquota' => '?float',
+      'tipoSuspensao' => '?TipoSuspensao',
+      'numeroProcessoSuspensao' => '?string',
+      'beneficioMunicipal' => '?BeneficioMunicipalData',
+      'cstPisCofins' => '?CstPisCofins',
+      'baseCalculoPisCofins' => '?float',
+      'aliquotaPis' => '?float',
+      'aliquotaCofins' => '?float',
+      'valorPis' => '?float',
+      'valorCofins' => '?float',
+      'tipoRetencaoPisCofins' => '?TipoRetencaoPisCofins',
+      'valorRetidoIrrf' => '?float',
+      'valorRetidoCsll' => '?float',
+      'valorTotalTributosFederais' => '?float',
+      'valorTotalTributosEstaduais' => '?float',
+      'valorTotalTributosMunicipais' => '?float',
+      'percentualTotalTributosSN' => '?float',
+      'percentualTotalTributosFederais' => '?float',
+      'percentualTotalTributosEstaduais' => '?float',
+      'percentualTotalTributosMunicipais' => '?float',
+      'indicadorTotalTributos' => '?IndicadorTotalTributos'
+    );
+
+
     /**
      * Tributação do ISSQN.
      * 1 - Operação tributável
@@ -23,8 +77,7 @@ class TributacaoData extends Dto
      * 3 - Exportação de serviço
      * 4 - Não Incidência
      */
-    #[MapFrom('tribMun.tribISSQN'), CastWith(EnumCaster::class, enumType: TributacaoIssqn::class)]
-    public ?TributacaoIssqn $tributacaoIssqn = null;
+    public $tributacaoIssqn = null;
 
     /**
      * Tipo de imunidade.
@@ -35,8 +88,7 @@ class TributacaoData extends Dto
      * 3 - Patrimônio, renda ou serviços dos partidos políticos, inclusive suas fundações, das entidades sindicais dos trabalhadores, das instituições de educação e de assistência social, sem fins lucrativos, atendidos os requisitos da lei (CF88, Art 150, VI, c)
      * 4 - Livros, jornais, periódicos e o papel destinado a sua impressão (CF88, Art 150, VI, d)
      */
-    #[MapFrom('tribMun.tpImunidade'), CastWith(EnumCaster::class, enumType: TipoImunidade::class)]
-    public ?TipoImunidade $tipoImunidade = null;
+    public $tipoImunidade = null;
 
     /**
      * Tipo de retencao do ISSQN.
@@ -44,58 +96,49 @@ class TributacaoData extends Dto
      * 2 - Retido pelo Tomador
      * 3 - Retido pelo Intermediario
      */
-    #[MapFrom('tribMun.tpRetISSQN'), CastWith(EnumCaster::class, enumType: TipoRetencaoIssqn::class)]
-    public ?TipoRetencaoIssqn $tipoRetencaoIssqn = null;
+    public $tipoRetencaoIssqn = null;
 
     /**
      * Alíquota do ISSQN.
      */
-    #[MapFrom('tribMun.pAliq')]
-    public ?float $aliquota = null;
+    public $aliquota = null;
 
     /**
      * Suspensão da exigibilidade do ISSQN.
      * 1 - Suspenso por decisão judicial
      * 2 - Suspenso por decisão administrativa
      */
-    #[MapFrom('tribMun.exigSusp.tpSusp'), CastWith(EnumCaster::class, enumType: TipoSuspensao::class)]
-    public ?TipoSuspensao $tipoSuspensao = null;
+    public $tipoSuspensao = null;
 
     /**
      * Número do processo judicial ou administrativo de suspensão da exigibilidade.
      */
-    #[MapFrom('tribMun.exigSusp.nProcesso')]
-    public ?string $numeroProcessoSuspensao = null;
+    public $numeroProcessoSuspensao = null;
 
     /**
      * Benefício Municipal.
      */
-    #[MapFrom('tribMun.BM')]
-    public ?BeneficioMunicipalData $beneficioMunicipal = null;
+    public $beneficioMunicipal = null;
 
     /**
      * Código da Situação Tributária do PIS/COFINS.
      */
-    #[MapFrom('tribFed.piscofins.CST'), CastWith(EnumCaster::class, enumType: CstPisCofins::class)]
-    public ?CstPisCofins $cstPisCofins = null;
+    public $cstPisCofins = null;
 
     /**
      * Base de cálculo PIS/COFINS.
      */
-    #[MapFrom('tribFed.piscofins.vBCPisCofins')]
-    public ?float $baseCalculoPisCofins = null;
+    public $baseCalculoPisCofins = null;
 
     /**
      * Alíquota PIS.
      */
-    #[MapFrom('tribFed.piscofins.pAliqPis')]
-    public ?float $aliquotaPis = null;
+    public $aliquotaPis = null;
 
     /**
      * Alíquota COFINS.
      */
-    #[MapFrom('tribFed.piscofins.pAliqCofins')]
-    public ?float $aliquotaCofins = null;
+    public $aliquotaCofins = null;
 
     /**
      * Valor PIS (R$).
@@ -104,8 +147,7 @@ class TributacaoData extends Dto
      * própria do prestador. Não deve ser usado para informar valores retidos.
      * Para retenção, consolidar no campo vRetCSLL.
      */
-    #[MapFrom('tribFed.piscofins.vPis')]
-    public ?float $valorPis = null;
+    public $valorPis = null;
 
     /**
      * Valor COFINS (R$).
@@ -114,8 +156,7 @@ class TributacaoData extends Dto
      * própria do prestador. Não deve ser usado para informar valores retidos.
      * Para retenção, consolidar no campo vRetCSLL.
      */
-    #[MapFrom('tribFed.piscofins.vCofins')]
-    public ?float $valorCofins = null;
+    public $valorCofins = null;
 
     /**
      * Tipo de Retenção PIS/COFINS e CSLL.
@@ -126,14 +167,12 @@ class TributacaoData extends Dto
      *
      * @see TipoRetencaoPisCofins
      */
-    #[MapFrom('tribFed.piscofins.tpRetPisCofins'), CastWith(EnumCaster::class, enumType: TipoRetencaoPisCofins::class)]
-    public ?TipoRetencaoPisCofins $tipoRetencaoPisCofins = null;
+    public $tipoRetencaoPisCofins = null;
 
     /**
      * Valor retido de IRRF (R$).
      */
-    #[MapFrom('tribFed.vRetIRRF')]
-    public ?float $valorRetidoIrrf = null;
+    public $valorRetidoIrrf = null;
 
     /**
      * Valor retido de contribuições sociais (R$).
@@ -149,55 +188,46 @@ class TributacaoData extends Dto
      * @see TipoRetencaoPisCofins::isRetidoCofins()
      * @see TipoRetencaoPisCofins::isRetidoCsll()
      */
-    #[MapFrom('tribFed.vRetCSLL')]
-    public ?float $valorRetidoCsll = null;
+    public $valorRetidoCsll = null;
 
     /**
      * Valor total dos tributos federais.
      */
-    #[MapFrom('totTrib.vTotTrib.vTotTribFed')]
-    public ?float $valorTotalTributosFederais = null;
+    public $valorTotalTributosFederais = null;
 
     /**
      * Valor total dos tributos estaduais.
      */
-    #[MapFrom('totTrib.vTotTrib.vTotTribEst')]
-    public ?float $valorTotalTributosEstaduais = null;
+    public $valorTotalTributosEstaduais = null;
 
     /**
      * Valor total dos tributos municipais.
      */
-    #[MapFrom('totTrib.vTotTrib.vTotTribMun')]
-    public ?float $valorTotalTributosMunicipais = null;
+    public $valorTotalTributosMunicipais = null;
 
     /**
      * Valor percentual total aproximado dos tributos federais, estaduais e municipais.
      */
-    #[MapFrom('totTrib.pTotTribSN')]
-    public ?float $percentualTotalTributosSN = null;
+    public $percentualTotalTributosSN = null;
 
     /**
      * Percentual total aproximado dos tributos federais.
      */
-    #[MapFrom('totTrib.pTotTrib.pTotTribFed')]
-    public ?float $percentualTotalTributosFederais = null;
+    public $percentualTotalTributosFederais = null;
 
     /**
      * Percentual total aproximado dos tributos estaduais.
      */
-    #[MapFrom('totTrib.pTotTrib.pTotTribEst')]
-    public ?float $percentualTotalTributosEstaduais = null;
+    public $percentualTotalTributosEstaduais = null;
 
     /**
      * Percentual total aproximado dos tributos municipais.
      */
-    #[MapFrom('totTrib.pTotTrib.pTotTribMun')]
-    public ?float $percentualTotalTributosMunicipais = null;
+    public $percentualTotalTributosMunicipais = null;
 
     /**
      * Indicador de informação de valor total de tributos.
      * 0 - Nenhum
      */
-    #[MapFrom('totTrib.indTotTrib'), CastWith(EnumCaster::class, enumType: IndicadorTotalTributos::class)]
-    public ?IndicadorTotalTributos $indicadorTotalTributos = null;
+    public $indicadorTotalTributos = null;
 }

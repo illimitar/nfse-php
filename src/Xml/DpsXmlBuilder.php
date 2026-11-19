@@ -18,7 +18,7 @@ use Nfse\Support\SchemaText;
 
 class DpsXmlBuilder
 {
-    private DOMDocument $dom;
+    private $dom;
 
     public function build(DpsData $dps): string
     {
@@ -229,7 +229,6 @@ class DpsXmlBuilder
             $this->appendElement($comExt, 'mdPrestacao', $data->comercioExterior->modoPrestacao);
             $this->appendElement($comExt, 'vincPrest', $data->comercioExterior->vinculoPrestacao);
             $this->appendElement($comExt, 'tpMoeda', $data->comercioExterior->tipoMoeda);
-            // TSDec15V2 exige duas casas quando há parte decimal (99.9 é rejeitado, 99.90 não)
             $this->appendElement(
                 $comExt,
                 'vServMoeda',
@@ -556,7 +555,7 @@ class DpsXmlBuilder
         $parent->appendChild($documentos);
     }
 
-    private function appendElement(DOMElement $parent, string $name, mixed $value): void
+    private function appendElement(DOMElement $parent, string $name, $value): void
     {
         if ($value instanceof \BackedEnum) {
             $value = $value->value;

@@ -6,10 +6,10 @@ use Nfse\Dto\Dto;
 
 class ResultadoConsultaAliquotasResponse extends Dto
 {
-    public ?string $mensagem = null;
+    public $mensagem = null;
 
     /**
      * @var AliquotaDto[]
      */
-    public array $aliquotas = [];
+    public $aliquotas = [];
 }

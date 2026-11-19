@@ -7,45 +7,52 @@ namespace Nfse\Enums;
  *
  * Baseado no schema: TSMdPrestacao
  */
-enum ModoPrestacao: string
+final class ModoPrestacao
 {
+    const Desconhecido = '0';
+    const Transfronteirico = '1';
+    const ConsumoNoExterior = '2';
+    const PresencaComercialNoExterior = '3';
+    const MovimentoTemporarioPessoasFisicas = '4';
+
+    private function __construct()
+    {
+    }
+
     /**
      * Desconhecido ou Não Aplicável
      */
-    case Desconhecido = '0';
-
     /**
      * Transfronteiriço
      */
-    case Transfronteirico = '1';
-
     /**
      * Consumo no Exterior
      */
-    case ConsumoNoExterior = '2';
-
     /**
      * Presença Comercial no Exterior
      */
-    case PresencaComercialNoExterior = '3';
-
     /**
      * Movimento Temporário de Pessoas Físicas
      */
-    case MovimentoTemporarioPessoasFisicas = '4';
-
     /**
      * Get description for the enum case
      */
     public function getDescription(): string
     {
-        return match ($this) {
-            self::Transfronteirico => 'Transfronteiriço',
-            self::ConsumoNoExterior => 'Consumo no Exterior',
-            self::PresencaComercialNoExterior => 'Presença Comercial no Exterior',
-            self::MovimentoTemporarioPessoasFisicas => 'Movimento Temporário de Pessoas Físicas',
-            self::Desconhecido => 'Desconhecido ou Não Aplicável',
-        };
+        return (call_user_func(function () {
+    switch ($this) {
+    case self::Transfronteirico:
+        return 'Transfronteiriço';
+    case self::ConsumoNoExterior:
+        return 'Consumo no Exterior';
+    case self::PresencaComercialNoExterior:
+        return 'Presença Comercial no Exterior';
+    case self::MovimentoTemporarioPessoasFisicas:
+        return 'Movimento Temporário de Pessoas Físicas';
+    case self::Desconhecido:
+        return 'Desconhecido ou Não Aplicável';
+    }
+}));
     }
 
     /**

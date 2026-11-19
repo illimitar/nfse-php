@@ -7,27 +7,37 @@ use Spatie\DataTransferObject\Attributes\MapFrom;
 
 class EnderecoExteriorData extends Dto
 {
+    public static $__mapFrom = array (
+  'codigoPais' => 'cPais',
+  'codigoEnderecamentoPostal' => 'cEndPost',
+  'cidade' => 'xCidade',
+  'estadoProvinciaRegiao' => 'xEstProvReg'
+);
+    public static $__propertyTypes = array (
+  'codigoPais' => '?string',
+  'codigoEnderecamentoPostal' => '?string',
+  'cidade' => '?string',
+  'estadoProvinciaRegiao' => '?string'
+);
+
+
     /**
      * Código do país (ISO2).
      */
-    #[MapFrom('cPais')]
-    public ?string $codigoPais = null;
+    public $codigoPais = null;
 
     /**
      * Código de endereçamento postal.
      */
-    #[MapFrom('cEndPost')]
-    public ?string $codigoEnderecamentoPostal = null;
+    public $codigoEnderecamentoPostal = null;
 
     /**
      * Nome da cidade.
      */
-    #[MapFrom('xCidade')]
-    public ?string $cidade = null;
+    public $cidade = null;
 
     /**
      * Estado, província ou região.
      */
-    #[MapFrom('xEstProvReg')]
-    public ?string $estadoProvinciaRegiao = null;
+    public $estadoProvinciaRegiao = null;
 }

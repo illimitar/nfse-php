@@ -7,17 +7,25 @@ use Spatie\DataTransferObject\Attributes\MapFrom;
 
 class LocalPrestacaoData extends Dto
 {
+    public static $__mapFrom = array (
+  'codigoLocalPrestacao' => 'cLocPrestacao',
+  'codigoPaisPrestacao' => 'cPaisPrestacao'
+);
+    public static $__propertyTypes = array (
+  'codigoLocalPrestacao' => '?string',
+  'codigoPaisPrestacao' => '?string'
+);
+
+
     /**
      * Código do município onde o serviço foi prestado (IBGE).
      * Utilizar 0000000 para "Águas Marítimas".
      */
-    #[MapFrom('cLocPrestacao')]
-    public ?string $codigoLocalPrestacao = null;
+    public $codigoLocalPrestacao = null;
 
     /**
      * Código do país onde o serviço foi prestado (ISO2).
      * Obrigatório se o serviço for prestado no exterior.
      */
-    #[MapFrom('cPaisPrestacao')]
-    public ?string $codigoPaisPrestacao = null;
+    public $codigoPaisPrestacao = null;
 }

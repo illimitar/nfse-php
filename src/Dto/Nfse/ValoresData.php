@@ -7,27 +7,37 @@ use Spatie\DataTransferObject\Attributes\MapFrom;
 
 class ValoresData extends Dto
 {
+    public static $__mapFrom = array (
+  'valorServicoPrestado' => 'vServPrest',
+  'desconto' => 'vDescCondIncond',
+  'deducaoReducao' => 'vDedRed',
+  'tributacao' => 'trib'
+);
+    public static $__propertyTypes = array (
+  'valorServicoPrestado' => '?ValorServicoPrestadoData',
+  'desconto' => '?DescontoData',
+  'deducaoReducao' => '?DeducaoReducaoData',
+  'tributacao' => '?TributacaoData'
+);
+
+
     /**
      * Valor do serviço prestado.
      */
-    #[MapFrom('vServPrest')]
-    public ?ValorServicoPrestadoData $valorServicoPrestado = null;
+    public $valorServicoPrestado = null;
 
     /**
      * Descontos condicionados e incondicionados.
      */
-    #[MapFrom('vDescCondIncond')]
-    public ?DescontoData $desconto = null;
+    public $desconto = null;
 
     /**
      * Deduções e reduções da base de cálculo.
      */
-    #[MapFrom('vDedRed')]
-    public ?DeducaoReducaoData $deducaoReducao = null;
+    public $deducaoReducao = null;
 
     /**
      * Informações sobre a tributação do serviço.
      */
-    #[MapFrom('trib')]
-    public ?TributacaoData $tributacao = null;
+    public $tributacao = null;
 }

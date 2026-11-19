@@ -7,21 +7,30 @@ use Spatie\DataTransferObject\Attributes\MapFrom;
 
 class ImovelData extends Dto
 {
+    public static $__mapFrom = array (
+  'inscricaoImobiliariaFiscal' => 'inscImobFisc',
+  'codigoCib' => 'cCIB',
+  'endereco' => 'end'
+);
+    public static $__propertyTypes = array (
+  'inscricaoImobiliariaFiscal' => '?string',
+  'codigoCib' => '?string',
+  'endereco' => '?EnderecoData'
+);
+
+
     /**
      * Inscrição imobiliária fiscal fornecida pela Prefeitura Municipal.
      */
-    #[MapFrom('inscImobFisc')]
-    public ?string $inscricaoImobiliariaFiscal = null;
+    public $inscricaoImobiliariaFiscal = null;
 
     /**
      * Código do Cadastro Imobiliário Brasileiro (CIB).
      */
-    #[MapFrom('cCIB')]
-    public ?string $codigoCib = null;
+    public $codigoCib = null;
 
     /**
      * Endereço do imóvel.
      */
-    #[MapFrom('end')]
-    public ?EnderecoData $endereco = null;
+    public $endereco = null;
 }

@@ -7,16 +7,24 @@ use Spatie\DataTransferObject\Attributes\MapFrom;
 
 class ValorServicoPrestadoData extends Dto
 {
+    public static $__mapFrom = array (
+  'valorRecebido' => 'vReceb',
+  'valorServico' => 'vServ'
+);
+    public static $__propertyTypes = array (
+  'valorRecebido' => '?float',
+  'valorServico' => '?float'
+);
+
+
     /**
      * Valor recebido pelo intermediário.
      * Obrigatório se tpEmit = 3.
      */
-    #[MapFrom('vReceb')]
-    public ?float $valorRecebido = null;
+    public $valorRecebido = null;
 
     /**
      * Valor do serviço prestado.
      */
-    #[MapFrom('vServ')]
-    public ?float $valorServico = null;
+    public $valorServico = null;
 }

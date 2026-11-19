@@ -11,27 +11,37 @@ use Spatie\DataTransferObject\Attributes\MapFrom;
  */
 class CancelamentoSubstituicaoData extends Dto
 {
+    public static $__mapFrom = array (
+  'descricao' => 'xDesc',
+  'codigoMotivo' => 'cMotivo',
+  'descricaoMotivo' => 'xMotivo',
+  'chaveNfseSubstituta' => 'chSubstituta'
+);
+    public static $__propertyTypes = array (
+  'descricao' => '?string',
+  'codigoMotivo' => '?string',
+  'descricaoMotivo' => '?string',
+  'chaveNfseSubstituta' => '?string'
+);
+
+
     /**
      * Descrição do Evento: "Cancelamento de NFS-e por Substituicao"
      */
-    #[MapFrom('xDesc')]
-    public ?string $descricao = null;
+    public $descricao = null;
 
     /**
      * Código de justificativa de cancelamento substituição
      */
-    #[MapFrom('cMotivo')]
-    public ?string $codigoMotivo = null;
+    public $codigoMotivo = null;
 
     /**
      * Descrição para explicitar o motivo indicado neste evento (opcional)
      */
-    #[MapFrom('xMotivo')]
-    public ?string $descricaoMotivo = null;
+    public $descricaoMotivo = null;
 
     /**
      * Chave de Acesso da NFS-e substituta
      */
-    #[MapFrom('chSubstituta')]
-    public ?string $chaveNfseSubstituta = null;
+    public $chaveNfseSubstituta = null;
 }

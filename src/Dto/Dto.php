@@ -4,54 +4,58 @@ namespace Nfse\Dto;
 
 use ReflectionClass;
 use ReflectionProperty;
-use Spatie\DataTransferObject\Attributes\MapFrom;
 use Spatie\DataTransferObject\DataTransferObject;
 
 abstract class Dto extends DataTransferObject
 {
     public function __construct(...$args)
     {
-        // Se o primeiro argumento é um array, usamos ele como input (estilo antigo/Spatie)
         if (isset($args[0]) && is_array($args[0])) {
             $input = $args[0];
         } else {
-            // Caso contrário, assumimos que os argumentos passados (named ou não) são o input
             $input = $args;
         }
 
-        // Normaliza o input (permite usar nomes de propriedades originais)
         $input = $this->normalizeInput($input);
 
-        // Chama o construtor pai passando o array normalizado como ÚNICO argumento
-        // Isso evita erros com chaves inválidas para named arguments (ex: '@attributes')
-        // e garante que o DataTransferObject trate como um array de propriedades
         parent::__construct($input);
     }
 
-    protected function normalizeInput(array $input): array
+    /**
+     * @param array $input
+     * @return array
+     */
+    protected function normalizeInput(array $input)
     {
         $class = new ReflectionClass($this);
+        $map = array();
+
+        if ($class->hasProperty('__mapFrom')) {
+            $prop = $class->getProperty('__mapFrom');
+            $prop->setAccessible(true);
+            // static property
+            $map = $class->getStaticPropertyValue('__mapFrom');
+            if (!is_array($map)) {
+                $map = array();
+            }
+        }
 
         foreach ($class->getProperties(ReflectionProperty::IS_PUBLIC) as $property) {
+            if ($property->isStatic()) {
+                continue;
+            }
             $propName = $property->getName();
 
-            // Se o input tem a chave com o nome da propriedade
             if (array_key_exists($propName, $input)) {
-                $attributes = $property->getAttributes(MapFrom::class);
+                $mappedName = isset($map[$propName]) ? $map[$propName] : null;
 
-                if (count($attributes) > 0) {
-                    $mapFrom = $attributes[0]->newInstance();
-                    $mappedName = $mapFrom->name;
-
-                    // Se o mappedName usa dot notation, precisamos expandir
+                if ($mappedName) {
                     if (str_contains($mappedName, '.')) {
-                        // Verifica se já existe valor no caminho mapeado
-                        if (! $this->hasDotNotation($input, $mappedName)) {
+                        if (!$this->hasDotNotation($input, $mappedName)) {
                             $this->setDotNotation($input, $mappedName, $input[$propName]);
                         }
                     } else {
-                        // Se não existe a chave mapeada, define ela
-                        if (! array_key_exists($mappedName, $input)) {
+                        if (!array_key_exists($mappedName, $input)) {
                             $input[$mappedName] = $input[$propName];
                         }
                     }
@@ -62,13 +66,18 @@ abstract class Dto extends DataTransferObject
         return $input;
     }
 
-    protected function hasDotNotation(array $array, string $key): bool
+    /**
+     * @param array $array
+     * @param string $key
+     * @return bool
+     */
+    protected function hasDotNotation(array $array, $key)
     {
         $keys = explode('.', $key);
         $current = $array;
 
         foreach ($keys as $k) {
-            if (! is_array($current) || ! array_key_exists($k, $current)) {
+            if (!is_array($current) || !array_key_exists($k, $current)) {
                 return false;
             }
             $current = $current[$k];
@@ -77,7 +86,13 @@ abstract class Dto extends DataTransferObject
         return true;
     }
 
-    protected function setDotNotation(array &$array, string $key, mixed $value): void
+    /**
+     * @param array $array
+     * @param string $key
+     * @param mixed $value
+     * @return void
+     */
+    protected function setDotNotation(array &$array, $key, $value)
     {
         $keys = explode('.', $key);
         $current = &$array;
@@ -86,8 +101,8 @@ abstract class Dto extends DataTransferObject
             if ($i === count($keys) - 1) {
                 $current[$k] = $value;
             } else {
-                if (! isset($current[$k]) || ! is_array($current[$k])) {
-                    $current[$k] = [];
+                if (!isset($current[$k]) || !is_array($current[$k])) {
+                    $current[$k] = array();
                 }
                 $current = &$current[$k];
             }

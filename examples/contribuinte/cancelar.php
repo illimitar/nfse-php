@@ -13,9 +13,9 @@ try {
     // $certificatePassword = 'senha';
 
     $context = new NfseContext(
-        ambiente: \Nfse\Enums\TipoAmbiente::Homologacao,
-        certificatePath: $certificatePath,
-        certificatePassword: $certificatePassword
+        \Nfse\Enums\TipoAmbiente::Homologacao,
+        $certificatePath,
+        $certificatePassword
     );
 
     $nfse = new Nfse($context);
@@ -37,9 +37,9 @@ try {
                 // XSD v1.01 (TE101101): valor fixo enumerado para xDesc.
                 'xDesc' => 'Cancelamento de NFS-e',
                 'cMotivo' => '1', // 1 - Erro na emissão
-                'xMotivo' => 'Teste de cancelamento via SDK PHP',
-            ],
-        ],
+                'xMotivo' => 'Teste de cancelamento via SDK PHP'
+            ]
+        ]
     ]);
 
     echo "Cancelando NFS-e: $chaveNfse...\n";

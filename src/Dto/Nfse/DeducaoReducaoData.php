@@ -9,23 +9,31 @@ use Spatie\DataTransferObject\Attributes\MapFrom;
 
 class DeducaoReducaoData extends Dto
 {
+    public static $__mapFrom = array (
+  'percentualDeducaoReducao' => 'pDR',
+  'valorDeducaoReducao' => 'vDR'
+);
+    public static $__propertyTypes = array (
+  'percentualDeducaoReducao' => '?float',
+  'valorDeducaoReducao' => '?float',
+  'documentos' => '?array'
+);
+
+
     /**
      * Percentual de dedução/redução da base de cálculo.
      */
-    #[MapFrom('pDR')]
-    public ?float $percentualDeducaoReducao = null;
+    public $percentualDeducaoReducao = null;
 
     /**
      * Valor monetário de dedução/redução da base de cálculo.
      */
-    #[MapFrom('vDR')]
-    public ?float $valorDeducaoReducao = null;
+    public $valorDeducaoReducao = null;
 
     /**
      * Documentos comprobatórios da dedução/redução.
      *
      * @var DocumentoDeducaoData[]|null
      */
-    #[MapFrom('documentos'), CastWith(ArrayCaster::class, itemType: DocumentoDeducaoData::class)]
-    public ?array $documentos = null;
+    public $documentos = null;
 }

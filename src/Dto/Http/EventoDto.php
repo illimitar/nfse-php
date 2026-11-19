@@ -14,15 +14,25 @@ use Nfse\Dto\Dto;
  */
 class EventoDto extends Dto
 {
-    public ?string $chaveAcesso = null;
+    public static $__mapFrom = array();
 
-    public ?int $tipoEvento = null;
+    public static $__propertyTypes = array(
+        'chaveAcesso' => '?string',
+        'tipoEvento' => '?int',
+        'numeroPedidoRegistroEvento' => '?int',
+        'dataHoraRecebimento' => '?string',
+        'arquivoXml' => '?string',
+    );
 
-    public ?int $numeroPedidoRegistroEvento = null;
+    public $chaveAcesso = null;
 
-    public ?string $dataHoraRecebimento = null;
+    public $tipoEvento = null;
 
-    public ?string $arquivoXml = null;
+    public $numeroPedidoRegistroEvento = null;
+
+    public $dataHoraRecebimento = null;
+
+    public $arquivoXml = null;
 
     /**
      * Descomprime o XML do evento.

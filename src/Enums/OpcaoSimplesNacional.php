@@ -7,33 +7,40 @@ namespace Nfse\Enums;
  *
  * Baseado no schema: TSOpSimpNac
  */
-enum OpcaoSimplesNacional: string
+final class OpcaoSimplesNacional
 {
+    const NaoOptante = '1';
+    const Mei = '2';
+    const MeEpp = '3';
+
+    private function __construct()
+    {
+    }
+
     /**
      * Não Optante
      */
-    case NaoOptante = '1';
-
     /**
      * Optante - Microempreendedor Individual (MEI)
      */
-    case Mei = '2';
-
     /**
      * Optante - Microempresa ou Empresa de Pequeno Porte (ME/EPP)
      */
-    case MeEpp = '3';
-
     /**
      * Get description for the enum case
      */
     public function getDescription(): string
     {
-        return match ($this) {
-            self::NaoOptante => 'Não Optante',
-            self::Mei => 'Optante - Microempreendedor Individual (MEI)',
-            self::MeEpp => 'Optante - Microempresa ou Empresa de Pequeno Porte (ME/EPP)',
-        };
+        return (call_user_func(function () {
+    switch ($this) {
+    case self::NaoOptante:
+        return 'Não Optante';
+    case self::Mei:
+        return 'Optante - Microempreendedor Individual (MEI)';
+    case self::MeEpp:
+        return 'Optante - Microempresa ou Empresa de Pequeno Porte (ME/EPP)';
+    }
+}));
     }
 
     /**

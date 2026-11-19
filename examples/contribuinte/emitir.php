@@ -13,9 +13,9 @@ try {
     // $certificatePassword = 'senha';
 
     $context = new NfseContext(
-        ambiente: \Nfse\Enums\TipoAmbiente::Homologacao,
-        certificatePath: $certificatePath,
-        certificatePassword: $certificatePassword
+        \Nfse\Enums\TipoAmbiente::Homologacao,
+        $certificatePath,
+        $certificatePassword
     );
 
     $nfse = new Nfse($context);
@@ -27,19 +27,19 @@ try {
     $numero = '100';
 
     $idDps = IdGenerator::generateDpsId(
-        cpfCnpj: $cnpjPrestador,
-        codIbge: $codigoMunicipio,
-        serieDps: $serie,
-        numDps: $numero
+        $cnpjPrestador,
+        $codigoMunicipio,
+        $serie,
+        $numero
     );
 
     $dps = new DpsData([
         '@attributes' => [
-            'versao' => '1.01',
+            'versao' => '1.01'
         ],
         'infDPS' => [
             '@attributes' => [
-                'Id' => $idDps,
+                'Id' => $idDps
             ],
             'tpAmb' => 2, // Homologação
             'dhEmi' => date('c'),
@@ -56,12 +56,12 @@ try {
                 'end' => [
                     'endNac' => [
                         'cMun' => $codigoMunicipio,
-                        'CEP' => '60000000',
+                        'CEP' => '60000000'
                     ],
                     'xLgr' => 'Rua Teste',
                     'nro' => '123',
                     'xCpl' => 'Sala 1',
-                    'xBairro' => 'Centro',
+                    'xBairro' => 'Centro'
                 ],
                 'fone' => '85999999999',
                 'email' => 'teste@empresa.com.br',
@@ -69,41 +69,41 @@ try {
                     'opSimpNac' => 1, // Não Optante 2 optante (MEI) 3-Optante (ME/EPP)
                     'regApTribSN' => null,
                     'regEspTrib' => 0, // Nenhum
-                ],
+                ]
             ],
             'toma' => [
                 'CNPJ' => '44827692000111',
-                'xNome' => 'Cliente de Teste',
+                'xNome' => 'Cliente de Teste'
             ],
             'serv' => [
                 'locPrest' => [
-                    'cLocPrestacao' => $codigoMunicipio,
+                    'cLocPrestacao' => $codigoMunicipio
                 ],
                 'cServ' => [
                     'cTribNac' => '010101',
-                    'xDescServ' => 'Desenvolvimento de Software',
-                ],
+                    'xDescServ' => 'Desenvolvimento de Software'
+                ]
             ],
             'valores' => [
                 'vServPrest' => [
-                    'vServ' => 100.00,
+                    'vServ' => 100.00
                 ],
                 'trib' => [
                     'tribMun' => [
                         'tribISSQN' => 1,
-                        'tpRetISSQN' => 1,
+                        'tpRetISSQN' => 1
                     ],
                     'tribFed' => [
                         'piscofins' => [
-                            'CST' => '08',
-                        ],
+                            'CST' => '08'
+                        ]
                     ],
                     'totTrib' => [
-                        'indTotTrib' => 0,
-                    ],
-                ],
-            ],
-        ],
+                        'indTotTrib' => 0
+                    ]
+                ]
+            ]
+        ]
     ]);
 
     echo "Emitindo NFS-e para a DPS: $idDps...\n";

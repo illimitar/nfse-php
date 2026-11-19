@@ -13,14 +13,28 @@ use Spatie\DataTransferObject\Attributes\MapFrom;
 
 class RegimeTributarioData extends Dto
 {
+    public static $__mapFrom = array (
+      'opcaoSimplesNacional' => 'opSimpNac',
+      'regimeApuracaoTributosSn' => 'regApTribSN',
+      'regimeApuracaoIbsCbsSn' => 'regApIBSCBSSN',
+      'regimeEspecialTributacao' => 'regEspTrib'
+    );
+    
+    public static $__propertyTypes = array (
+      'opcaoSimplesNacional' => '?OpcaoSimplesNacional',
+      'regimeApuracaoTributosSn' => '?RegimeApuracaoSN',
+      'regimeApuracaoIbsCbsSn' => '?RegimeApuracaoIbsCbsSn',
+      'regimeEspecialTributacao' => '?RegimeEspecialTributacao'
+    );
+
+
     /**
      * Opção pelo Simples Nacional.
      * 1 - Não Optante
      * 2 - Optante - Microempreendedor Individual (MEI)
      * 3 - Optante - Microempresa ou Empresa de Pequeno Porte (ME/EPP)
      */
-    #[MapFrom('opSimpNac'), CastWith(EnumCaster::class, enumType: OpcaoSimplesNacional::class)]
-    public ?OpcaoSimplesNacional $opcaoSimplesNacional = null;
+    public $opcaoSimplesNacional = null;
 
     /**
      * Regime de apuração dos tributos (SN).
@@ -28,8 +42,7 @@ class RegimeTributarioData extends Dto
      * 1 - Regime de apuração dos tributos federais e municipal pelo SN
      * 2 - Regime de apuração dos tributos federais pelo SN e municipal pelo regime normal (ISSQN)
      */
-    #[MapFrom('regApTribSN'), CastWith(EnumCaster::class, enumType: RegimeApuracaoSN::class)]
-    public ?RegimeApuracaoSN $regimeApuracaoTributosSn = null;
+    public $regimeApuracaoTributosSn = null;
 
     /**
      * Regime de apuração do IBS e da CBS para optantes do Simples Nacional.
@@ -39,8 +52,7 @@ class RegimeTributarioData extends Dto
      * 2 - CBS apurada pelo SN e IBS pelo regime regular;
      * 3 - IBS e CBS apurados pelo regime regular.
      */
-    #[MapFrom('regApIBSCBSSN'), CastWith(EnumCaster::class, enumType: RegimeApuracaoIbsCbsSn::class)]
-    public ?RegimeApuracaoIbsCbsSn $regimeApuracaoIbsCbsSn = null;
+    public $regimeApuracaoIbsCbsSn = null;
 
     /**
      * Regime Especial de Tributação.
@@ -52,6 +64,5 @@ class RegimeTributarioData extends Dto
      * 5 - Profissional Autônomo
      * 6 - Sociedade de Profissionais
      */
-    #[MapFrom('regEspTrib'), CastWith(EnumCaster::class, enumType: RegimeEspecialTributacao::class)]
-    public ?RegimeEspecialTributacao $regimeEspecialTributacao = null;
+    public $regimeEspecialTributacao = null;
 }

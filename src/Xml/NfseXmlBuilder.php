@@ -14,9 +14,9 @@ use Nfse\Support\SchemaText;
 
 class NfseXmlBuilder
 {
-    private DOMDocument $dom;
+    private $dom;
 
-    private DpsXmlBuilder $dpsBuilder;
+    private $dpsBuilder;
 
     public function __construct()
     {
@@ -230,7 +230,7 @@ class NfseXmlBuilder
         return $value !== null ? number_format($value, 2, '.', '') : null;
     }
 
-    private function appendElement(DOMElement $parent, string $name, mixed $value): void
+    private function appendElement(DOMElement $parent, string $name, $value): void
     {
         if ($value instanceof \BackedEnum) {
             $value = $value->value;

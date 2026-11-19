@@ -12,14 +12,23 @@ use Nfse\Dto\Dto;
  */
 class ConsultaEventoResponse extends Dto
 {
-    public ?int $tipoAmbiente = null;
+    public static $__mapFrom = array();
 
-    public ?string $versaoAplicativo = null;
+    public static $__propertyTypes = array(
+        'tipoAmbiente' => '?int',
+        'versaoAplicativo' => '?string',
+        'dataHoraProcessamento' => '?string',
+        'eventos' => 'array',
+    );
 
-    public ?string $dataHoraProcessamento = null;
+    public $tipoAmbiente = null;
+
+    public $versaoAplicativo = null;
+
+    public $dataHoraProcessamento = null;
 
     /** @var EventoDto[] */
-    public array $eventos = [];
+    public $eventos = array();
 
     /**
      * Primeiro evento da lista, se a consulta retornou algum.
@@ -29,6 +38,6 @@ class ConsultaEventoResponse extends Dto
      */
     public function primeiroEvento(): ?EventoDto
     {
-        return $this->eventos[0] ?? null;
+        return isset($this->eventos[0]) ? $this->eventos[0] : null;
     }
 }

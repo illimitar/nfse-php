@@ -6,13 +6,13 @@ use Nfse\Dto\Dto;
 
 class ConsultaDpsResponse extends Dto
 {
-    public ?int $tipoAmbiente = null;
+    public $tipoAmbiente = null;
 
-    public ?string $versaoAplicativo = null;
+    public $versaoAplicativo = null;
 
-    public ?string $dataHoraProcessamento = null;
+    public $dataHoraProcessamento = null;
 
-    public ?string $idDps = null;
+    public $idDps = null;
 
-    public ?string $chaveAcesso = null;
+    public $chaveAcesso = null;
 }

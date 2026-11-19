@@ -7,15 +7,25 @@ use Spatie\DataTransferObject\Attributes\MapFrom;
 
 class AliquotaDto extends Dto
 {
-    #[MapFrom('Incidencia')]
-    public ?string $incidencia = null;
+    public static $__mapFrom = array (
+  'incidencia' => 'Incidencia',
+  'aliquota' => 'Aliq',
+  'dataInicio' => 'DtIni',
+  'dataFim' => 'DtFim'
+);
+    public static $__propertyTypes = array (
+  'incidencia' => '?string',
+  'aliquota' => '?float',
+  'dataInicio' => '?string',
+  'dataFim' => '?string'
+);
 
-    #[MapFrom('Aliq')]
-    public ?float $aliquota = null;
 
-    #[MapFrom('DtIni')]
-    public ?string $dataInicio = null;
+    public $incidencia = null;
 
-    #[MapFrom('DtFim')]
-    public ?string $dataFim = null;
+    public $aliquota = null;
+
+    public $dataInicio = null;
+
+    public $dataFim = null;
 }

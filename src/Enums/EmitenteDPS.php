@@ -7,33 +7,40 @@ namespace Nfse\Enums;
  *
  * Baseado no schema: TSEmitenteDPS
  */
-enum EmitenteDPS: string
+final class EmitenteDPS
 {
+    const Prestador = '1';
+    const Tomador = '2';
+    const Intermediario = '3';
+
+    private function __construct()
+    {
+    }
+
     /**
      * Prestador
      */
-    case Prestador = '1';
-
     /**
      * Tomador
      */
-    case Tomador = '2';
-
     /**
      * Intermediário
      */
-    case Intermediario = '3';
-
     /**
      * Get description for the enum case
      */
     public function getDescription(): string
     {
-        return match ($this) {
-            self::Prestador => 'Prestador',
-            self::Tomador => 'Tomador',
-            self::Intermediario => 'Intermediário',
-        };
+        return (call_user_func(function () {
+    switch ($this) {
+    case self::Prestador:
+        return 'Prestador';
+    case self::Tomador:
+        return 'Tomador';
+    case self::Intermediario:
+        return 'Intermediário';
+    }
+}));
     }
 
     /**

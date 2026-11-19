@@ -7,33 +7,40 @@ namespace Nfse\Enums;
  *
  * Baseado no schema: TSProcEmissao
  */
-enum ProcessoEmissao: string
+final class ProcessoEmissao
 {
+    const WebService = '1';
+    const WebFisco = '2';
+    const AppFisco = '3';
+
+    private function __construct()
+    {
+    }
+
     /**
      * Emissão com aplicativo do contribuinte (via Web Service)
      */
-    case WebService = '1';
-
     /**
      * Emissão com aplicativo disponibilizado pelo fisco (Web)
      */
-    case WebFisco = '2';
-
     /**
      * Emissão com aplicativo disponibilizado pelo fisco (App)
      */
-    case AppFisco = '3';
-
     /**
      * Get description for the enum case
      */
     public function getDescription(): string
     {
-        return match ($this) {
-            self::WebService => 'Emissão com aplicativo do contribuinte (via Web Service)',
-            self::WebFisco => 'Emissão com aplicativo disponibilizado pelo fisco (Web)',
-            self::AppFisco => 'Emissão com aplicativo disponibilizado pelo fisco (App)',
-        };
+        return (call_user_func(function () {
+    switch ($this) {
+    case self::WebService:
+        return 'Emissão com aplicativo do contribuinte (via Web Service)';
+    case self::WebFisco:
+        return 'Emissão com aplicativo disponibilizado pelo fisco (Web)';
+    case self::AppFisco:
+        return 'Emissão com aplicativo disponibilizado pelo fisco (App)';
+    }
+}));
     }
 
     /**

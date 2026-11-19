@@ -7,27 +7,34 @@ namespace Nfse\Enums;
  *
  * Baseado no schema: TSTipoAmbiente
  */
-enum TipoAmbiente: string
+final class TipoAmbiente
 {
+    const Producao = '1';
+    const Homologacao = '2';
+
+    private function __construct()
+    {
+    }
+
     /**
      * Produção
      */
-    case Producao = '1';
-
     /**
      * Homologação
      */
-    case Homologacao = '2';
-
     /**
      * Get description for the enum case
      */
     public function getDescription(): string
     {
-        return match ($this) {
-            self::Producao => 'Produção',
-            self::Homologacao => 'Homologação',
-        };
+        return (call_user_func(function () {
+    switch ($this) {
+    case self::Producao:
+        return 'Produção';
+    case self::Homologacao:
+        return 'Homologação';
+    }
+}));
     }
 
     /**

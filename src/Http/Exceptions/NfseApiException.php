@@ -7,10 +7,10 @@ use Nfse\Dto\Http\MensagemProcessamentoDto;
 
 class NfseApiException extends Exception
 {
-    private ?string $rawResponse = null;
+    private $rawResponse = null;
 
     /** @var MensagemProcessamentoDto[] */
-    private array $errors = [];
+    private $errors = [];
 
     public function getRawResponse(): ?string
     {

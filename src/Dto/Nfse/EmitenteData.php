@@ -7,51 +7,65 @@ use Spatie\DataTransferObject\Attributes\MapFrom;
 
 class EmitenteData extends Dto
 {
+    public static $__mapFrom = array (
+  'cnpj' => 'CNPJ',
+  'cpf' => 'CPF',
+  'inscricaoMunicipal' => 'IM',
+  'nome' => 'xNome',
+  'nomeFantasia' => 'xFant',
+  'endereco' => 'enderNac',
+  'telefone' => 'fone',
+  'email' => 'email'
+);
+    public static $__propertyTypes = array (
+  'cnpj' => '?string',
+  'cpf' => '?string',
+  'inscricaoMunicipal' => '?string',
+  'nome' => '?string',
+  'nomeFantasia' => '?string',
+  'endereco' => '?EnderecoEmitenteData',
+  'telefone' => '?string',
+  'email' => '?string'
+);
+
+
     /**
      * CNPJ do emitente.
      */
-    #[MapFrom('CNPJ')]
-    public ?string $cnpj = null;
+    public $cnpj = null;
 
     /**
      * CPF do emitente.
      */
-    #[MapFrom('CPF')]
-    public ?string $cpf = null;
+    public $cpf = null;
 
     /**
      * Inscrição Municipal do emitente.
      */
-    #[MapFrom('IM')]
-    public ?string $inscricaoMunicipal = null;
+    public $inscricaoMunicipal = null;
 
     /**
      * Razão Social ou Nome do emitente.
      */
-    #[MapFrom('xNome')]
-    public ?string $nome = null;
+    public $nome = null;
 
     /**
      * Nome Fantasia do emitente.
      */
-    #[MapFrom('xFant')]
-    public ?string $nomeFantasia = null;
+    public $nomeFantasia = null;
 
     /**
      * Endereço do emitente.
      */
-    #[MapFrom('enderNac')]
-    public ?EnderecoEmitenteData $endereco = null;
+    public $endereco = null;
 
     /**
      * Telefone do emitente.
      */
-    #[MapFrom('fone')]
-    public ?string $telefone = null;
+    public $telefone = null;
 
     /**
      * Email do emitente.
      */
-    #[MapFrom('email')]
-    public ?string $email = null;
+    public $email = null;
 }

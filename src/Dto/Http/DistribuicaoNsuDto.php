@@ -7,12 +7,21 @@ use Spatie\DataTransferObject\Attributes\MapFrom;
 
 class DistribuicaoNsuDto extends Dto
 {
-    #[MapFrom('NSU')]
-    public ?int $nsu = null;
+    public static $__mapFrom = array (
+  'nsu' => 'NSU',
+  'chaveAcesso' => 'chAcesso',
+  'dfeXmlGZipB64' => 'dfeXmlGZipB64'
+);
+    public static $__propertyTypes = array (
+  'nsu' => '?int',
+  'chaveAcesso' => '?string',
+  'dfeXmlGZipB64' => '?string'
+);
 
-    #[MapFrom('chAcesso')]
-    public ?string $chaveAcesso = null;
 
-    #[MapFrom('dfeXmlGZipB64')]
-    public ?string $dfeXmlGZipB64 = null;
+    public $nsu = null;
+
+    public $chaveAcesso = null;
+
+    public $dfeXmlGZipB64 = null;
 }

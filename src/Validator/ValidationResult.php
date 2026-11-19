@@ -4,10 +4,12 @@ namespace Nfse\Validator;
 
 class ValidationResult
 {
-    public function __construct(
-        public readonly bool $isValid,
-        public readonly array $errors = []
-    ) {}
+    public $isValid;
+    public $errors;
+
+    public function __construct(bool $isValid, array $errors = []) {
+        $this->isValid = $isValid;
+        $this->errors = $errors;}
 
     public static function success(): self
     {

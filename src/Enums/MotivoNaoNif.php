@@ -7,27 +7,34 @@ namespace Nfse\Enums;
  *
  * Baseado no schema: TSCNaoNIF
  */
-enum MotivoNaoNif: string
+final class MotivoNaoNif
 {
+    const Dispensado = '1';
+    const NaoExigencia = '2';
+
+    private function __construct()
+    {
+    }
+
     /**
      * Dispensado do NIF
      */
-    case Dispensado = '1';
-
     /**
      * Não exigência do NIF
      */
-    case NaoExigencia = '2';
-
     /**
      * Get description for the enum case
      */
     public function getDescription(): string
     {
-        return match ($this) {
-            self::Dispensado => 'Dispensado do NIF',
-            self::NaoExigencia => 'Não exigência do NIF',
-        };
+        return (call_user_func(function () {
+    switch ($this) {
+    case self::Dispensado:
+        return 'Dispensado do NIF';
+    case self::NaoExigencia:
+        return 'Não exigência do NIF';
+    }
+}));
     }
 
     /**

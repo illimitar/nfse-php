@@ -19,114 +19,114 @@ use Nfse\Dto\Nfse\ValorServicoPrestadoData;
 
 try {
     $infDps = new InfDpsData(
-        id: 'DPS123',
-        tipoAmbiente: 2,
-        dataEmissao: '2023-10-27T10:00:00',
-        versaoAplicativo: '1.0',
-        serie: '1',
-        numeroDps: '1001',
-        dataCompetencia: '2023-10-27',
-        tipoEmitente: 1,
-        codigoLocalEmissao: '3550308',
-        substituicao: new SubstituicaoData(
-            chaveSubstituida: 'NFS123',
-            codigoMotivo: '01',
-            descricaoMotivo: 'Erro de preenchimento'
+        'DPS123',
+        2,
+        '2023-10-27T10:00:00',
+        '1.0',
+        '1',
+        '1001',
+        '2023-10-27',
+        1,
+        '3550308',
+        new SubstituicaoData(
+            'NFS123',
+            '01',
+            'Erro de preenchimento'
         ),
-        prestador: new PrestadorData(
-            cnpj: '12345678000199',
-            cpf: null,
-            nif: null,
-            codigoNaoNif: null,
-            caepf: null,
-            inscricaoMunicipal: '12345',
-            nome: 'Prestador Exemplo Ltda',
-            endereco: new EnderecoData(
-                logradouro: 'Exemplo',
-                numero: '100',
-                bairro: 'Centro',
-                codigoMunicipio: '3550308',
-                cep: '01001000'
+        new PrestadorData(
+            '12345678000199',
+            null,
+            null,
+            null,
+            null,
+            '12345',
+            'Prestador Exemplo Ltda',
+            new EnderecoData(
+                'Exemplo',
+                '100',
+                'Centro',
+                '3550308',
+                '01001000'
             ),
-            telefone: '11999999999',
-            email: 'prestador@example.com',
-            regimeTributario: new RegimeTributarioData(
-                opcaoSimplesNacional: 1,
-                regimeApuracaoTributariaSN: 0,
-                regimeEspecialTributacao: 0
+            '11999999999',
+            'prestador@example.com',
+            new RegimeTributarioData(
+                1,
+                0,
+                0
             )
         ),
-        tomador: new TomadorData(
-            cpf: '11122233344',
-            cnpj: null,
-            nif: null,
-            codigoNaoNif: null,
-            caepf: null,
-            inscricaoMunicipal: null,
-            nome: 'Tomador Exemplo',
-            endereco: new EnderecoData(
-                logradouro: 'Brasil',
-                numero: '200',
-                bairro: 'Jardins',
-                codigoMunicipio: '3550308',
-                cep: '01002000'
+        new TomadorData(
+            '11122233344',
+            null,
+            null,
+            null,
+            null,
+            null,
+            'Tomador Exemplo',
+            new EnderecoData(
+                'Brasil',
+                '200',
+                'Jardins',
+                '3550308',
+                '01002000'
             ),
-            telefone: '11888888888',
-            email: 'tomador@example.com'
+            '11888888888',
+            'tomador@example.com'
         ),
-        intermediario: new IntermediarioData(
-            cnpj: '98765432000100',
-            cpf: null,
-            nif: null,
-            codigoNaoNif: null,
-            caepf: null,
-            inscricaoMunicipal: '54321',
-            nome: 'Intermediario Ltda',
-            endereco: new EnderecoData(
-                logradouro: 'Meio',
-                numero: '50',
-                bairro: 'Centro',
-                codigoMunicipio: '3550308',
-                cep: '01003000'
+        new IntermediarioData(
+            '98765432000100',
+            null,
+            null,
+            null,
+            null,
+            '54321',
+            'Intermediario Ltda',
+            new EnderecoData(
+                'Meio',
+                '50',
+                'Centro',
+                '3550308',
+                '01003000'
             ),
-            telefone: '11777777777',
-            email: 'interm@example.com'
+            '11777777777',
+            'interm@example.com'
         ),
-        servico: new ServicoData(
-            localPrestacao: new LocalPrestacaoData(
-                codigoLocalPrestacao: '3550308',
-                codigoPaisPrestacao: 'BR'
+        new ServicoData(
+            new LocalPrestacaoData(
+                '3550308',
+                'BR'
             ),
-            codigoServico: new CodigoServicoData(
-                codigoTributacaoNacional: '1.01',
-                codigoTributacaoMunicipal: '1010',
-                descricaoServico: 'Analise de sistemas',
-                codigoNbs: '1234',
-                codigoInternoContribuinte: 'SERV001'
+            new CodigoServicoData(
+                '1.01',
+                '1010',
+                'Analise de sistemas',
+                '1234',
+                'SERV001'
             ),
-            comercioExterior: null,
-            obra: null,
-            atividadeEvento: null,
-            informacoesComplementares: 'Serviço prestado com excelência',
-            idDocumentoTecnico: null,
-            documentoReferencia: null,
-            descricaoInformacoesComplementares: null
+            null,
+            null,
+            null,
+            'Serviço prestado com excelência',
+            null,
+            null,
+            null
         ),
-        valores: new ValoresData(
-            valorServicoPrestado: new ValorServicoPrestadoData(
-                valorRecebido: 1000.00,
-                valorServico: 1000.00
+        new ValoresData(
+            new ValorServicoPrestadoData(
+                1000.00,
+                1000.00
             ),
-            desconto: new DescontoData(
-                valorDescontoIncondicionado: 0.0,
-                valorDescontoCondicionado: 0.0
+            new DescontoData(
+                0.0,
+                0.0
             ),
-            deducaoReducao: null,
-            tributacao: new TributacaoData(
-                tributacaoIssqn: 1,
-                tipoRetencaoIssqn: 1,
-                cstPisCofins: null,
-                percentualTotalTributosSN: null
+            null,
+            new TributacaoData(
+                1,
+                1,
+                null,
+                null
             )
         )
     );

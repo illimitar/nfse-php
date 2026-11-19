@@ -5,24 +5,31 @@ namespace Nfse\Enums;
 /**
  * Tipo de Suspensão da Exigibilidade do ISSQN
  */
-enum TipoSuspensao: int
+final class TipoSuspensao
 {
+    const DecisaoJudicial = 1;
+    const DecisaoAdministrativa = 2;
+
+    private function __construct()
+    {
+    }
+
     /**
      * Suspenso por decisão judicial
      */
-    case DecisaoJudicial = 1;
-
     /**
      * Suspenso por decisão administrativa
      */
-    case DecisaoAdministrativa = 2;
-
     public function getDescription(): string
     {
-        return match ($this) {
-            self::DecisaoJudicial => 'Suspenso por decisão judicial',
-            self::DecisaoAdministrativa => 'Suspenso por decisão administrativa',
-        };
+        return (call_user_func(function () {
+    switch ($this) {
+    case self::DecisaoJudicial:
+        return 'Suspenso por decisão judicial';
+    case self::DecisaoAdministrativa:
+        return 'Suspenso por decisão administrativa';
+    }
+}));
     }
 
     public function label(): string
