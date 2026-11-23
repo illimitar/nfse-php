@@ -58,8 +58,8 @@ final class TipoOperacaoRtc
     /**
      * Indica se o tipo de operação exige o grupo de NFS-e referenciadas.
      */
-    public function exigeNfseReferenciada(): bool
+    public static function exigeNfseReferenciada($tipo): bool
     {
-        return in_array($this, [self::RecebimentoFornecimentoRealizado, self::FornecimentoPagamentoRealizado], true);
+        return in_array($tipo, [self::RecebimentoFornecimentoRealizado, self::FornecimentoPagamentoRealizado], true);
     }
 }

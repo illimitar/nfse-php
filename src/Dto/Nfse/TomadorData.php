@@ -19,7 +19,17 @@ class TomadorData extends Dto
   'nome' => 'xNome',
   'endereco' => 'end',
   'telefone' => 'fone',
-  'email' => 'email'
+  'email' => 'email',
+  'codigoNaoNif' => 'cNaoNIF'
+);
+    /** @var array */
+    public static $__castWith = array (
+  'codigoNaoNif' => array (
+    'caster' => 'Nfse\Support\DTO\EnumCaster',
+    'args' => array (
+      'enumType' => 'Nfse\Enums\MotivoNaoNif'
+    )
+  )
 );
     public static $__propertyTypes = array (
   'cpf' => '?string',

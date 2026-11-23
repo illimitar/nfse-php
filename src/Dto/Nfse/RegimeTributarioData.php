@@ -19,6 +19,33 @@ class RegimeTributarioData extends Dto
       'regimeApuracaoIbsCbsSn' => 'regApIBSCBSSN',
       'regimeEspecialTributacao' => 'regEspTrib'
     );
+    /** @var array */
+    public static $__castWith = array (
+  'opcaoSimplesNacional' => array (
+    'caster' => 'Nfse\Support\DTO\EnumCaster',
+    'args' => array (
+      'enumType' => 'Nfse\Enums\OpcaoSimplesNacional'
+    )
+  ),
+  'regimeApuracaoTributosSn' => array (
+    'caster' => 'Nfse\Support\DTO\EnumCaster',
+    'args' => array (
+      'enumType' => 'Nfse\Enums\RegimeApuracaoSN'
+    )
+  ),
+  'regimeApuracaoIbsCbsSn' => array (
+    'caster' => 'Nfse\Support\DTO\EnumCaster',
+    'args' => array (
+      'enumType' => 'Nfse\Enums\RegimeApuracaoIbsCbsSn'
+    )
+  ),
+  'regimeEspecialTributacao' => array (
+    'caster' => 'Nfse\Support\DTO\EnumCaster',
+    'args' => array (
+      'enumType' => 'Nfse\Enums\RegimeEspecialTributacao'
+    )
+  )
+);
     
     public static $__propertyTypes = array (
       'opcaoSimplesNacional' => '?OpcaoSimplesNacional',

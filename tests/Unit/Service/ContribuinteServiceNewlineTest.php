@@ -35,9 +35,12 @@ it('removes newlines from signed xml before emission', function () {
     // Inject mocks into the service
     $reflection = new ReflectionClass(ContribuinteService::class);
     $sefinProperty = $reflection->getProperty('sefinClient');
+    $sefinProperty->setAccessible(true);
     $sefinProperty->setValue($service, $sefinClientMock);
 
     $adnProperty = $reflection->getProperty('adnClient');
+
+    $adnProperty->setAccessible(true);
     $adnProperty->setValue($service, $adnClientMock);
 
     // Setup the mock signer to return XML WITHOUT newlines (matching real XmlSigner behavior)

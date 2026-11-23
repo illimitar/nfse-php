@@ -27,7 +27,38 @@ class IbscbsData extends Dto
   'codigoClassificacaoTributariaRegular' => 'valores.trib.gIBSCBS.gTribRegular.cClassTribReg',
   'percentualDiferimentoUf' => 'valores.trib.gIBSCBS.gDif.pDifUF',
   'percentualDiferimentoMunicipal' => 'valores.trib.gIBSCBS.gDif.pDifMun',
-  'percentualDiferimentoCbs' => 'valores.trib.gIBSCBS.gDif.pDifCBS'
+  'percentualDiferimentoCbs' => 'valores.trib.gIBSCBS.gDif.pDifCBS',
+  'tipoOperacao' => 'tpOper',
+  'tipoEnteGovernamental' => 'tpEnteGov',
+  'indicadorDestinatario' => 'indDest',
+  'documentosReembolso' => 'valores.gReeRepRes.documentos'
+);
+    /** @var array */
+    public static $__castWith = array (
+  'tipoOperacao' => array (
+    'caster' => 'Nfse\Support\DTO\EnumCaster',
+    'args' => array (
+      'enumType' => 'Nfse\Enums\TipoOperacaoRtc'
+    )
+  ),
+  'tipoEnteGovernamental' => array (
+    'caster' => 'Nfse\Support\DTO\EnumCaster',
+    'args' => array (
+      'enumType' => 'Nfse\Enums\TipoEnteGovernamental'
+    )
+  ),
+  'indicadorDestinatario' => array (
+    'caster' => 'Nfse\Support\DTO\EnumCaster',
+    'args' => array (
+      'enumType' => 'Nfse\Enums\IndicadorDestinatario'
+    )
+  ),
+  'documentosReembolso' => array (
+    'caster' => 'Nfse\Support\DTO\ArrayCaster',
+    'args' => array (
+      'itemType' => 'Nfse\Dto\Nfse\ReembolsoDocumentoData'
+    )
+  )
 );
     public static $__propertyTypes = array (
   'finalidadeNfse' => '?string',

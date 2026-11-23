@@ -14,7 +14,8 @@ use ReflectionClass;
 
 class AdnClientTest extends TestCase
 {
-    private MockHandler $mock;
+    /** @var MockHandler */
+    private $mock;
 
     private function createClientWithMock(array $responses, ?NfseContext $context = null): AdnClient
     {
@@ -22,7 +23,7 @@ class AdnClientTest extends TestCase
         $handlerStack = HandlerStack::create($this->mock);
         $httpClient = new Client(['handler' => $handlerStack]);
 
-        $context ??= new NfseContext(
+        $context = $context ?? new NfseContext(
             TipoAmbiente::Homologacao,
             'fake/path.pfx',
             'password'
@@ -32,6 +33,7 @@ class AdnClientTest extends TestCase
 
         $reflection = new ReflectionClass($client);
         $property = $reflection->getProperty('httpClient');
+        $property->setAccessible(true);
 
         $property->setValue($client, $httpClient);
 

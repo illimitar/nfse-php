@@ -90,6 +90,7 @@ class NfseApiExceptionTest extends TestCase
         $client = new SefinClient($context);
         $reflection = new ReflectionClass($client);
         $property = $reflection->getProperty('httpClient');
+        $property->setAccessible(true);
         $property->setValue($client, $httpClient);
 
         return $client;

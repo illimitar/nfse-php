@@ -42,19 +42,29 @@ class ContribuinteServiceTest extends TestCase
         $reflection = new ReflectionClass($this->service);
 
         $sefinProperty = $reflection->getProperty('sefinClient');
+
+        $sefinProperty->setAccessible(true);
         $sefinProperty->setValue($this->service, $this->sefinClientMock);
 
         $adnProperty = $reflection->getProperty('adnClient');
+
+        $adnProperty->setAccessible(true);
         $adnProperty->setValue($this->service, $this->adnClientMock);
     }
 
     public function test_signing_with_nss_only_throws_clear_exception(): void
     {
         $service = new ContribuinteService(new NfseContext(
-            ambiente: TipoAmbiente::Homologacao,
-            nssCertificateSelector: 'NSS Certificate DB:Test Certificate'
+            TipoAmbiente::Homologacao,
+            null,
+            '',
+            null,
+            null,
+            null,
+            'NSS Certificate DB:Test Certificate'
         ));
         $method = (new ReflectionClass($service))->getMethod('makeCertificate');
+        $method->setAccessible(true);
 
         $this->expectException(\LogicException::class);
         $this->expectExceptionMessage('XML signing requires a PFX certificate');

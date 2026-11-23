@@ -8,7 +8,6 @@ it('casts cStat to CodigoStatus enum', function () {
         'cStat' => 100,
     ]);
 
-    expect($data->codigoStatus)->toBeInstanceOf(CodigoStatus::class);
     expect($data->codigoStatus)->toBe(CodigoStatus::NfseGerada);
 });
 
@@ -17,6 +16,5 @@ it('casts cStat to CodigoStatus enum when value is string', function () {
         'cStat' => '100',
     ]);
 
-    expect($data->codigoStatus)->toBeInstanceOf(CodigoStatus::class);
     expect($data->codigoStatus)->toBe(CodigoStatus::NfseGerada);
 });

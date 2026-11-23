@@ -26,7 +26,7 @@ it('gives up after the retry limit', function () {
         new Response(503),
     ]);
 
-    expect(fn () => (new Client(['handler' => Retry::stack($mock)]))->get('/danfse/123'))
+    expect(function () use ($mock) { return (new Client(['handler' => Retry::stack($mock)]))->get('/danfse/123'); })
         ->toThrow(ServerException::class);
 
     expect($mock->count())->toBe(0);
@@ -38,7 +38,7 @@ it('never retries a POST, to avoid duplicating NFS-e', function () {
         new Response(200, [], 'ok'),
     ]);
 
-    expect(fn () => (new Client(['handler' => Retry::stack($mock)]))->post('/nfse'))
+    expect(function () use ($mock) { return (new Client(['handler' => Retry::stack($mock)]))->post('/nfse'); })
         ->toThrow(ServerException::class);
 
     expect($mock->count())->toBe(1);

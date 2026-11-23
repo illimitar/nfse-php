@@ -19,6 +19,48 @@ abstract class Dto extends DataTransferObject
         $input = $this->normalizeInput($input);
 
         parent::__construct($input);
+
+        $this->converterTiposEscalares();
+    }
+
+    /**
+     * No PHP 7.3 as propriedades não têm tipo. Reproduz a conversão automática do PHP 8
+     * ('950.00' => 950.0 em ?float, '1' => 1 em ?int, 100 => '100' em ?string),
+     * usando os tipos simples declarados em $__propertyTypes.
+     *
+     * @return void
+     */
+    private function converterTiposEscalares()
+    {
+        foreach (static::$__propertyTypes as $nome => $tipo) {
+            $valor = $this->{$nome};
+
+            if ($valor === null || !is_scalar($valor)) {
+                continue;
+            }
+
+            switch (ltrim($tipo, '?')) {
+                case 'int':
+                case 'integer':
+                    if (is_numeric($valor)) {
+                        $this->{$nome} = (int) $valor;
+                    }
+                    break;
+                case 'float':
+                case 'double':
+                    if (is_numeric($valor)) {
+                        $this->{$nome} = (float) $valor;
+                    }
+                    break;
+                case 'string':
+                    $this->{$nome} = (string) $valor;
+                    break;
+                case 'bool':
+                case 'boolean':
+                    $this->{$nome} = (bool) $valor;
+                    break;
+            }
+        }
     }
 
     /**

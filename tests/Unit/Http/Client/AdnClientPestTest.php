@@ -34,6 +34,7 @@ it('sends correct tipoNSU query parameter in baixarDfeMunicipio', function () {
     $client = new AdnClient($context);
     $reflection = new ReflectionClass($client);
     $property = $reflection->getProperty('httpClient');
+    $property->setAccessible(true);
     $property->setValue($client, $httpClient);
 
     $client->baixarDfeMunicipio(100, TipoNsu::Geral);

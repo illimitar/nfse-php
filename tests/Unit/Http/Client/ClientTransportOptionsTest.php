@@ -15,7 +15,7 @@ it('configures TLS and timeouts through Guzzle request options, not raw cURL opt
     $mock = new MockHandler([new Response(200, [], '{}')]);
     $client = new $clientClass(new NfseContext(TipoAmbiente::Homologacao, 'fake/path.pfx', 'password'));
 
-    $httpClient = (new ReflectionClass($client))->getProperty('httpClient')->getValue($client);
+    $httpClient = (function ($client) { $p = (new ReflectionClass($client))->getProperty('httpClient'); $p->setAccessible(true); return $p->getValue($client); })($client);
     $httpClient->getConfig('handler')->setHandler($mock);
 
     $httpClient->get('/');

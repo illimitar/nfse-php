@@ -40,6 +40,7 @@ class SefinClientConsultarEventoTest extends TestCase
 
         $reflection = new ReflectionClass($client);
         $property = $reflection->getProperty('httpClient');
+        $property->setAccessible(true);
 
         $property->setValue($client, $httpClient);
 
@@ -124,8 +125,8 @@ class SefinClientConsultarEventoTest extends TestCase
     public function test_arquivo_xml_ausente_ou_invalido_nao_quebra_a_decodificacao(): void
     {
         $this->assertNull((new EventoDto)->arquivoXmlDecodificado());
-        $this->assertNull((new EventoDto(arquivoXml: 'nao-e-base64'))->arquivoXmlDecodificado());
-        $this->assertNull((new EventoDto(arquivoXml: base64_encode('nao-e-gzip')))->arquivoXmlDecodificado());
+        $this->assertNull((new EventoDto(['arquivoXml' => 'nao-e-base64']))->arquivoXmlDecodificado());
+        $this->assertNull((new EventoDto(['arquivoXml' => base64_encode('nao-e-gzip')]))->arquivoXmlDecodificado());
     }
 
     public function test_listar_eventos_nao_existe_na_api(): void

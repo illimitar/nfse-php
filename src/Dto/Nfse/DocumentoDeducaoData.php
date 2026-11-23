@@ -17,7 +17,17 @@ class DocumentoDeducaoData extends Dto
   'dataEmissaoDocumento' => 'dEmiDoc',
   'valorDedutivelRedutivel' => 'vDedutivelRedutivel',
   'valorDeducaoReducao' => 'vDeducaoReducao',
-  'fornecedor' => 'fornec'
+  'fornecedor' => 'fornec',
+  'tipoDeducaoReducao' => 'tpDedRed'
+);
+    /** @var array */
+    public static $__castWith = array (
+  'tipoDeducaoReducao' => array (
+    'caster' => 'Nfse\Support\DTO\EnumCaster',
+    'args' => array (
+      'enumType' => 'Nfse\Enums\TipoDeducaoReducao'
+    )
+  )
 );
     public static $__propertyTypes = array (
   'chaveNfse' => '?string',

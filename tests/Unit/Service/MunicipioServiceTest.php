@@ -38,9 +38,13 @@ class MunicipioServiceTest extends TestCase
         $reflection = new ReflectionClass($this->service);
 
         $adnProperty = $reflection->getProperty('adnClient');
+
+        $adnProperty->setAccessible(true);
         $adnProperty->setValue($this->service, $this->adnClientMock);
 
         $cncProperty = $reflection->getProperty('cncClient');
+
+        $cncProperty->setAccessible(true);
         $cncProperty->setValue($this->service, $this->cncClientMock);
     }
 
@@ -49,7 +53,7 @@ class MunicipioServiceTest extends TestCase
         $this->adnClientMock->expects($this->once())
             ->method('baixarDfeMunicipio')
             ->with(100)
-            ->willReturn(new \Nfse\Dto\Http\DistribuicaoDfeResponse(ultimoNsu: 100, listaNsu: []));
+            ->willReturn(new \Nfse\Dto\Http\DistribuicaoDfeResponse(['ultimoNsu' => 100, 'listaNsu' => []]));
 
         $result = $this->service->baixarDfe(100);
 
@@ -108,10 +112,10 @@ class MunicipioServiceTest extends TestCase
 
     public function test_consultar_parametros_convenio()
     {
-        $response = new \Nfse\Dto\Http\ResultadoConsultaConfiguracoesConvenioResponse(
-            mensagem: 'Sucesso',
-            parametrosConvenio: new \Nfse\Dto\Http\ParametrosConfiguracaoConvenioDto(tipoConvenio: 1)
-        );
+        $response = new \Nfse\Dto\Http\ResultadoConsultaConfiguracoesConvenioResponse([
+            'mensagem' => 'Sucesso',
+            'parametrosConvenio' => new \Nfse\Dto\Http\ParametrosConfiguracaoConvenioDto(['tipoConvenio' => 1]),
+        ]);
 
         $this->adnClientMock->expects($this->once())
             ->method('consultarParametrosConvenio')
@@ -126,10 +130,10 @@ class MunicipioServiceTest extends TestCase
 
     public function test_consultar_aliquota()
     {
-        $response = new \Nfse\Dto\Http\ResultadoConsultaAliquotasResponse(
-            mensagem: 'Sucesso',
-            aliquotas: ['01.01.00.001' => [new \Nfse\Dto\Http\AliquotaDto(aliquota: 5.0)]]
-        );
+        $response = new \Nfse\Dto\Http\ResultadoConsultaAliquotasResponse([
+            'mensagem' => 'Sucesso',
+            'aliquotas' => ['01.01.00.001' => [new \Nfse\Dto\Http\AliquotaDto(['aliquota' => 5.0])]],
+        ]);
 
         $this->adnClientMock->expects($this->once())
             ->method('consultarAliquota')
@@ -144,10 +148,10 @@ class MunicipioServiceTest extends TestCase
 
     public function test_consultar_historico_aliquotas()
     {
-        $response = new \Nfse\Dto\Http\ResultadoConsultaAliquotasResponse(
-            mensagem: 'Sucesso',
-            aliquotas: []
-        );
+        $response = new \Nfse\Dto\Http\ResultadoConsultaAliquotasResponse([
+            'mensagem' => 'Sucesso',
+            'aliquotas' => [],
+        ]);
 
         $this->adnClientMock->expects($this->once())
             ->method('consultarHistoricoAliquotas')

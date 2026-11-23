@@ -12,7 +12,7 @@ it('throws when content is empty', function () {
     $certificate = new Certificate($pfxPath, $password);
     $signer = new XmlSigner($certificate);
 
-    expect(fn () => $signer->sign('', 'infDPS'))->toThrow(\Exception::class, 'Conteúdo XML vazio.');
+    expect(function () use ($signer) { return $signer->sign('', 'infDPS'); })->toThrow(\Exception::class, 'Conteúdo XML vazio.');
 });
 
 it('throws when tag not found', function () {
@@ -24,7 +24,7 @@ it('throws when tag not found', function () {
 
     $xml = '<DPS></DPS>';
 
-    expect(fn () => $signer->sign($xml, 'infDPS'))->toThrow(\Exception::class, 'Tag infDPS não encontrada para assinatura.');
+    expect(function () use ($signer, $xml) { return $signer->sign($xml, 'infDPS'); })->toThrow(\Exception::class, 'Tag infDPS não encontrada para assinatura.');
 });
 
 it('throws when mark attribute is present but empty', function () {
@@ -39,7 +39,7 @@ it('throws when mark attribute is present but empty', function () {
     <infDPS Id=""></infDPS>
 </DPS>';
 
-    expect(fn () => $signer->sign($xml, 'infDPS'))->toThrow(\Exception::class, "Tag a ser assinada deve possuir um atributo 'Id'.");
+    expect(function () use ($signer, $xml) { return $signer->sign($xml, 'infDPS'); })->toThrow(\Exception::class, "Tag a ser assinada deve possuir um atributo 'Id'.");
 });
 
 it('can sign when using a custom mark attribute', function () {

@@ -16,6 +16,15 @@ class CodigoServicoData extends Dto
   'codigoCnae' => 'cCNAE',
   'codigoInternoContribuinte' => 'cIntContrib'
 );
+    /** @var array */
+    public static $__castWith = array (
+  'codigoAtividadeSimplesNacional' => array (
+    'caster' => 'Nfse\Support\DTO\EnumCaster',
+    'args' => array (
+      'enumType' => 'Nfse\Enums\CodigoAtividadeSimplesNacional'
+    )
+  )
+);
     public static $__propertyTypes = array (
   'codigoTributacaoNacional' => '?string',
   'codigoTributacaoMunicipal' => '?string',

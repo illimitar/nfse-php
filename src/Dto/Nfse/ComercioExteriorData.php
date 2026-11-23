@@ -27,7 +27,31 @@ class ComercioExteriorData extends Dto
   'mecanismoApoioComexTomador' => 'mecAFComexT',
   'numeroDeclaracaoImportacao' => 'nDI',
   'numeroRegistroExportacao' => 'nRE',
-  'mdic' => 'mdic'
+  'mdic' => 'mdic',
+  'modoPrestacao' => 'mdPrestacao',
+  'tipoPessoaExportador' => 'tpPessoaExport',
+  'movimentacaoTemporariaBens' => 'movTempBens'
+);
+    /** @var array */
+    public static $__castWith = array (
+  'modoPrestacao' => array (
+    'caster' => 'Nfse\Support\DTO\EnumCaster',
+    'args' => array (
+      'enumType' => 'Nfse\Enums\ModoPrestacao'
+    )
+  ),
+  'tipoPessoaExportador' => array (
+    'caster' => 'Nfse\Support\DTO\EnumCaster',
+    'args' => array (
+      'enumType' => 'Nfse\Enums\TipoPessoa'
+    )
+  ),
+  'movimentacaoTemporariaBens' => array (
+    'caster' => 'Nfse\Support\DTO\EnumCaster',
+    'args' => array (
+      'enumType' => 'Nfse\Enums\MovimentacaoTemporariaBens'
+    )
+  )
 );
     public static $__propertyTypes = array (
   'modoPrestacao' => '?ModoPrestacao',

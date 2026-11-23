@@ -17,12 +17,12 @@ it('can sign with custom parameters', function () {
 
     // Sign with custom parameters
     $signedXml = $signer->sign(
-        content: $xml,
-        tagname: 'infDPS',
-        mark: 'Id',
-        algorithm: OPENSSL_ALGO_SHA1,
-        canonical: [true, false, null, null],
-        rootname: 'DPS'
+        $xml,
+        'infDPS',
+        'Id',
+        OPENSSL_ALGO_SHA1,
+        [true, false, null, null],
+        'DPS'
     );
 
     expect($signedXml)->toContain('Signature xmlns')
@@ -44,9 +44,10 @@ it('can sign with SHA256 algorithm', function () {
 
     // Sign with SHA256
     $signedXml = $signer->sign(
-        content: $xml,
-        tagname: 'infDPS',
-        algorithm: OPENSSL_ALGO_SHA256
+        $xml,
+        'infDPS',
+        'Id',
+        OPENSSL_ALGO_SHA256
     );
 
     expect($signedXml)->toContain('Signature xmlns')
@@ -67,11 +68,14 @@ it('validates root element when rootname is specified', function () {
     $xml = file_get_contents($xmlPath);
 
     // Should throw exception when rootname doesn't match
-    expect(fn () => $signer->sign(
-        content: $xml,
-        tagname: 'infDPS',
-        rootname: 'NFSe'  // Wrong root element
-    ))->toThrow(\Exception::class, 'Elemento raiz esperado: NFSe, encontrado: DPS');
+    expect(function () use ($signer, $xml) { return $signer->sign(
+        $xml,
+        'infDPS',
+        'Id',
+        OPENSSL_ALGO_SHA1,
+        [true, false, null, null],
+        'NFSe'  // Wrong root element
+    ); })->toThrow(\Exception::class, 'Elemento raiz esperado: NFSe, encontrado: DPS');
 });
 
 it('throws exception when mark attribute is missing', function () {
@@ -89,8 +93,8 @@ it('throws exception when mark attribute is missing', function () {
 </DPS>';
 
     // Should throw exception when Id attribute is missing
-    expect(fn () => $signer->sign(
-        content: $xml,
-        tagname: 'infDPS'
-    ))->toThrow(\Exception::class, "Tag a ser assinada deve possuir um atributo 'Id'.");
+    expect(function () use ($signer, $xml) { return $signer->sign(
+        $xml,
+        'infDPS'
+    ); })->toThrow(\Exception::class, "Tag a ser assinada deve possuir um atributo 'Id'.");
 });

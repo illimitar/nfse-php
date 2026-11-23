@@ -42,6 +42,51 @@ class TributacaoData extends Dto
       'percentualTotalTributosMunicipais' => 'totTrib.pTotTrib.pTotTribMun',
       'indicadorTotalTributos' => 'totTrib.indTotTrib'
     );
+    /** @var array */
+    public static $__castWith = array (
+  'tributacaoIssqn' => array (
+    'caster' => 'Nfse\Support\DTO\EnumCaster',
+    'args' => array (
+      'enumType' => 'Nfse\Enums\TributacaoIssqn'
+    )
+  ),
+  'tipoImunidade' => array (
+    'caster' => 'Nfse\Support\DTO\EnumCaster',
+    'args' => array (
+      'enumType' => 'Nfse\Enums\TipoImunidade'
+    )
+  ),
+  'tipoRetencaoIssqn' => array (
+    'caster' => 'Nfse\Support\DTO\EnumCaster',
+    'args' => array (
+      'enumType' => 'Nfse\Enums\TipoRetencaoIssqn'
+    )
+  ),
+  'tipoSuspensao' => array (
+    'caster' => 'Nfse\Support\DTO\EnumCaster',
+    'args' => array (
+      'enumType' => 'Nfse\Enums\TipoSuspensao'
+    )
+  ),
+  'cstPisCofins' => array (
+    'caster' => 'Nfse\Support\DTO\EnumCaster',
+    'args' => array (
+      'enumType' => 'Nfse\Enums\CstPisCofins'
+    )
+  ),
+  'tipoRetencaoPisCofins' => array (
+    'caster' => 'Nfse\Support\DTO\EnumCaster',
+    'args' => array (
+      'enumType' => 'Nfse\Enums\TipoRetencaoPisCofins'
+    )
+  ),
+  'indicadorTotalTributos' => array (
+    'caster' => 'Nfse\Support\DTO\EnumCaster',
+    'args' => array (
+      'enumType' => 'Nfse\Enums\IndicadorTotalTributos'
+    )
+  )
+);
     public static $__propertyTypes = array (
       'tributacaoIssqn' => '?TributacaoIssqn',
       'tipoImunidade' => '?TipoImunidade',

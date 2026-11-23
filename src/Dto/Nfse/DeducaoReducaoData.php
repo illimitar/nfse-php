@@ -11,7 +11,17 @@ class DeducaoReducaoData extends Dto
 {
     public static $__mapFrom = array (
   'percentualDeducaoReducao' => 'pDR',
-  'valorDeducaoReducao' => 'vDR'
+  'valorDeducaoReducao' => 'vDR',
+  'documentos' => 'documentos'
+);
+    /** @var array */
+    public static $__castWith = array (
+  'documentos' => array (
+    'caster' => 'Nfse\Support\DTO\ArrayCaster',
+    'args' => array (
+      'itemType' => 'Nfse\Dto\Nfse\DocumentoDeducaoData'
+    )
+  )
 );
     public static $__propertyTypes = array (
   'percentualDeducaoReducao' => '?float',

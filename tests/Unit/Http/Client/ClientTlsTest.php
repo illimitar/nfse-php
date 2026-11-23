@@ -45,8 +45,13 @@ it('pins municipal hosts that used to be called by IP', function (string $client
 
 it('keeps TLS verification enabled when using an NSS client certificate', function (string $clientClass) {
     $context = new NfseContext(
-        ambiente: TipoAmbiente::Producao,
-        nssCertificateSelector: 'NSS Certificate DB:Test Certificate'
+        TipoAmbiente::Producao,
+        null,
+        '',
+        null,
+        null,
+        null,
+        'NSS Certificate DB:Test Certificate'
     );
     $httpClient = httpClientDoClient(new $clientClass($context));
     $curl = $httpClient->getConfig('curl');

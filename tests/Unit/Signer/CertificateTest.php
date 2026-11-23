@@ -9,7 +9,7 @@ it('throws exception for invalid password', function () {
     $pfxPath = __DIR__.'/../../fixtures/certs/test.pfx';
     $password = 'wrong_password';
 
-    expect(fn () => new Certificate($pfxPath, $password))
+    expect(function () use ($password, $pfxPath) { return new Certificate($pfxPath, $password); })
         ->toThrow(Exception::class, 'Senha do certificado incorreta ou arquivo inválido/corrompido');
 });
 
@@ -19,7 +19,7 @@ it('throws exception for expired certificate', function () {
 })->skip('Requires a pre-generated expired PFX file');
 
 it('throws exception when certificate file not found', function () {
-    expect(fn () => new Certificate('non_existent.pfx', 'password'))
+    expect(function () { return new Certificate('non_existent.pfx', 'password'); })
         ->toThrow(Exception::class, 'Certificado não encontrado');
 });
 
@@ -61,11 +61,11 @@ it('fromContent produces the same output as fromPath', function () {
 it('fromContent throws on wrong password', function () {
     $pfxContent = file_get_contents(__DIR__.'/../../fixtures/certs/test.pfx');
 
-    expect(fn () => Certificate::fromContent($pfxContent, 'wrong_password'))
+    expect(function () use ($pfxContent) { return Certificate::fromContent($pfxContent, 'wrong_password'); })
         ->toThrow(Exception::class, 'Senha do certificado incorreta ou arquivo inválido/corrompido');
 });
 
 it('fromContent throws on invalid pfx bytes', function () {
-    expect(fn () => Certificate::fromContent('not-a-pfx-file', 'any'))
+    expect(function () { return Certificate::fromContent('not-a-pfx-file', 'any'); })
         ->toThrow(Exception::class, 'Senha do certificado incorreta ou arquivo inválido/corrompido');
 });

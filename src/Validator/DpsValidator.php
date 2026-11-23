@@ -6,6 +6,7 @@ use Nfse\Dto\Nfse\DpsData;
 use Nfse\Dto\Nfse\InfDpsData;
 use Nfse\Enums\EmitenteDPS;
 use Nfse\Enums\IndicadorDestinatario;
+use Nfse\Enums\TipoOperacaoRtc;
 use Nfse\Enums\TipoReembolsoRepasseRessarcimento;
 
 class DpsValidator
@@ -179,7 +180,7 @@ class DpsValidator
         }
 
         // Rule 549: gRefNFSe é obrigatório quando tpOper = 2 ou 3
-        if ($ibscbs->tipoOperacao->exigeNfseReferenciada() && empty($ibscbs->chavesNfseReferenciadas)) {
+        if (TipoOperacaoRtc::exigeNfseReferenciada($ibscbs->tipoOperacao) && empty($ibscbs->chavesNfseReferenciadas)) {
             $errors[] = 'O grupo de NFS-e referenciadas é obrigatório quando o tipo de operação for 2 ou 3.';
         }
 

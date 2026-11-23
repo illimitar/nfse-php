@@ -16,12 +16,17 @@ class ClientCertificateTest extends TestCase
     {
         $selector = 'NSS Certificate DB:Test Certificate';
         $context = new NfseContext(
-            ambiente: TipoAmbiente::Homologacao,
-            nssCertificateSelector: $selector
+            TipoAmbiente::Homologacao,
+            null,
+            '',
+            null,
+            null,
+            null,
+            $selector
         );
 
         foreach ([new AdnClient($context), new CncClient($context), new SefinClient($context)] as $client) {
-            $httpClient = (new ReflectionClass($client))->getProperty('httpClient')->getValue($client);
+            $httpClient = (function ($client) { $p = (new ReflectionClass($client))->getProperty('httpClient'); $p->setAccessible(true); return $p->getValue($client); })($client);
             $curlOptions = $httpClient->getConfig('curl');
 
             $this->assertSame('ENG', $curlOptions[CURLOPT_SSLCERTTYPE]);

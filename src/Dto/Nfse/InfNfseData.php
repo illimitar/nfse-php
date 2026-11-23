@@ -31,7 +31,31 @@ class InfNfseData extends Dto
   'dps' => 'DPS',
   'emitente' => 'emit',
   'valores' => 'valores',
-  'ibscbs' => 'IBSCBS'
+  'ibscbs' => 'IBSCBS',
+  'ambienteGerador' => 'ambGer',
+  'processoEmissao' => 'procEmi',
+  'codigoStatus' => 'cStat'
+);
+    /** @var array */
+    public static $__castWith = array (
+  'ambienteGerador' => array (
+    'caster' => 'Nfse\Support\DTO\EnumCaster',
+    'args' => array (
+      'enumType' => 'Nfse\Enums\AmbienteGerador'
+    )
+  ),
+  'processoEmissao' => array (
+    'caster' => 'Nfse\Support\DTO\EnumCaster',
+    'args' => array (
+      'enumType' => 'Nfse\Enums\ProcessoEmissao'
+    )
+  ),
+  'codigoStatus' => array (
+    'caster' => 'Nfse\Support\DTO\EnumCaster',
+    'args' => array (
+      'enumType' => 'Nfse\Enums\CodigoStatus'
+    )
+  )
 );
     public static $__propertyTypes = array (
   'id' => '?string',

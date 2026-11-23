@@ -12,7 +12,17 @@ class SubstituicaoData extends Dto
 {
     public static $__mapFrom = array (
   'chaveNfseSubstituida' => 'chSubstda',
-  'descricaoMotivo' => 'xMotivo'
+  'descricaoMotivo' => 'xMotivo',
+  'codigoMotivo' => 'cMotivo'
+);
+    /** @var array */
+    public static $__castWith = array (
+  'codigoMotivo' => array (
+    'caster' => 'Nfse\Support\DTO\EnumCaster',
+    'args' => array (
+      'enumType' => 'Nfse\Enums\MotivoSubstituicao'
+    )
+  )
 );
     public static $__propertyTypes = array (
   'chaveNfseSubstituida' => '?string',

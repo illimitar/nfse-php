@@ -147,11 +147,11 @@ class AdnClient implements AdnDanfseInterface
     /**
      * ADN Município
      */
-    public function baixarDfeMunicipio(int $nsu, ?TipoNsu $tipoNSU = null, bool $lote = true): DistribuicaoDfeResponse
+    public function baixarDfeMunicipio(int $nsu, $tipoNSU = null, bool $lote = true): DistribuicaoDfeResponse
     {
         $queryParams = [];
         if ($tipoNSU) {
-            $queryParams['tipoNSU'] = $tipoNSU->value;
+            $queryParams['tipoNSU'] = $tipoNSU;
         }
         if (! $lote) {
             $queryParams['lote'] = 'false';

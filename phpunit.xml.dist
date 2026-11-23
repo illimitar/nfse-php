@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.3/phpunit.xsd"
+    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.6/phpunit.xsd"
     backupGlobals="false"
     bootstrap="tests/bootstrap.php"
     colors="true"
@@ -10,10 +10,9 @@
     executionOrder="random"
     failOnWarning="true"
     failOnRisky="true"
-    failOnEmptyTestSuite="true"
     beStrictAboutOutputDuringTests="true"
-    cacheDirectory=".phpunit.cache"
-    backupStaticProperties="false"
+    cacheResultFile=".phpunit.cache/test-results"
+    backupStaticAttributes="false"
 >
     <testsuites>
         <testsuite name="Nfse Test Suite">
@@ -23,11 +22,11 @@
     <logging>
         <junit outputFile="build/report.junit.xml" />
     </logging>
-    <source ignoreIndirectDeprecations="true">
+    <coverage processUncoveredFiles="true">
         <include>
             <directory suffix=".php">./src</directory>
         </include>
-    </source>
+    </coverage>
     <php>
         <ini name="error_reporting" value="16383" /> <!-- E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED -->
     </php>

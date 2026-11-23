@@ -51,7 +51,7 @@ class XmlSigner implements SignerInterface
 
         // Validate root element if specified
         if (! empty($rootname) && $root->nodeName !== $rootname) {
-            throw new Exception("Elemento raiz esperado: {$rootname}, {$root->nodeName}");
+            throw new Exception("Elemento raiz esperado: {$rootname}, encontrado: {$root->nodeName}");
         }
 
         $node = $dom->getElementsByTagName($tagname)->item(0);

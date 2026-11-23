@@ -7,9 +7,9 @@ use Nfse\Dto\Http\Endpoint;
 
 it('resolves default production endpoint when municipio is not informed', function () {
     $context = new NfseContext(
-        ambiente: TipoAmbiente::Producao,
-        certificatePath: '/tmp/cert.pfx',
-        certificatePassword: '123456'
+        TipoAmbiente::Producao,
+        '/tmp/cert.pfx',
+        '123456'
     );
 
     $resolver = new SefinEndpointResolver();
@@ -19,9 +19,9 @@ it('resolves default production endpoint when municipio is not informed', functi
 
 it('resolves default homologation endpoint when municipio is not informed', function () {
     $context = new NfseContext(
-        ambiente: TipoAmbiente::Homologacao,
-        certificatePath: '/tmp/cert.pfx',
-        certificatePassword: '123456'
+        TipoAmbiente::Homologacao,
+        '/tmp/cert.pfx',
+        '123456'
     );
 
     $resolver = new SefinEndpointResolver();
@@ -36,10 +36,11 @@ it('resolves custom endpoint when provided in context', function () {
     ]);
 
     $context = new NfseContext(
-        ambiente: TipoAmbiente::Producao,
-        certificatePath: '/tmp/cert.pfx',
-        certificatePassword: '123456',
-        endpoint: $customEndpoint
+        TipoAmbiente::Producao,
+        '/tmp/cert.pfx',
+        '123456',
+        null,
+        $customEndpoint
     );
 
     $resolver = new SefinEndpointResolver();
@@ -53,9 +54,9 @@ it('resolves custom endpoint when provided in context', function () {
 
 it('resolves null danfse url when municipio has no mapped endpoint', function () {
     $context = new NfseContext(
-        ambiente: TipoAmbiente::Producao,
-        certificatePath: '/tmp/cert.pfx',
-        certificatePassword: '123456'
+        TipoAmbiente::Producao,
+        '/tmp/cert.pfx',
+        '123456'
     );
 
     $resolver = new SefinEndpointResolver();

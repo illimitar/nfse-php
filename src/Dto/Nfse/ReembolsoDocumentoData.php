@@ -23,7 +23,24 @@ class ReembolsoDocumentoData extends Dto
   'dataEmissaoDocumento' => 'dtEmiDoc',
   'dataCompetenciaDocumento' => 'dtCompDoc',
   'descricaoTipoReembolso' => 'xTpReeRepRes',
-  'valorReembolso' => 'vlrReeRepRes'
+  'valorReembolso' => 'vlrReeRepRes',
+  'tipoChaveDfe' => 'dFeNacional.tipoChaveDFe',
+  'tipoReembolso' => 'tpReeRepRes'
+);
+    /** @var array */
+    public static $__castWith = array (
+  'tipoChaveDfe' => array (
+    'caster' => 'Nfse\Support\DTO\EnumCaster',
+    'args' => array (
+      'enumType' => 'Nfse\Enums\TipoChaveDFe'
+    )
+  ),
+  'tipoReembolso' => array (
+    'caster' => 'Nfse\Support\DTO\EnumCaster',
+    'args' => array (
+      'enumType' => 'Nfse\Enums\TipoReembolsoRepasseRessarcimento'
+    )
+  )
 );
     public static $__propertyTypes = array (
   'tipoChaveDfe' => '?TipoChaveDFe',

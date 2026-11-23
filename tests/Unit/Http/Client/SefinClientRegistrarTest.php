@@ -34,6 +34,7 @@ class SefinClientRegistrarTest extends TestCase
 
         $reflection = new ReflectionClass($client);
         $property = $reflection->getProperty('httpClient');
+        $property->setAccessible(true);
 
         $property->setValue($client, $httpClient);
 
