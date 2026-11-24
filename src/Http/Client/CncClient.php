@@ -59,15 +59,13 @@ class CncClient
         if ($this->context->nssCertificateSelector !== null) {
             $curlOptions[CURLOPT_SSLCERTTYPE] = 'ENG';
             $curlOptions[CURLOPT_SSLCERT] = $this->context->nssCertificateSelector;
-            $certificateOptions = array();
         } else {
-            $certificateOptions = array(
-                RequestOptions::CERT => array($this->resolveCertificatePath(), $this->context->certificatePassword),
-                RequestOptions::CERT_TYPE => 'P12',
-            );
+            $curlOptions[CURLOPT_SSLCERTTYPE] = 'P12';
+            $curlOptions[CURLOPT_SSLCERT] = $this->resolveCertificatePath();
+            $curlOptions[CURLOPT_SSLCERTPASSWD] = $this->context->certificatePassword;
         }
 
-        return new Client(array_merge(array(
+        return new Client(array(
             'base_uri' => $baseUrl,
             'handler' => Retry::stack(),
             'curl' => $curlOptions,
@@ -79,7 +77,7 @@ class CncClient
                 'Content-Type' => 'application/json',
                 'Accept' => 'application/json',
             ),
-        ), $certificateOptions));
+        ));
     }
 
     private function get(string $endpoint): array

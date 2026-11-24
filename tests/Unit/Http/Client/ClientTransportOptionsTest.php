@@ -11,7 +11,7 @@ use Nfse\Http\Client\SefinClient;
 use Nfse\Http\NfseContext;
 use ReflectionClass;
 
-it('configures TLS and timeouts through Guzzle request options, not raw cURL options', function (string $clientClass) {
+it('sends the A1 certificate as P12 through cURL options, compatible with Guzzle 7.5', function (string $clientClass) {
     $mock = new MockHandler([new Response(200, [], '{}')]);
     $client = new $clientClass(new NfseContext(TipoAmbiente::Homologacao, 'fake/path.pfx', 'password'));
 
@@ -22,9 +22,11 @@ it('configures TLS and timeouts through Guzzle request options, not raw cURL opt
 
     $options = $mock->getLastOptions();
 
-    expect(array_diff_key($options['curl'] ?? [], [CURLOPT_RESOLVE => true]))->toBeEmpty()
-        ->and($options['cert'])->toBe(['fake/path.pfx', 'password'])
-        ->and($options['cert_type'])->toBe('P12')
+    expect($options['curl'][CURLOPT_SSLCERTTYPE])->toBe('P12')
+        ->and($options['curl'][CURLOPT_SSLCERT])->toBe('fake/path.pfx')
+        ->and($options['curl'][CURLOPT_SSLCERTPASSWD])->toBe('password')
+        ->and(isset($options['cert']))->toBeFalse()
+        ->and(isset($options['cert_type']))->toBeFalse()
         ->and($options['force_ip_resolve'])->toBe('v4')
         ->and($options['connect_timeout'])->toBe(10)
         ->and($options['timeout'])->toBe(60)
