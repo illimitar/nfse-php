@@ -9,44 +9,30 @@ namespace Nfse\Enums;
  */
 final class MovimentacaoTemporariaBens
 {
-    const Nenhum = '0';
+    const Desconhecido = '0';
     const Nao = '1';
-    const SimImportacao = '2';
-    const SimExportacao = '3';
+    const DeclaracaoImportacao = '2';
+    const DeclaracaoExportacao = '3';
 
     private function __construct()
     {
     }
 
     /**
-     * Nenhum
-     */
-    /**
-     * Não
-     */
-    /**
-     * Sim (Importação)
-     */
-    /**
-     * Sim (Exportação)
-     */
-    /**
      * Get description for the enum case
      */
     public function getDescription(): string
     {
-        return (call_user_func(function () {
-    switch ($this) {
-    case self::Nenhum:
-        return 'Nenhum';
-    case self::Nao:
-        return 'Não';
-    case self::SimImportacao:
-        return 'Sim (Importação)';
-    case self::SimExportacao:
-        return 'Sim (Exportação)';
-    }
-}));
+        switch ($this) {
+            case self::Desconhecido:
+                return 'Desconhecido (tipo não informado na nota de origem)';
+            case self::Nao:
+                return 'Não';
+            case self::DeclaracaoImportacao:
+                return 'Vinculada - Declaração de Importação';
+            case self::DeclaracaoExportacao:
+                return 'Vinculada - Declaração de Exportação';
+        }
     }
 
     /**

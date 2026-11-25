@@ -3,25 +3,18 @@
 namespace Nfse\Dto\Nfse;
 
 use Nfse\Dto\Dto;
-use Nfse\Enums\IndicadorDestinatario;
-use Nfse\Enums\TipoEnteGovernamental;
-use Nfse\Enums\TipoOperacaoRtc;
-use Nfse\Support\DTO\ArrayCaster;
-use Nfse\Support\DTO\EnumCaster;
-use Spatie\DataTransferObject\Attributes\CastWith;
-use Spatie\DataTransferObject\Attributes\MapFrom;
 
 class IbscbsData extends Dto
 {
     public static $__mapFrom = array (
-  'finalidadeNfse' => 'finNFSe',
   'indicadorUsoConsumoPessoal' => 'indFinal',
   'codigoIndicadorOperacao' => 'cIndOp',
   'chavesNfseReferenciadas' => 'gRefNFSe.refNFSe',
   'destinatario' => 'dest',
   'imovel' => 'imovel',
-  'cst' => 'valores.trib.gIBSCBS.CST',
-  'codigoClassificacaoTributaria' => 'valores.trib.gIBSCBS.cClassTrib',
+  'bensMoveis' => 'bensMoveis',
+  'cst' => 'valores.trib.CST',
+  'codigoClassificacaoTributaria' => 'valores.trib.cClassTrib',
   'codigoCreditoPresumido' => 'valores.trib.gIBSCBS.cCredPres',
   'cstTributacaoRegular' => 'valores.trib.gIBSCBS.gTribRegular.CSTReg',
   'codigoClassificacaoTributariaRegular' => 'valores.trib.gIBSCBS.gTribRegular.cClassTribReg',
@@ -30,38 +23,42 @@ class IbscbsData extends Dto
   'percentualDiferimentoCbs' => 'valores.trib.gIBSCBS.gDif.pDifCBS',
   'tipoOperacao' => 'tpOper',
   'tipoEnteGovernamental' => 'tpEnteGov',
-  'indicadorDestinatario' => 'indDest',
-  'documentosReembolso' => 'valores.gReeRepRes.documentos'
+  'indicadorDestinatario' => 'indDest'
 );
     /** @var array */
     public static $__castWith = array (
-  'tipoOperacao' => array (
-    'caster' => 'Nfse\Support\DTO\EnumCaster',
+  'codigoIndicadorOperacao' => array (
+    'caster' => 'Nfse\\Support\\DTO\\EnumCaster',
     'args' => array (
-      'enumType' => 'Nfse\Enums\TipoOperacaoRtc'
+      'enumType' => 'Nfse\\Enums\\CodigoIndicadorOperacao'
+    )
+  ),
+  'tipoOperacao' => array (
+    'caster' => 'Nfse\\Support\\DTO\\EnumCaster',
+    'args' => array (
+      'enumType' => 'Nfse\\Enums\\TipoOperacaoRtc'
     )
   ),
   'tipoEnteGovernamental' => array (
-    'caster' => 'Nfse\Support\DTO\EnumCaster',
+    'caster' => 'Nfse\\Support\\DTO\\EnumCaster',
     'args' => array (
-      'enumType' => 'Nfse\Enums\TipoEnteGovernamental'
+      'enumType' => 'Nfse\\Enums\\TipoEnteGovernamental'
     )
   ),
   'indicadorDestinatario' => array (
-    'caster' => 'Nfse\Support\DTO\EnumCaster',
+    'caster' => 'Nfse\\Support\\DTO\\EnumCaster',
     'args' => array (
-      'enumType' => 'Nfse\Enums\IndicadorDestinatario'
+      'enumType' => 'Nfse\\Enums\\IndicadorDestinatario'
     )
   ),
-  'documentosReembolso' => array (
-    'caster' => 'Nfse\Support\DTO\ArrayCaster',
+  'bensMoveis' => array (
+    'caster' => 'Nfse\\Support\\DTO\\ArrayCaster',
     'args' => array (
-      'itemType' => 'Nfse\Dto\Nfse\ReembolsoDocumentoData'
+      'itemType' => 'Nfse\\Dto\\Nfse\\BemMovelData'
     )
   )
 );
     public static $__propertyTypes = array (
-  'finalidadeNfse' => '?string',
   'indicadorUsoConsumoPessoal' => '?int',
   'codigoIndicadorOperacao' => '?string',
   'tipoOperacao' => '?TipoOperacaoRtc',
@@ -70,7 +67,7 @@ class IbscbsData extends Dto
   'indicadorDestinatario' => '?IndicadorDestinatario',
   'destinatario' => '?TomadorData',
   'imovel' => '?ImovelData',
-  'documentosReembolso' => '?array',
+  'bensMoveis' => '?array',
   'cst' => '?string',
   'codigoClassificacaoTributaria' => '?string',
   'codigoCreditoPresumido' => '?string',
@@ -83,12 +80,6 @@ class IbscbsData extends Dto
 
 
     /**
-     * Indicador da finalidade da emissão de NFS-e.
-     * 0 - NFS-e regular
-     */
-    public $finalidadeNfse = null;
-
-    /**
      * Indica operação de uso ou consumo pessoal (art. 57).
      * 0 - Não
      * 1 - Sim
@@ -96,8 +87,7 @@ class IbscbsData extends Dto
     public $indicadorUsoConsumoPessoal = null;
 
     /**
-     * Código indicador da operação de fornecimento, conforme tabela
-     * "código indicador de operação" (Anexo VII).
+     * Código indicador da operação de fornecimento.
      */
     public $codigoIndicadorOperacao = null;
 
@@ -131,16 +121,16 @@ class IbscbsData extends Dto
     public $destinatario = null;
 
     /**
-     * Informações de operações relacionadas a bens imóveis, exceto obras.
+     * Operações relacionadas a bens imóveis, exceto obras.
      */
     public $imovel = null;
 
     /**
-     * Documentos referenciados de reembolso, repasse ou ressarcimento.
+     * Bens móveis objeto de locação.
      *
-     * @var ReembolsoDocumentoData[]|null
+     * @var BemMovelData[]|null
      */
-    public $documentosReembolso = null;
+    public $bensMoveis = null;
 
     /**
      * Código de Situação Tributária do IBS e da CBS.

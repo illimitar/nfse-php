@@ -123,10 +123,6 @@ try {
             ),
             null,
             new TributacaoData(
-                1,
-                1,
-                null,
-                null
             )
         )
     );

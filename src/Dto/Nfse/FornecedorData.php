@@ -3,7 +3,6 @@
 namespace Nfse\Dto\Nfse;
 
 use Nfse\Dto\Dto;
-use Spatie\DataTransferObject\Attributes\MapFrom;
 
 class FornecedorData extends Dto
 {
@@ -15,7 +14,7 @@ class FornecedorData extends Dto
   'caepf' => 'CAEPF',
   'inscricaoMunicipal' => 'IM',
   'nome' => 'xNome',
-  'endereco' => 'endFornec',
+  'endereco' => 'end',
   'telefone' => 'fone',
   'email' => 'email'
 );

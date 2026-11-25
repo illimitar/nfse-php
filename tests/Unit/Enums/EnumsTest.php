@@ -8,8 +8,8 @@ use Nfse\Enums\IndicadorTotalTributos;
 use Nfse\Enums\MovimentacaoTemporariaBens;
 use Nfse\Enums\ProcessoEmissao;
 use Nfse\Enums\RegimeEspecialTributacao;
+use Nfse\Enums\TipoAjusteBaseCalculo;
 use Nfse\Enums\TipoAmbiente;
-use Nfse\Enums\TipoDeducaoReducao;
 use Nfse\Enums\TipoImunidade;
 use Nfse\Enums\TipoNsu;
 use Nfse\Enums\TipoRetencaoIssqn;
@@ -78,25 +78,20 @@ it('IndicadorTotalTributos has correct values', function () {
 });
 
 it('MovimentacaoTemporariaBens has correct values', function () {
-    expect(MovimentacaoTemporariaBens::Nenhum)->toBe('0')
+    expect(MovimentacaoTemporariaBens::Desconhecido)->toBe('0')
         ->and(MovimentacaoTemporariaBens::Nao)->toBe('1')
-        ->and(MovimentacaoTemporariaBens::SimImportacao)->toBe('2')
-        ->and(MovimentacaoTemporariaBens::SimExportacao)->toBe('3')
+        ->and(MovimentacaoTemporariaBens::DeclaracaoImportacao)->toBe('2')
+        ->and(MovimentacaoTemporariaBens::DeclaracaoExportacao)->toBe('3')
         ->and((new \ReflectionClass(MovimentacaoTemporariaBens::class))->getConstants())->toHaveCount(4);
 });
 
-it('TipoDeducaoReducao has all values of TSIdeDedRed from schema 1.01', function () {
-    expect((new \ReflectionClass(TipoDeducaoReducao::class))->getConstants())->toHaveCount(10)
-        ->and(TipoDeducaoReducao::AlimentacaoBebidas)->toBe('1')
-        ->and(TipoDeducaoReducao::Materiais)->toBe('2')
-        ->and(TipoDeducaoReducao::ProducaoExterna)->toBe('3')
-        ->and(TipoDeducaoReducao::ReembolsoDespesas)->toBe('4')
-        ->and(TipoDeducaoReducao::RepasseConsorciado)->toBe('5')
-        ->and(TipoDeducaoReducao::RepassePlanoSaude)->toBe('6')
-        ->and(TipoDeducaoReducao::Servicos)->toBe('7')
-        ->and(TipoDeducaoReducao::SubempreitadaMaoObra)->toBe('8')
-        ->and(TipoDeducaoReducao::ProfissionalParceiro)->toBe('9')
-        ->and(TipoDeducaoReducao::OutrasDeducoes)->toBe('99');
+it('TipoAjusteBaseCalculo has the values of TSRTCTpAjusteBC', function () {
+    expect((new \ReflectionClass(TipoAjusteBaseCalculo::class))->getConstants())->toHaveCount(13)
+        ->and(TipoAjusteBaseCalculo::Materiais)->toBe('2')
+        ->and(TipoAjusteBaseCalculo::RepasseConsorciado)->toBe('5')
+        ->and(TipoAjusteBaseCalculo::OutrasDeducoes)->toBe('99')
+        ->and(TipoAjusteBaseCalculo::RepasseIntermediacaoImoveis)->toBe('101')
+        ->and(TipoAjusteBaseCalculo::OutrosReembolsos)->toBe('199');
 });
 
 it('CodigoStatus has only the values of TStat from schema 1.01', function () {

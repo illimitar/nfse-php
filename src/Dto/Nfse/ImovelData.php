@@ -3,34 +3,44 @@
 namespace Nfse\Dto\Nfse;
 
 use Nfse\Dto\Dto;
-use Spatie\DataTransferObject\Attributes\MapFrom;
 
 class ImovelData extends Dto
 {
     public static $__mapFrom = array (
-  'inscricaoImobiliariaFiscal' => 'inscImobFisc',
-  'codigoCib' => 'cCIB',
-  'endereco' => 'end'
+  'codigoMunicipio' => 'cMun',
+  'locacao' => 'gLocacao',
+  'unidadesImovel' => 'gUnidImob'
+);
+    /** @var array */
+    public static $__castWith = array (
+  'unidadesImovel' => array (
+    'caster' => 'Nfse\\Support\\DTO\\ArrayCaster',
+    'args' => array (
+      'itemType' => 'Nfse\\Dto\\Nfse\\UnidadeImovelData'
+    )
+  )
 );
     public static $__propertyTypes = array (
-  'inscricaoImobiliariaFiscal' => '?string',
-  'codigoCib' => '?string',
-  'endereco' => '?EnderecoData'
+  'codigoMunicipio' => '?string',
+  'locacao' => '?LocacaoData',
+  'unidadesImovel' => '?array'
 );
 
 
     /**
-     * Inscrição imobiliária fiscal fornecida pela Prefeitura Municipal.
+     * Código do município do imóvel (tabela do IBGE).
      */
-    public $inscricaoImobiliariaFiscal = null;
+    public $codigoMunicipio = null;
 
     /**
-     * Código do Cadastro Imobiliário Brasileiro (CIB).
+     * Locação, cessão onerosa ou arrendamento.
      */
-    public $codigoCib = null;
+    public $locacao = null;
 
     /**
-     * Endereço do imóvel.
+     * Unidades imobiliárias objeto da operação.
+     *
+     * @var UnidadeImovelData[]|null
      */
-    public $endereco = null;
+    public $unidadesImovel = null;
 }

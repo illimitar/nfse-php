@@ -3,18 +3,30 @@
 namespace Nfse\Dto\Nfse;
 
 use Nfse\Dto\Dto;
-use Spatie\DataTransferObject\Attributes\MapFrom;
 
 class InfoComplData extends Dto
 {
     public static $__mapFrom = array (
   'idDocumentoTecnico' => 'idDocTec',
   'documentoReferencia' => 'docRef',
+  'numeroPedido' => 'xPed',
+  'itensPedido' => 'gItemPed.xItemPed',
   'informacoesComplementares' => 'xInfComp'
+);
+    /** @var array */
+    public static $__castWith = array (
+  'itensPedido' => array (
+    'caster' => 'Nfse\\Support\\DTO\\ArrayCaster',
+    'args' => array (
+      'itemType' => 'string'
+    )
+  )
 );
     public static $__propertyTypes = array (
   'idDocumentoTecnico' => '?string',
   'documentoReferencia' => '?string',
+  'numeroPedido' => '?string',
+  'itensPedido' => '?array',
   'informacoesComplementares' => '?string'
 );
 
@@ -37,6 +49,18 @@ class InfoComplData extends Dto
      * caso a nota esteja sendo emitida pelo Tomador ou intermediário do serviço).
      */
     public $documentoReferencia = null;
+
+    /**
+     * Número do pedido, ordem de compra, ordem de serviço ou projeto.
+     */
+    public $numeroPedido = null;
+
+    /**
+     * Itens do pedido citado em numeroPedido.
+     *
+     * @var string[]|null
+     */
+    public $itensPedido = null;
 
     /**
      * Oc. 0-1

@@ -3,67 +3,39 @@
 namespace Nfse\Dto\Nfse;
 
 use Nfse\Dto\Dto;
-use Nfse\Enums\ModoPrestacao;
-use Nfse\Enums\MovimentacaoTemporariaBens;
-use Nfse\Enums\TipoPessoa;
-use Nfse\Support\DTO\EnumCaster;
-use Spatie\DataTransferObject\Attributes\CastWith;
-use Spatie\DataTransferObject\Attributes\MapFrom;
 
 class ComercioExteriorData extends Dto
 {
     public static $__mapFrom = array (
+  'modoPrestacao' => 'mdPrestacao',
   'vinculoPrestacao' => 'vincPrest',
-  'nifExportador' => 'NIFExport',
-  'codigoPaisExportador' => 'cPaisExport',
-  'codigoMecanismoApoioFomento' => 'cMecAFComex',
-  'numeroEnquadramento' => 'nEnquad',
-  'numeroProcesso' => 'nProc',
-  'indicadorIncentivo' => 'indIncentivo',
-  'descricaoIncentivo' => 'xDescIncentivo',
   'tipoMoeda' => 'tpMoeda',
   'valorServicoMoeda' => 'vServMoeda',
   'mecanismoApoioComexPrestador' => 'mecAFComexP',
   'mecanismoApoioComexTomador' => 'mecAFComexT',
+  'movimentacaoTemporariaBens' => 'movTempBens',
   'numeroDeclaracaoImportacao' => 'nDI',
   'numeroRegistroExportacao' => 'nRE',
-  'mdic' => 'mdic',
-  'modoPrestacao' => 'mdPrestacao',
-  'tipoPessoaExportador' => 'tpPessoaExport',
-  'movimentacaoTemporariaBens' => 'movTempBens'
+  'mdic' => 'mdic'
 );
     /** @var array */
     public static $__castWith = array (
   'modoPrestacao' => array (
-    'caster' => 'Nfse\Support\DTO\EnumCaster',
+    'caster' => 'Nfse\\Support\\DTO\\EnumCaster',
     'args' => array (
-      'enumType' => 'Nfse\Enums\ModoPrestacao'
-    )
-  ),
-  'tipoPessoaExportador' => array (
-    'caster' => 'Nfse\Support\DTO\EnumCaster',
-    'args' => array (
-      'enumType' => 'Nfse\Enums\TipoPessoa'
+      'enumType' => 'Nfse\\Enums\\ModoPrestacao'
     )
   ),
   'movimentacaoTemporariaBens' => array (
-    'caster' => 'Nfse\Support\DTO\EnumCaster',
+    'caster' => 'Nfse\\Support\\DTO\\EnumCaster',
     'args' => array (
-      'enumType' => 'Nfse\Enums\MovimentacaoTemporariaBens'
+      'enumType' => 'Nfse\\Enums\\MovimentacaoTemporariaBens'
     )
   )
 );
     public static $__propertyTypes = array (
   'modoPrestacao' => '?ModoPrestacao',
   'vinculoPrestacao' => '?int',
-  'tipoPessoaExportador' => '?TipoPessoa',
-  'nifExportador' => '?string',
-  'codigoPaisExportador' => '?string',
-  'codigoMecanismoApoioFomento' => '?string',
-  'numeroEnquadramento' => '?string',
-  'numeroProcesso' => '?string',
-  'indicadorIncentivo' => '?int',
-  'descricaoIncentivo' => '?string',
   'tipoMoeda' => '?string',
   'valorServicoMoeda' => '?float',
   'mecanismoApoioComexPrestador' => '?string',
@@ -77,66 +49,29 @@ class ComercioExteriorData extends Dto
 
     /**
      * Modo de prestação do serviço.
+     * 0 - Desconhecido
      * 1 - Transfronteiriço
      * 2 - Consumo no Brasil
-     * 3 - Presença Comercial no Exterior
-     * 4 - Movimento Temporário de Pessoas Físicas
+     * 3 - Movimento temporário de pessoas físicas
+     * 4 - Consumo no exterior
      */
     public $modoPrestacao = null;
 
     /**
      * Vínculo entre as partes no negócio.
-     * 1 - Sem vínculo
-     * 2 - Com vínculo
+     * 0 - Sem vínculo
+     * 1 - Controlada
+     * 2 - Controladora
+     * 3 - Coligada
+     * 4 - Matriz
+     * 5 - Filial ou sucursal
+     * 6 - Outro vínculo
+     * 9 - Desconhecido
      */
     public $vinculoPrestacao = null;
 
     /**
-     * Tipo de pessoa do exportador.
-     * 1 - Pessoa Jurídica
-     * 2 - Pessoa Física
-     */
-    public $tipoPessoaExportador = null;
-
-    /**
-     * NIF do exportador.
-     */
-    public $nifExportador = null;
-
-    /**
-     * Código do país do exportador.
-     */
-    public $codigoPaisExportador = null;
-
-    /**
-     * Código do mecanismo de apoio/fomento.
-     */
-    public $codigoMecanismoApoioFomento = null;
-
-    /**
-     * Número do enquadramento.
-     */
-    public $numeroEnquadramento = null;
-
-    /**
-     * Número do processo.
-     */
-    public $numeroProcesso = null;
-
-    /**
-     * Indicador de incentivo fiscal.
-     * 1 - Sim
-     * 2 - Não
-     */
-    public $indicadorIncentivo = null;
-
-    /**
-     * Descrição do incentivo fiscal.
-     */
-    public $descricaoIncentivo = null;
-
-    /**
-     * Código da moeda da transação (ISO 4217).
+     * Código da moeda da transação (tabela do Banco Central).
      */
     public $tipoMoeda = null;
 
@@ -156,7 +91,7 @@ class ComercioExteriorData extends Dto
     public $mecanismoApoioComexTomador = null;
 
     /**
-     * Movimentação temporária de bens.
+     * Vínculo da operação à movimentação temporária de bens.
      */
     public $movimentacaoTemporariaBens = null;
 
@@ -171,9 +106,9 @@ class ComercioExteriorData extends Dto
     public $numeroRegistroExportacao = null;
 
     /**
-     * Compartilhamento de dados com o MDIC.
-     * 1 - Sim
-     * 2 - Não
+     * Envio das informações ao MDIC.
+     * 0 - Não enviar
+     * 1 - Enviar
      */
     public $mdic = null;
 }

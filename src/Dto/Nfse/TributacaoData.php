@@ -18,6 +18,7 @@ class TributacaoData extends Dto
 {
     public static $__mapFrom = array (
       'tributacaoIssqn' => 'tribMun.tribISSQN',
+      'codigoPaisResultado' => 'tribMun.cPaisResult',
       'tipoImunidade' => 'tribMun.tpImunidade',
       'tipoRetencaoIssqn' => 'tribMun.tpRetISSQN',
       'aliquota' => 'tribMun.pAliq',
@@ -31,6 +32,7 @@ class TributacaoData extends Dto
       'valorPis' => 'tribFed.piscofins.vPis',
       'valorCofins' => 'tribFed.piscofins.vCofins',
       'tipoRetencaoPisCofins' => 'tribFed.piscofins.tpRetPisCofins',
+      'valorRetidoCp' => 'tribFed.vRetCP',
       'valorRetidoIrrf' => 'tribFed.vRetIRRF',
       'valorRetidoCsll' => 'tribFed.vRetCSLL',
       'valorTotalTributosFederais' => 'totTrib.vTotTrib.vTotTribFed',
@@ -89,6 +91,7 @@ class TributacaoData extends Dto
 );
     public static $__propertyTypes = array (
       'tributacaoIssqn' => '?TributacaoIssqn',
+      'codigoPaisResultado' => '?string',
       'tipoImunidade' => '?TipoImunidade',
       'tipoRetencaoIssqn' => '?TipoRetencaoIssqn',
       'aliquota' => '?float',
@@ -102,6 +105,7 @@ class TributacaoData extends Dto
       'valorPis' => '?float',
       'valorCofins' => '?float',
       'tipoRetencaoPisCofins' => '?TipoRetencaoPisCofins',
+      'valorRetidoCp' => '?float',
       'valorRetidoIrrf' => '?float',
       'valorRetidoCsll' => '?float',
       'valorTotalTributosFederais' => '?float',
@@ -123,6 +127,11 @@ class TributacaoData extends Dto
      * 4 - Não Incidência
      */
     public $tributacaoIssqn = null;
+
+    /**
+     * Código do país onde ocorreu o resultado do serviço (tabela ISO).
+     */
+    public $codigoPaisResultado = null;
 
     /**
      * Tipo de imunidade.
@@ -213,6 +222,11 @@ class TributacaoData extends Dto
      * @see TipoRetencaoPisCofins
      */
     public $tipoRetencaoPisCofins = null;
+
+    /**
+     * Valor retido de contribuição previdenciária (R$).
+     */
+    public $valorRetidoCp = null;
 
     /**
      * Valor retido de IRRF (R$).

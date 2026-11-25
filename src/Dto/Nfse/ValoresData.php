@@ -3,20 +3,19 @@
 namespace Nfse\Dto\Nfse;
 
 use Nfse\Dto\Dto;
-use Spatie\DataTransferObject\Attributes\MapFrom;
 
 class ValoresData extends Dto
 {
     public static $__mapFrom = array (
   'valorServicoPrestado' => 'vServPrest',
   'desconto' => 'vDescCondIncond',
-  'deducaoReducao' => 'vDedRed',
+  'ajusteBaseCalculo' => 'vAjusteBC',
   'tributacao' => 'trib'
 );
     public static $__propertyTypes = array (
   'valorServicoPrestado' => '?ValorServicoPrestadoData',
   'desconto' => '?DescontoData',
-  'deducaoReducao' => '?DeducaoReducaoData',
+  'ajusteBaseCalculo' => '?AjusteBaseCalculoData',
   'tributacao' => '?TributacaoData'
 );
 
@@ -32,9 +31,9 @@ class ValoresData extends Dto
     public $desconto = null;
 
     /**
-     * Deduções e reduções da base de cálculo.
+     * Ajuste da base de cálculo do ISSQN e/ou IBS/CBS.
      */
-    public $deducaoReducao = null;
+    public $ajusteBaseCalculo = null;
 
     /**
      * Informações sobre a tributação do serviço.
