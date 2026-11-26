@@ -9,7 +9,8 @@ class AjusteBaseCalculoData extends Dto
     public static $__mapFrom = array (
   'percentualAjusteBaseCalculoIssqn' => 'pAjusteBCISSQN',
   'valorAjusteBaseCalculoIssqn' => 'vAjusteBCISSQN',
-  'documentos' => 'documentos.docAjusteBC'
+  'documentos' => 'documentos.docAjusteBC',
+  'valorAjusteBaseCalculoIbscbsComercioExterior' => 'vAjusteBCIBSCBSComExt'
 );
     /** @var array */
     public static $__castWith = array (
@@ -23,7 +24,8 @@ class AjusteBaseCalculoData extends Dto
     public static $__propertyTypes = array (
   'percentualAjusteBaseCalculoIssqn' => '?float',
   'valorAjusteBaseCalculoIssqn' => '?float',
-  'documentos' => '?array'
+  'documentos' => '?array',
+  'valorAjusteBaseCalculoIbscbsComercioExterior' => '?float'
 );
 
     /**
@@ -42,4 +44,9 @@ class AjusteBaseCalculoData extends Dto
          * @var DocumentoAjusteBaseCalculoData[]|null
          */
     public $documentos = null;
+
+    /**
+     * Ajuste da base de cálculo do IBS e da CBS no comércio exterior. Schema 20261124.
+     */
+    public $valorAjusteBaseCalculoIbscbsComercioExterior = null;
 }

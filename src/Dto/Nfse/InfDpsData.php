@@ -3,12 +3,6 @@
 namespace Nfse\Dto\Nfse;
 
 use Nfse\Dto\Dto;
-use Nfse\Enums\EmitenteDPS;
-use Nfse\Enums\MotivoEmissaoTomadorIntermediario;
-use Nfse\Enums\TipoAmbiente;
-use Nfse\Support\DTO\EnumCaster;
-use Spatie\DataTransferObject\Attributes\CastWith;
-use Spatie\DataTransferObject\Attributes\MapFrom;
 
 class InfDpsData extends Dto
 {
@@ -29,6 +23,8 @@ class InfDpsData extends Dto
   'substituicao' => 'subst',
   'prestador' => 'prest',
   'tomador' => 'toma',
+  'indicadorDestinatario' => 'indDest',
+  'destinatario' => 'dest',
   'intermediario' => 'interm',
   'servico' => 'serv',
   'ibscbs' => 'IBSCBS',
@@ -59,6 +55,14 @@ class InfDpsData extends Dto
     array (
       'enumType' => 'Nfse\Enums\MotivoEmissaoTomadorIntermediario'
     )
+  ),
+  'indicadorDestinatario' =>
+  array (
+    'caster' => 'Nfse\Support\DTO\EnumCaster',
+    'args' =>
+    array (
+      'enumType' => 'Nfse\Enums\IndicadorDestinatario'
+    )
   )
 );
     /** @var array */
@@ -78,6 +82,8 @@ class InfDpsData extends Dto
   'substituicao' => '?SubstituicaoData',
   'prestador' => '?PrestadorData',
   'tomador' => '?TomadorData',
+  'indicadorDestinatario' => '?IndicadorDestinatario',
+  'destinatario' => '?TomadorData',
   'intermediario' => '?IntermediarioData',
   'servico' => '?ServicoData',
   'ibscbs' => '?IbscbsData',
@@ -170,6 +176,16 @@ class InfDpsData extends Dto
      * Dados do tomador do serviço.
      */
     public $tomador = null;
+
+    /**
+     * Indicador do destinatário. No schema 20261124 fica em infDPS, depois do tomador.
+     */
+    public $indicadorDestinatario = null;
+
+    /**
+     * Destinatário do serviço quando não é o tomador. No schema 20261124 fica em infDPS.
+     */
+    public $destinatario = null;
 
     /**
      * Dados do intermediário do serviço.

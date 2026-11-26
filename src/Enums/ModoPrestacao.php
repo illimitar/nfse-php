@@ -14,6 +14,7 @@ final class ModoPrestacao
     const ConsumoNoBrasil = '2';
     const MovimentoTemporarioPessoasFisicas = '3';
     const ConsumoNoExterior = '4';
+    const ConsumoConcomitante = '5';
 
     private function __construct()
     {
@@ -35,6 +36,8 @@ final class ModoPrestacao
                 return 'Movimento Temporário de Pessoas Físicas';
             case self::ConsumoNoExterior:
                 return 'Consumo no Exterior';
+            case self::ConsumoConcomitante:
+                return 'Consumo concomitante no território nacional e no exterior';
         }
     }
 

@@ -4,6 +4,7 @@ namespace Nfse\Xml;
 
 use DOMDocument;
 use DOMElement;
+use Nfse\Dto\Nfse\CondominioData;
 use Nfse\Dto\Nfse\DocumentoAjusteBaseCalculoData;
 use Nfse\Dto\Nfse\DpsData;
 use Nfse\Dto\Nfse\EnderecoData;
@@ -22,6 +23,17 @@ use Nfse\Support\SchemaText;
 class DpsXmlBuilder
 {
     private $dom;
+
+    /** @var string */
+    private $schema;
+
+    /**
+     * @param string $schema
+     */
+    public function __construct($schema = SchemaDps::Producao)
+    {
+        $this->schema = SchemaDps::resolver($schema);
+    }
 
     public function build(DpsData $dps): string
     {
@@ -72,6 +84,21 @@ class DpsXmlBuilder
 
         if ($data->tomador) {
             $this->buildTomador($parent, $data->tomador);
+        }
+
+        if ($this->schema === SchemaDps::Homologacao) {
+            $indicador = $data->indicadorDestinatario;
+            if ($indicador === null && $data->ibscbs !== null) {
+                $indicador = $data->ibscbs->indicadorDestinatario;
+            }
+            $this->appendElement($parent, 'indDest', $indicador);
+            $destinatario = $data->destinatario;
+            if ($destinatario === null && $data->ibscbs !== null) {
+                $destinatario = $data->ibscbs->destinatario;
+            }
+            if ($destinatario) {
+                $this->buildDestinatario($parent, $destinatario);
+            }
         }
 
         if ($data->intermediario) {
@@ -222,19 +249,38 @@ class DpsXmlBuilder
             $this->appendElement($comExt, 'mdPrestacao', $data->comercioExterior->modoPrestacao);
             $this->appendElement($comExt, 'vincPrest', $data->comercioExterior->vinculoPrestacao);
             $this->appendElement($comExt, 'tpMoeda', $data->comercioExterior->tipoMoeda);
-            $this->appendElement(
-                $comExt,
-                'vServMoeda',
-                $data->comercioExterior->valorServicoMoeda !== null
-                    ? number_format($data->comercioExterior->valorServicoMoeda, 2, '.', '')
-                    : null
-            );
+            if ($this->schema === SchemaDps::Homologacao) {
+                $this->appendElement($comExt, 'nFatura', $data->comercioExterior->numeroFatura);
+                $this->appendElement(
+                    $comExt,
+                    'vFatura',
+                    $data->comercioExterior->valorFatura !== null
+                        ? number_format($data->comercioExterior->valorFatura, 2, '.', '')
+                        : null
+                );
+            } else {
+                $this->appendElement(
+                    $comExt,
+                    'vServMoeda',
+                    $data->comercioExterior->valorServicoMoeda !== null
+                        ? number_format($data->comercioExterior->valorServicoMoeda, 2, '.', '')
+                        : null
+                );
+            }
             $this->appendElement($comExt, 'mecAFComexP', $data->comercioExterior->mecanismoApoioComexPrestador);
             $this->appendElement($comExt, 'mecAFComexT', $data->comercioExterior->mecanismoApoioComexTomador);
             $this->appendElement($comExt, 'movTempBens', $data->comercioExterior->movimentacaoTemporariaBens);
-            $this->appendElement($comExt, 'nDI', $data->comercioExterior->numeroDeclaracaoImportacao);
-            $this->appendElement($comExt, 'nRE', $data->comercioExterior->numeroRegistroExportacao);
+            if ($this->schema === SchemaDps::Homologacao) {
+                $this->appendElement($comExt, 'nDUIMP', $data->comercioExterior->numeroDuimp);
+                $this->appendElement($comExt, 'nDUE', $data->comercioExterior->numeroDue);
+            } else {
+                $this->appendElement($comExt, 'nDI', $data->comercioExterior->numeroDeclaracaoImportacao);
+                $this->appendElement($comExt, 'nRE', $data->comercioExterior->numeroRegistroExportacao);
+            }
             $this->appendElement($comExt, 'mdic', $data->comercioExterior->mdic);
+            if ($this->schema === SchemaDps::Homologacao) {
+                $this->appendElement($comExt, 'nContCambio', $data->comercioExterior->numeroContratoCambio);
+            }
             $serv->appendChild($comExt);
         }
 
@@ -256,6 +302,9 @@ class DpsXmlBuilder
             $this->appendElement($atvEvento, 'xNome', $data->atividadeEvento->nome);
             $this->appendElement($atvEvento, 'dtIni', $data->atividadeEvento->dataInicio);
             $this->appendElement($atvEvento, 'dtFim', $data->atividadeEvento->dataFim);
+            if ($this->schema === SchemaDps::Homologacao) {
+                $this->appendElement($atvEvento, 'cMun', $data->atividadeEvento->codigoMunicipio);
+            }
             if ($data->atividadeEvento->idAtividadeEvento) {
                 $this->appendElement($atvEvento, 'idAtvEvt', $data->atividadeEvento->idAtividadeEvento);
             } elseif ($data->atividadeEvento->endereco) {
@@ -316,6 +365,14 @@ class DpsXmlBuilder
                     $documentos->appendChild($this->buildDocumentoAjusteBaseCalculo($docData));
                 }
                 $vAjusteBc->appendChild($documentos);
+            }
+
+            if ($this->schema === SchemaDps::Homologacao && $data->ajusteBaseCalculo->valorAjusteBaseCalculoIbscbsComercioExterior !== null) {
+                $this->appendElement(
+                    $vAjusteBc,
+                    'vAjusteBCIBSCBSComExt',
+                    number_format($data->ajusteBaseCalculo->valorAjusteBaseCalculoIbscbsComercioExterior, 2, '.', '')
+                );
             }
 
             $valores->appendChild($vAjusteBc);
@@ -424,6 +481,75 @@ class DpsXmlBuilder
         $parent->appendChild($valores);
     }
 
+    private function buildDestinatario(DOMElement $parent, TomadorData $data): void
+    {
+        $dest = $this->dom->createElement('dest');
+        $this->appendElement($dest, 'CNPJ', $data->cnpj);
+        $this->appendElement($dest, 'CPF', $data->cpf);
+        $this->appendElement($dest, 'NIF', $data->nif);
+        $this->appendElement($dest, 'cNaoNIF', $data->codigoNaoNif);
+        $this->appendElement($dest, 'xNome', $data->nome);
+
+        if ($data->endereco) {
+            $this->buildEndereco($dest, $data->endereco);
+        }
+
+        $this->appendElement($dest, 'fone', $data->telefone);
+        $this->appendElement($dest, 'email', $data->email);
+        $parent->appendChild($dest);
+    }
+
+    private function buildCondominios(CondominioData $data): DOMElement
+    {
+        $condominios = $this->dom->createElement('condominios');
+        $this->appendElement($condominios, 'dVencOrig', $data->dataVencimentoOriginal);
+
+        foreach ($data->cobrancas ?? [] as $cobranca) {
+            $gCobranca = $this->dom->createElement('gCobranca');
+            $this->appendElement($gCobranca, 'tpCobranca', $cobranca->tipoCobranca);
+            $this->appendElement($gCobranca, 'xTpCobranca', $cobranca->descricaoTipoCobranca);
+            $this->appendElement(
+                $gCobranca,
+                'vCobranca',
+                $cobranca->valorCobranca !== null
+                    ? number_format($cobranca->valorCobranca, 2, '.', '')
+                    : null
+            );
+
+            foreach ($cobranca->detalhamentos ?? [] as $detalhe) {
+                $gDetCobranca = $this->dom->createElement('gDetCobranca');
+                $this->appendElement($gDetCobranca, 'tpDetCobranca', $detalhe->tipoDetalhamento);
+                $this->appendElement($gDetCobranca, 'xTpDetCobranca', $detalhe->descricaoTipoDetalhamento);
+                $this->appendElement(
+                    $gDetCobranca,
+                    'vDetCobranca',
+                    $detalhe->valorDetalhamento !== null
+                        ? number_format($detalhe->valorDetalhamento, 2, '.', '')
+                        : null
+                );
+                $gCobranca->appendChild($gDetCobranca);
+            }
+
+            $condominios->appendChild($gCobranca);
+        }
+
+        foreach ($data->descontos ?? [] as $desconto) {
+            $gDesconto = $this->dom->createElement('gDesconto');
+            $this->appendElement($gDesconto, 'tpDesconto', $desconto->tipoDesconto);
+            $this->appendElement(
+                $gDesconto,
+                'vDesconto',
+                $desconto->valorDesconto !== null
+                    ? number_format($desconto->valorDesconto, 2, '.', '')
+                    : null
+            );
+            $this->appendElement($gDesconto, 'xTpDesconto', $desconto->descricaoTipoDesconto);
+            $condominios->appendChild($gDesconto);
+        }
+
+        return $condominios;
+    }
+
     private function buildIbscbs(DOMElement $parent, IbscbsData $data): void
     {
         $ibscbs = $this->dom->createElement('IBSCBS');
@@ -441,23 +567,11 @@ class DpsXmlBuilder
         }
 
         $this->appendElement($ibscbs, 'tpEnteGov', $data->tipoEnteGovernamental);
-        $this->appendElement($ibscbs, 'indDest', $data->indicadorDestinatario);
-
-        if ($data->destinatario) {
-            $dest = $this->dom->createElement('dest');
-            $this->appendElement($dest, 'CNPJ', $data->destinatario->cnpj);
-            $this->appendElement($dest, 'CPF', $data->destinatario->cpf);
-            $this->appendElement($dest, 'NIF', $data->destinatario->nif);
-            $this->appendElement($dest, 'cNaoNIF', $data->destinatario->codigoNaoNif);
-            $this->appendElement($dest, 'xNome', $data->destinatario->nome);
-
-            if ($data->destinatario->endereco) {
-                $this->buildEndereco($dest, $data->destinatario->endereco);
+        if ($this->schema !== SchemaDps::Homologacao) {
+            $this->appendElement($ibscbs, 'indDest', $data->indicadorDestinatario);
+            if ($data->destinatario) {
+                $this->buildDestinatario($ibscbs, $data->destinatario);
             }
-
-            $this->appendElement($dest, 'fone', $data->destinatario->telefone);
-            $this->appendElement($dest, 'email', $data->destinatario->email);
-            $ibscbs->appendChild($dest);
         }
 
         if ($data->imovel) {
@@ -472,6 +586,10 @@ class DpsXmlBuilder
                 $this->appendElement($bensMoveis, 'qtdNCMBemMovel', $bemMovel->quantidadeNcmBemMovel);
                 $ibscbs->appendChild($bensMoveis);
             }
+        }
+
+        if ($this->schema === SchemaDps::Homologacao && $data->condominios) {
+            $ibscbs->appendChild($this->buildCondominios($data->condominios));
         }
 
         $valores = $this->dom->createElement('valores');

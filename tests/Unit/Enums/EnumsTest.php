@@ -10,6 +10,9 @@ use Nfse\Enums\ProcessoEmissao;
 use Nfse\Enums\RegimeEspecialTributacao;
 use Nfse\Enums\TipoAjusteBaseCalculo;
 use Nfse\Enums\TipoAmbiente;
+use Nfse\Enums\TipoCobrancaCondominio;
+use Nfse\Enums\TipoDescontoCondominio;
+use Nfse\Enums\TipoDetalhamentoCobrancaCondominio;
 use Nfse\Enums\TipoImunidade;
 use Nfse\Enums\TipoNsu;
 use Nfse\Enums\TipoRetencaoIssqn;
@@ -120,4 +123,23 @@ it('RegimeEspecialTributacao has only the values of TSRegEspTrib from schema 1.0
         ->and(in_array('7', $constantes, true))->toBeFalse()
         ->and(in_array('8', $constantes, true))->toBeFalse()
         ->and(in_array('10', $constantes, true))->toBeFalse();
+});
+
+it('TipoCobrancaCondominio has the values of TSRTCTpCobranca', function () {
+    expect(TipoCobrancaCondominio::CondominioOrdinario)->toBe('01')
+        ->and(TipoCobrancaCondominio::OutraCobranca)->toBe('99')
+        ->and((new \ReflectionClass(TipoCobrancaCondominio::class))->getConstants())->toHaveCount(6);
+});
+
+it('TipoDescontoCondominio has the values of TSRTCTpDesconto', function () {
+    expect(TipoDescontoCondominio::DescontoIncondicionado)->toBe('1')
+        ->and(TipoDescontoCondominio::DescontoCondicionado)->toBe('2')
+        ->and((new \ReflectionClass(TipoDescontoCondominio::class))->getConstants())->toHaveCount(2);
+});
+
+it('TipoDetalhamentoCobrancaCondominio has the values of TSRTCTpDetCobranca', function () {
+    expect(TipoDetalhamentoCobrancaCondominio::CondominioComumCrd)->toBe('001')
+        ->and(TipoDetalhamentoCobrancaCondominio::CondominioIrrecuperavel)->toBe('036')
+        ->and(TipoDetalhamentoCobrancaCondominio::Outro)->toBe('999')
+        ->and((new \ReflectionClass(TipoDetalhamentoCobrancaCondominio::class))->getConstants())->toHaveCount(37);
 });

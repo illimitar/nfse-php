@@ -3,7 +3,6 @@
 namespace Nfse\Dto\Nfse;
 
 use Nfse\Dto\Dto;
-use Spatie\DataTransferObject\Attributes\MapFrom;
 
 class AtividadeEventoData extends Dto
 {
@@ -11,6 +10,7 @@ class AtividadeEventoData extends Dto
   'nome' => 'xNome',
   'dataInicio' => 'dtIni',
   'dataFim' => 'dtFim',
+  'codigoMunicipio' => 'cMun',
   'idAtividadeEvento' => 'idAtvEvt',
   'endereco' => 'end'
 );
@@ -18,6 +18,7 @@ class AtividadeEventoData extends Dto
   'nome' => '?string',
   'dataInicio' => '?string',
   'dataFim' => '?string',
+  'codigoMunicipio' => '?string',
   'idAtividadeEvento' => '?string',
   'endereco' => '?EnderecoData'
 );
@@ -39,6 +40,11 @@ class AtividadeEventoData extends Dto
      * Formato: AAAA-MM-DD
      */
     public $dataFim = null;
+
+    /**
+     * Município do evento. Schema 20261124.
+     */
+    public $codigoMunicipio = null;
 
     /**
      * Identificador da atividade ou evento.

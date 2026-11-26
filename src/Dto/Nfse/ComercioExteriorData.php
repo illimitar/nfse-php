@@ -16,7 +16,12 @@ class ComercioExteriorData extends Dto
   'movimentacaoTemporariaBens' => 'movTempBens',
   'numeroDeclaracaoImportacao' => 'nDI',
   'numeroRegistroExportacao' => 'nRE',
-  'mdic' => 'mdic'
+  'mdic' => 'mdic',
+  'numeroFatura' => 'nFatura',
+  'valorFatura' => 'vFatura',
+  'numeroDuimp' => 'nDUIMP',
+  'numeroDue' => 'nDUE',
+  'numeroContratoCambio' => 'nContCambio'
 );
     /** @var array */
     public static $__castWith = array (
@@ -43,7 +48,12 @@ class ComercioExteriorData extends Dto
   'movimentacaoTemporariaBens' => '?MovimentacaoTemporariaBens',
   'numeroDeclaracaoImportacao' => '?string',
   'numeroRegistroExportacao' => '?string',
-  'mdic' => '?string'
+  'mdic' => '?string',
+  'numeroFatura' => '?string',
+  'valorFatura' => '?float',
+  'numeroDuimp' => '?string',
+  'numeroDue' => '?string',
+  'numeroContratoCambio' => '?string'
 );
 
 
@@ -111,4 +121,29 @@ class ComercioExteriorData extends Dto
      * 1 - Enviar
      */
     public $mdic = null;
+
+    /**
+     * Número da fatura. Schema 20261124.
+     */
+    public $numeroFatura = null;
+
+    /**
+     * Valor da fatura. Schema 20261124.
+     */
+    public $valorFatura = null;
+
+    /**
+     * Número da DUIMP. Schema 20261124.
+     */
+    public $numeroDuimp = null;
+
+    /**
+     * Número da DU-E. Schema 20261124.
+     */
+    public $numeroDue = null;
+
+    /**
+     * Número do contrato de câmbio. Schema 20261124.
+     */
+    public $numeroContratoCambio = null;
 }

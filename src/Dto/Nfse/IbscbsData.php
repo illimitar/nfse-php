@@ -13,6 +13,7 @@ class IbscbsData extends Dto
   'destinatario' => 'dest',
   'imovel' => 'imovel',
   'bensMoveis' => 'bensMoveis',
+  'condominios' => 'condominios',
   'cst' => 'valores.trib.CST',
   'codigoClassificacaoTributaria' => 'valores.trib.cClassTrib',
   'codigoCreditoPresumido' => 'valores.trib.gIBSCBS.cCredPres',
@@ -68,6 +69,7 @@ class IbscbsData extends Dto
   'destinatario' => '?TomadorData',
   'imovel' => '?ImovelData',
   'bensMoveis' => '?array',
+  'condominios' => '?CondominioData',
   'cst' => '?string',
   'codigoClassificacaoTributaria' => '?string',
   'codigoCreditoPresumido' => '?string',
@@ -132,6 +134,11 @@ class IbscbsData extends Dto
      * @var BemMovelData[]|null
      */
     public $bensMoveis = null;
+
+    /**
+     * Operações de condomínio. Schema 20261124. Somente para o subitem 99.05.
+     */
+    public $condominios = null;
 
     /**
      * Código de Situação Tributária do IBS e da CBS.

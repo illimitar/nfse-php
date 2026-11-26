@@ -7,15 +7,22 @@ use Nfse\Dto\Nfse\InfDpsData;
 use Nfse\Enums\CodigoIndicadorOperacao;
 use Nfse\Enums\EmitenteDPS;
 use Nfse\Enums\IndicadorDestinatario;
+use Nfse\Enums\TipoCobrancaCondominio;
+use Nfse\Enums\TipoDetalhamentoCobrancaCondominio;
 use Nfse\Enums\TipoOperacaoRtc;
 use Nfse\Support\CatalogoNbs;
+use Nfse\Xml\SchemaDps;
 
 class DpsValidator
 {
-    public function validate(DpsData $dps): ValidationResult
+    /**
+     * @param string|null $schema
+     */
+    public function validate(DpsData $dps, $schema = null): ValidationResult
     {
         $errors = [];
         $infDps = $dps->infDps;
+        $schemaResolvido = $schema === null ? SchemaDps::Producao : SchemaDps::resolver($schema);
 
         if ($infDps === null) {
             return ValidationResult::failure(['InfDpsData is required.']);
@@ -26,7 +33,10 @@ class DpsValidator
         $this->validateTomador($infDps, $errors);
         $this->validateValores($infDps, $errors);
         $this->validateServico($infDps, $errors);
-        $this->validateIbscbs($infDps, $errors);
+        $this->validateIbscbs($infDps, $errors, $schemaResolvido);
+        if ($schemaResolvido === SchemaDps::Homologacao) {
+            $this->validateSchema20261124($infDps, $errors);
+        }
 
         if (count($errors) > 0) {
             return ValidationResult::failure($errors);
@@ -166,7 +176,71 @@ class DpsValidator
         }
     }
 
-    private function validateIbscbs(InfDpsData $infDps, array &$errors): void
+    private function validateSchema20261124(InfDpsData $infDps, array &$errors): void
+    {
+        $ibscbs = $infDps->ibscbs;
+        $servico = $infDps->servico;
+        $indicador = $infDps->indicadorDestinatario;
+        if ($indicador === null && $ibscbs !== null) {
+            $indicador = $ibscbs->indicadorDestinatario;
+        }
+        if ($indicador === null) {
+            $errors[] = 'O indicador de destinatário é obrigatório no schema 20261124.';
+        }
+
+        $destinatario = $infDps->destinatario;
+        if ($destinatario === null && $ibscbs !== null) {
+            $destinatario = $ibscbs->destinatario;
+        }
+        if ($destinatario !== null && $indicador !== IndicadorDestinatario::DestinatarioDiverso) {
+            $errors[] = 'O destinatário do serviço só deve ser identificado quando o indicador de destinatário for 1.';
+        }
+
+        $comercioExterior = $servico !== null ? $servico->comercioExterior : null;
+        if ($comercioExterior !== null && (
+            $comercioExterior->valorServicoMoeda !== null
+            || ($comercioExterior->numeroDeclaracaoImportacao !== null && $comercioExterior->numeroDeclaracaoImportacao !== '')
+            || ($comercioExterior->numeroRegistroExportacao !== null && $comercioExterior->numeroRegistroExportacao !== '')
+        )) {
+            $errors[] = 'Os campos vServMoeda, nDI e nRE não existem no schema 20261124.';
+        }
+
+        $condominios = $ibscbs !== null ? $ibscbs->condominios : null;
+        if ($condominios === null) {
+            return;
+        }
+
+        $codigoServico = $servico !== null ? $servico->codigoServico : null;
+        $codigoTributacao = preg_replace('/\D/', '', $codigoServico !== null ? (string) $codigoServico->codigoTributacaoNacional : '');
+        if (! str_starts_with($codigoTributacao, '9905')) {
+            $errors[] = 'O grupo de condomínios só é admitido para o subitem 99.05 do código de tributação nacional.';
+        }
+
+        foreach ($condominios->cobrancas ?? [] as $cobranca) {
+            if (
+                $cobranca->descricaoTipoCobranca !== null
+                && $cobranca->descricaoTipoCobranca !== ''
+                && $cobranca->tipoCobranca !== TipoCobrancaCondominio::OutraCobranca
+            ) {
+                $errors[] = 'A descrição do tipo de cobrança só deve ser informada quando o tipo for 99.';
+            }
+
+            foreach ($cobranca->detalhamentos ?? [] as $detalhe) {
+                if (
+                    $detalhe->descricaoTipoDetalhamento !== null
+                    && $detalhe->descricaoTipoDetalhamento !== ''
+                    && $detalhe->tipoDetalhamento !== TipoDetalhamentoCobrancaCondominio::Outro
+                ) {
+                    $errors[] = 'A descrição do detalhamento da cobrança só deve ser informada quando o tipo for 999.';
+                }
+            }
+        }
+    }
+
+    /**
+     * @param string $schema
+     */
+    private function validateIbscbs(InfDpsData $infDps, array &$errors, $schema): void
     {
         $ibscbs = $infDps->ibscbs;
         if ($ibscbs === null) {
@@ -196,8 +270,9 @@ class DpsValidator
             $errors[] = 'O grupo de NFS-e referenciadas é obrigatório quando o tipo de operação for 2 ou 3.';
         }
 
-        // Rule 554: o destinatário só deve ser identificado quando indDest = 1
-        if ($ibscbs->destinatario !== null && $ibscbs->indicadorDestinatario !== IndicadorDestinatario::DestinatarioDiverso) {
+        // Rule 554: o destinatário só deve ser identificado quando indDest = 1.
+        // No schema 20261124 a mesma regra vale para o indDest de infDPS.
+        if ($schema !== SchemaDps::Homologacao && $ibscbs->destinatario !== null && $ibscbs->indicadorDestinatario !== IndicadorDestinatario::DestinatarioDiverso) {
             $errors[] = 'O destinatário do serviço só deve ser identificado quando o indicador de destinatário for 1.';
         }
 

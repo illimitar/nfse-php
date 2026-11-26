@@ -14,6 +14,7 @@ use Nfse\Signer\Certificate;
 use Nfse\Signer\SignerInterface;
 use Nfse\Signer\XmlSigner;
 use Nfse\Xml\DpsXmlBuilder;
+use Nfse\Xml\SchemaDps;
 use Nfse\Xml\EventosXmlBuilder;
 use Nfse\Xml\NfseXmlParser;
 
@@ -35,9 +36,12 @@ class ContribuinteService
     /**
      * Emite uma NFS-e a partir de um DPS.
      */
-    public function emitir(DpsData $dps): NfseData
+    /**
+     * @param string|null $schema
+     */
+    public function emitir(DpsData $dps, $schema = null): NfseData
     {
-        $builder = new DpsXmlBuilder;
+        $builder = new DpsXmlBuilder(SchemaDps::resolver($schema, $this->context->ambiente));
         $xml = $builder->build($dps);
 
         $cert = $this->makeCertificate();
