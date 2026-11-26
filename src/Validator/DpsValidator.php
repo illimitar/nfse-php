@@ -4,6 +4,7 @@ namespace Nfse\Validator;
 
 use Nfse\Dto\Nfse\DpsData;
 use Nfse\Dto\Nfse\InfDpsData;
+use Nfse\Enums\CodigoIndicadorOperacao;
 use Nfse\Enums\EmitenteDPS;
 use Nfse\Enums\IndicadorDestinatario;
 use Nfse\Enums\TipoOperacaoRtc;
@@ -200,8 +201,26 @@ class DpsValidator
             $errors[] = 'O destinatário do serviço só deve ser identificado quando o indicador de destinatário for 1.';
         }
 
+        if ($ibscbs->cstVeioCaminhoAntigo()) {
+            $errors[] = 'O CST foi informado em valores.trib.gIBSCBS. Esse caminho não é mais lido. Informe o CST em valores.trib.';
+        } elseif ($ibscbs->cst === null || $ibscbs->cst === '') {
+            $errors[] = 'O CST do IBS e da CBS é obrigatório quando o grupo de informações de IBS/CBS é informado.';
+        }
+
+        if ($ibscbs->classificacaoVeioCaminhoAntigo()) {
+            $errors[] = 'A classificação tributária foi informada em valores.trib.gIBSCBS. Esse caminho não é mais lido. Informe a classificação em valores.trib.';
+        } elseif ($ibscbs->codigoClassificacaoTributaria === null || $ibscbs->codigoClassificacaoTributaria === '') {
+            $errors[] = 'A classificação tributária do IBS e da CBS é obrigatória quando o grupo de informações de IBS/CBS é informado.';
+        }
+
+        if ($ibscbs->codigoIndicadorOperacao !== null && $ibscbs->codigoIndicadorOperacao !== ''
+            && CodigoIndicadorOperacao::tryFrom($ibscbs->codigoIndicadorOperacao) === null) {
+            $errors[] = 'O código indicador da operação informado não consta na tabela de cIndOp.';
+        }
+
         // Rule 627: os 3 primeiros dígitos do cClassTrib devem corresponder ao CST
-        if ($ibscbs->cst !== null && $ibscbs->codigoClassificacaoTributaria !== null
+        if ($ibscbs->cst !== null && $ibscbs->cst !== ''
+            && $ibscbs->codigoClassificacaoTributaria !== null && $ibscbs->codigoClassificacaoTributaria !== ''
             && ! str_starts_with($ibscbs->codigoClassificacaoTributaria, $ibscbs->cst)) {
             $errors[] = 'O código de classificação tributária informado não pertence ao grupo do CST de IBS/CBS informado.';
         }

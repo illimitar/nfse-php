@@ -88,6 +88,7 @@ class IbscbsData extends Dto
 
     /**
      * Código indicador da operação de fornecimento.
+     * Seis dígitos da tabela CodigoIndicadorOperacao.
      */
     public $codigoIndicadorOperacao = null;
 
@@ -171,4 +172,50 @@ class IbscbsData extends Dto
      * Percentual de diferimento para a CBS.
      */
     public $percentualDiferimentoCbs = null;
+
+    /** @var bool */
+    private $cstCaminhoAntigo = false;
+
+    /** @var bool */
+    private $classificacaoCaminhoAntigo = false;
+
+    public function cstVeioCaminhoAntigo(): bool
+    {
+        return $this->cstCaminhoAntigo;
+    }
+
+    public function classificacaoVeioCaminhoAntigo(): bool
+    {
+        return $this->classificacaoCaminhoAntigo;
+    }
+
+    /**
+     * @param array $input
+     * @return array
+     */
+    protected function normalizeInput(array $input)
+    {
+        $this->cstCaminhoAntigo = $this->textoPreenchido($input, 'valores.trib.gIBSCBS.CST');
+        $this->classificacaoCaminhoAntigo = $this->textoPreenchido($input, 'valores.trib.gIBSCBS.cClassTrib');
+
+        return parent::normalizeInput($input);
+    }
+
+    /**
+     * @param array $input
+     * @param string $caminho
+     * @return bool
+     */
+    private function textoPreenchido(array $input, $caminho)
+    {
+        $atual = $input;
+        foreach (explode('.', $caminho) as $chave) {
+            if (! is_array($atual) || ! array_key_exists($chave, $atual)) {
+                return false;
+            }
+            $atual = $atual[$chave];
+        }
+
+        return is_scalar($atual) && trim((string) $atual) !== '';
+    }
 }

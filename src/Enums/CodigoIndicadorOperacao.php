@@ -14,6 +14,10 @@ final class CodigoIndicadorOperacao
     const Ind010103 = '010103';
     const Ind010106 = '010106';
     const Ind020101 = '020101';
+
+    /** Válido a partir de 01/12/2026. Operação com bem imóvel relacionada a BICE. */
+    const Ind020102 = '020102';
+
     const Ind020201 = '020201';
     const Ind020202 = '020202';
     const Ind020301 = '020301';
@@ -42,8 +46,34 @@ final class CodigoIndicadorOperacao
     const Ind100502 = '100502';
     const Ind100601 = '100601';
 
+    /** Válido a partir de 01/12/2026. Transporte dutoviário de gás natural, capacidade de entrada. */
+    const Ind130101 = '130101';
+
+    /** Válido a partir de 01/12/2026. Transporte dutoviário de gás natural, capacidade de saída. */
+    const Ind130201 = '130201';
+
     private function __construct()
     {
+    }
+
+    /**
+     * @param mixed $valor
+     * @return string|null
+     */
+    public static function tryFrom($valor)
+    {
+        if ($valor === null || $valor === '') {
+            return null;
+        }
+
+        $constantes = (new \ReflectionClass(self::class))->getConstants();
+        foreach ($constantes as $constante) {
+            if ((string) $constante === (string) $valor) {
+                return $constante;
+            }
+        }
+
+        return null;
     }
 
     /**
@@ -62,6 +92,8 @@ final class CodigoIndicadorOperacao
                 return 'Bem Móvel Material';
             case self::Ind020101:
                 return 'Operação com bem imóvel, bem imaterial, inclusive direito, relacionada a bem imóvel';
+            case self::Ind020102:
+                return 'Operação com bem imóvel, bem móvel imaterial, inclusive direito, relacionada a Bem Imóvel de Características Especiais (BICE)';
             case self::Ind020201:
                 return 'Serviço prestado fisicamente sobre bem imóvel';
             case self::Ind020202:
@@ -116,6 +148,10 @@ final class CodigoIndicadorOperacao
                 return 'Demais bens, em operações onerosas';
             case self::Ind100601:
                 return 'Demais bens, em operações não onerosas';
+            case self::Ind130101:
+                return 'Operações de transporte dutoviário de gás natural, na contratação de capacidade de entrada';
+            case self::Ind130201:
+                return 'Operações de transporte dutoviário de gás natural, na contratação de capacidade de saída';
         }
     }
 
